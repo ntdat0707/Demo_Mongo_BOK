@@ -2,7 +2,9 @@ import { ServiceProvider } from './serviceprovider.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
 import { Product } from 'src/products/product.entity';
+import { CreateDentistDTO } from 'src/dentist/dto/create-dentist-dto';
 
+import { CreateProductDTO } from 'src/products/dto/create-product-dto';
 @EntityRepository(ServiceProvider)
 export class ServiceProviderRepository extends Repository<ServiceProvider> {
   //Function test for entity
@@ -13,18 +15,17 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
       provider_id,
       provider_name,
       location,
-      products,
-      dentists,
+      products = CreateProductDTO,
+      dentists = CreateDentistDTO,
     } = createProviderDTO;
 
     const provider = new ServiceProvider();
-    let testproduct = new Product();
-    testproduct = products;
     provider.provider_id = provider_id;
     provider.provider_name = provider_name;
     provider.location = location;
     provider.products = products;
     provider.dentists = dentists;
+    console.log('New Provider: ',provider);
     try {
       await provider.save();
       return provider;

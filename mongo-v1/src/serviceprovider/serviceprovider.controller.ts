@@ -8,8 +8,8 @@ export class ServiceproviderController {
     constructor(private ServiceProviderService: ServiceproviderService) {}
     
     @Post()
-    @UsePipes(ValidationPipe)
-    async createSP (@Body() serviceproviderDTO:CreateServiceProviderDTO):Promise<ServiceProvider>{
+   // @UsePipes(ValidationPipe)
+    async createSP (@Body(ValidationPipe) serviceproviderDTO:CreateServiceProviderDTO):Promise<ServiceProvider>{
         return this.ServiceProviderService.createSP(serviceproviderDTO);
     }
 }
