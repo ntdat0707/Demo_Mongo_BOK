@@ -1,21 +1,21 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Dentist extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn()
+  _id: number;
 
   @Column()
-  name: string;
+  dentist_id:number;
 
   @Column()
-  provider_id: string;
+  dentist_name: string;
 
   @Column()
-  product_id: string;
+  dentist_email: string;
 
   @Column()
-  available_time: string;
+  dentist_phone: string;
 
   // @ManyToOne(type => User, user => user.tasks, { eager: false })
   // user: User;

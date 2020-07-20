@@ -2,14 +2,14 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateDentistDTO {
     @IsNotEmpty()
-    name: string;
+    dentist_id:number;
+
+    @IsNotEmpty()
+    dentist_name: string;
   
     @IsNotEmpty()
-    provider_id: string;
+    dentist_email: string;
   
     @IsNotEmpty()
-    product_id: string;
-  
-    @IsOptional()
-    available_time: string;
+    dentist_phone: string;
 }
