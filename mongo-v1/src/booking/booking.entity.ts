@@ -1,9 +1,15 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from 'typeorm';
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  Entity,
+  BaseEntity,
+  ObjectIdColumn,
+} from 'typeorm';
 
 @Entity()
 export class Booking extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn()
+  _id: string;
 
   @Column()
   customer_name: string;

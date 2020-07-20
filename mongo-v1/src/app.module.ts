@@ -14,15 +14,7 @@ import { Booking } from './booking/booking.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url:
-        'mongodb+srv://Test1:123@cluster0-ga0wm.azure.mongodb.net/Wesere_Test?retryWrites=true&w=majority',
-      database: 'Wesere_Test',
-      synchronize: true,
-      useUnifiedTopology: true,
-      entities: [Booking, Dentist, ServiceProvider, Product],
-    }),
+    TypeOrmModule.forRoot(typeOrmConfig),
     BookingModule,
     DentistModule,
     ServiceproviderModule,

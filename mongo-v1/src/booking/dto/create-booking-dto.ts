@@ -2,6 +2,7 @@ import { IsNotEmpty, IsEmail } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 export class CreateBookingDTO {
   //@ApiProperty({ type: String, description: 'title' })
+  
   @IsNotEmpty()
   customer_name: string;
 
