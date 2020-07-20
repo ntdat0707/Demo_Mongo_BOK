@@ -1,20 +1,28 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from "typeorm";
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  Entity,
+  BaseEntity,
+  ObjectIdColumn,
+} from 'typeorm';
 
 @Entity()
 export class ServiceProvider extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @ObjectIdColumn()
+  _id: string;
 
-    @Column()
-    provider_name: string;
+  @PrimaryGeneratedColumn()
+  provider_id: number;
 
-    @Column()
-    provider_products: string;
+  @Column()
+  provider_name: string;
 
-    @Column()
-    provider_dentists: string;
+  @Column()
+  location: string;
 
-    @Column()
-    provider_location:string;
+  @Column()
+  products: object;
 
+  @Column()
+  dentists: object;
 }
