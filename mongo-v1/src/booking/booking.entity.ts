@@ -1,37 +1,41 @@
+import { ServiceProvider } from './../serviceprovider/serviceprovider.entity';
 import {
   Column,
   PrimaryGeneratedColumn,
   Entity,
   BaseEntity,
   ObjectIdColumn,
+  PrimaryColumn,
 } from 'typeorm';
+import { Customer } from 'src/customer/customer.entity';
+import { Product } from 'src/products/product.entity';
 
 @Entity()
 export class Booking extends BaseEntity {
   @ObjectIdColumn()
   _id: string;
 
-  @Column()
-  customer_name: string;
+  @PrimaryColumn()
+  booking_id: number;
 
   @Column()
-  phone: string;
+  user:object;
 
   @Column()
-  email: string;
+  provider_id: number;
 
   @Column()
-  product_id: string;
+  provider_name: string;
 
   @Column()
-  provider_id: string;
+  product:object;
 
   @Column()
-  dentist_id: string;
+  dentist_id: number;
 
   @Column()
-  price: string;
+  dentist_name: string;
 
   @Column()
-  time: string;
+  cus_booking_time: string;
 }
