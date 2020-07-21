@@ -1,7 +1,7 @@
 import { IsNotEmpty, ValidateNested } from 'class-validator';
-import { CreateProductDTO } from 'src/products/dto/create-product-dto';
 import { Type } from 'class-transformer';
-import { CreateDentistDTO } from 'src/dentist/dto/create-dentist-dto';
+import { CreateDentistDTO } from 'src/dentist/middleware/create-dentist-dto';
+import { CreateProductDTO } from 'src/products/middleware/create-product-dto';
 
 export class CreateServiceProviderDTO {
   @IsNotEmpty()
