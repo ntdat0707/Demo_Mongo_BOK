@@ -5,7 +5,7 @@ export class Dentist extends BaseEntity {
   @ObjectIdColumn()
   _id: number;
 
-  @Column()
+  @PrimaryGeneratedColumn()
   dentist_id:number;
 
   @Column()

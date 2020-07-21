@@ -11,6 +11,9 @@ import { Dentist } from './dentist/dentist.entity';
 import { ServiceProvider } from './serviceprovider/serviceprovider.entity';
 import { Product } from './products/product.entity';
 import { Booking } from './booking/booking.entity';
+import { ChatbotModule } from './chatbot/chatbot.module';
+import { ConservationModule } from './conservation/conservation.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
@@ -19,6 +22,9 @@ import { Booking } from './booking/booking.entity';
     DentistModule,
     ServiceproviderModule,
     ProductsModule,
+    ChatbotModule,
+    ConservationModule,
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

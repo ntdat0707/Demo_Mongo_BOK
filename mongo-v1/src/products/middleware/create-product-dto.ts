@@ -11,5 +11,5 @@ export class CreateProductDTO {
     product_name:string;
 
     @IsNotEmpty()
-    product_price:string;
+    product_price:number;
 }
