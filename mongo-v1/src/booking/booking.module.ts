@@ -8,6 +8,6 @@ import { BookingController } from './booking.controller';
   imports: [TypeOrmModule.forFeature([BookingRepository])],
   providers: [BookingService],
   controllers: [BookingController],
-  exports: [BookingService],
+  exports: [BookingService,TypeOrmModule.forFeature([BookingRepository])],
 })
 export class BookingModule {}

@@ -5,6 +5,7 @@ import { CreateProductDTO } from 'src/products/middleware/create-product-dto';
 import { Product } from 'src/products/product.entity';
 import { Dentist } from 'src/dentist/dentist.entity';
 import { CreateDentistDTO } from 'src/dentist/middleware/create-dentist-dto';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(ServiceProvider)
 export class ServiceProviderRepository extends Repository<ServiceProvider> {
@@ -37,16 +38,17 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
       await provider.save();
       return provider;
     } catch (error) {
-      console.log(`Error: ${error}`);
+      throw new InternalServerErrorException("Can not create this provider");
     }
   }
 
   edit_products() {}
   edit_dentist() {}
-  // async updateName(id: number, name: string): Promise<ServiceProvider> {
+ 
+  async updateLocation(provider_id:number,location:string) {
 
-  // }
-  async updateLocation() {}
+  }
+
   async createProduct(productDTO: CreateProductDTO): Promise<string> {
     const { product_id, product_name, product_price } = productDTO;
     const product = new Product();
@@ -72,4 +74,5 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
     await dentist.save();
     return await 'New dentist created';
   }
+
 }

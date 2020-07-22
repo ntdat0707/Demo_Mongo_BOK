@@ -1,5 +1,6 @@
-import { BaseEntity, Column, ObjectIdColumn } from 'typeorm';
+import { BaseEntity, Column, ObjectIdColumn, Entity } from 'typeorm';
 
+@Entity()
 export class Notification extends BaseEntity {
     @ObjectIdColumn()
     _id:string;
