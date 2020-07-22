@@ -21,6 +21,7 @@ export class BookingService {
     for (const booking of bookings) {
       if (booking.provider_id == provider_id) {
         found = true;
+        console.log('Booking:',booking.user['user_id']);
         return booking;
       }
     }
@@ -50,6 +51,7 @@ export class BookingService {
   }
 
   async getBooking(): Promise<Booking[]> {
+
     return this.bookingRepository.find();
   }
 }
