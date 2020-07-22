@@ -1,18 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BookingService } from 'src/booking/booking.service';
 import { Booking } from 'src/booking/booking.entity';
-//import { nodemailer } from 'nodemailer';
+import { BookingRepository } from 'src/booking/booking.repository';
 
 @Injectable()
 export class NotificationService {
-  constructor(private bookingService: BookingService) {}
+  constructor(
+    private bookingService: BookingService,
+    private bookingRepository: BookingRepository,
+  ) {}
 
   async getCustomerBooking(customer_id: number): Promise<Booking> {
-    const bookings = await this.getBookings();
+    const bookings = await this.bookingService.getBookings();
+   
     let found = false;
     for (const booking of bookings) {
       if (booking.user['user_id'] == customer_id) {
-        found = true;
         return await booking;
       }
     }
@@ -24,7 +27,7 @@ export class NotificationService {
   async sendEmailNotification(content: string, id: number): Promise<void> {
     //setting nodemailer
     var nodemailer = require('nodemailer');
-    const booking = await this.createEmailContent(id);
+    const booking = await this.bookingRepository.findOne({booking_id:id})
     var transpoter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
@@ -45,7 +48,7 @@ export class NotificationService {
       -\nBooking Time:\n<strong>${booking['cus_booking_time']}</strong><br>-\nService:\n<strong>${booking.product['product_name']}</strong><br>-\nDentist:\n<strong>${booking['dentist_name']}</strong></p>`,
     };
 
-      transpoter.sendMail(mailOptions, (error, infor) => {
+    transpoter.sendMail(mailOptions, (error, infor) => {
       if (error) {
         console.log('Error mail', error);
       } else {
@@ -54,12 +57,8 @@ export class NotificationService {
     });
   }
 
-  async getBookings(): Promise<Booking[]> {
-    return this.bookingService.getBooking();
-  }
-
   async createEmailContent(id: number): Promise<Booking> {
-    const bookings = await this.getBookings();
+    const bookings = await this.bookingService.getBookings();
     const booking = await bookings.find(booking => booking.booking_id == id);
     if (!booking) {
       throw new NotFoundException('Not found this booking');

@@ -14,28 +14,6 @@ import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
-    // MailerModule.forRoot({
-    //   transport: {
-    //     host: 'mail.google.com',
-    //     service: 'gmail',
-    //     port: 587,
-    //     secure: false, // upgrade later with STARTTLS
-    //     auth: {
-    //       user: "username",
-    //       pass: "password",
-    //     },
-    //   },
-    //   defaults: {
-    //     from:'"nest-modules" <modules@nestjs.com>',
-    //   },
-    //   template: {
-    //     dir: process.cwd() + '/templates/',
-    //     adapter: new PugAdapter(), // or new PugAdapter()
-    //     options: {
-    //       strict: true,
-    //     },
-    //   },
-    // }),
     TypeOrmModule.forRoot(typeOrmConfig),
     BookingModule,
     DentistModule,

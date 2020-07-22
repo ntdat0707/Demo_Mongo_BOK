@@ -1,7 +1,10 @@
 import { Customer } from './customer.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { CreateCustomerDTO } from './middleware/create-customer-dto';
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 
 @EntityRepository(Customer)
 export class CustomerRepository extends Repository<Customer> {
@@ -20,4 +23,5 @@ export class CustomerRepository extends Repository<Customer> {
       throw new InternalServerErrorException();
     }
   }
+
 }

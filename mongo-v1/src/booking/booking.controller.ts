@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, Param, ValidationPipe} from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, ValidationPipe, ParseIntPipe} from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { Booking } from './booking.entity';
 import { CreateBookingDTO } from './middleware/create-booking-dto';
+import { Product } from 'src/products/product.entity';
 
 @Controller('booking')
 export class BookingController {
@@ -15,12 +16,17 @@ export class BookingController {
   }
 
   @Get('/provider/:id')
-  getProvider(@Param('id') id: number): Promise<Booking> {
+  getProvider(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
     return this.bookingService.getProvider(id);
   }
 
+  // @Get('/product/:id')
+  // getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
+  //   return this.bookingService.getProduct(id);
+  // }
+
   @Get('/dentist/:id')
-  getDentist(@Param('id') id: number): Promise<Booking> {
+  getDentist(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
     return this.bookingService.getDentist(id);
   }
 }

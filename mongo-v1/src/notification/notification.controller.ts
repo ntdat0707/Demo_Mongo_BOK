@@ -1,4 +1,4 @@
-import { Controller, Post, Query, Get, Param } from '@nestjs/common';
+import { Controller, Post, Query, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { Booking } from 'src/booking/booking.entity';
 
@@ -7,13 +7,13 @@ export class NotificationController {
   constructor(private notificationService: NotificationService) {}
 
   @Get('/:id')
-  async getCustomerBooking(@Param('id') id: number): Promise<Booking> {
+  async getCustomerBooking(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
     return this.notificationService.getCustomerBooking(id);
   }
   @Post()
   sendEmailNotification(
     @Query('content') content: string,
-    @Query('id') id: number,
+    @Query('id',ParseIntPipe) id: number,
   ):Promise<void> {
     return this.notificationService.sendEmailNotification(content, id);
   }

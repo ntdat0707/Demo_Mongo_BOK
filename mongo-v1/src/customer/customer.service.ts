@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CustomerRepository } from './customer.repository';
 import { CreateCustomerDTO } from './middleware/create-customer-dto';
 import { Customer } from './customer.entity';
@@ -11,8 +11,17 @@ export class CustomerService {
     return this.customerRepository.createUser(customerDTO);
   }
 
-  async getUser(customerId: number): Promise<Customer> {
-    return await this.customerRepository.findOne(customerId);
+  async getUsers(): Promise<Customer[]> {
+    return this.customerRepository.find();
+  }
+  async getUser(userID: number): Promise<Customer> {
+
+    const user = await this.customerRepository.findOne({ user_id: userID });
+    if (!user) {
+      throw new NotFoundException(`Not found this User id: ${userID}`);
+    } else {
+      return user;
+    }
   }
 
   async connectChatbot() {}

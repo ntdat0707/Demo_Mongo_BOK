@@ -6,8 +6,8 @@ export class Conservation extends BaseEntity {
   _id: string;
 
   @PrimaryGeneratedColumn()
-  conversation_id: string;
+  conversation_id: number;
 
   @CreateDateColumn({ type: 'timestamp' })
-  timestamp: Date;
+  timestamp = new Date();
 }

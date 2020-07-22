@@ -49,4 +49,8 @@ export class ServiceproviderService {
       return provider;
     }
   }
+
+  async getServiceProviders():Promise<ServiceProvider[]>{
+    return this.serviceproviderRepositorys.find();
+  }
 }
