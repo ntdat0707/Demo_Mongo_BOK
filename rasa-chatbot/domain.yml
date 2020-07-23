@@ -4,7 +4,7 @@ intents:
   - ask_name
   - ask_email
   - ask_phone
-  - hi_rasa
+  - hello_rasa
 
 forms:
   - info_form
@@ -27,57 +27,78 @@ slots:
 
 actions:
   - action_get_name
+  - action_check_email
+  - action_check_phone
 
 responses:
   utter_question_name:
-    - text: "[
+    - text: "(
         \"message\": \"Hello, What's your name?\"
-      ]"
+      )"
 
   utter_question_email:
-    - text: "[
+    - text: "(
         \"message\": \"what's your email address?\"
-      ]"
+      )"
 
   utter_input_email_again:
-    - text: '[
+    - text: '(
         "message": "please enter your email address in a valid format!"
-      ]'
+      )'
 
   utter_question_phone:
-    - text: "[
+    - text: "(
         \"message\": \"what's your telephone number?\"
-      ]"
-      
+      )" 
 
   utter_thank_you_update:
-    - text: '[
+    - text: '(
         "message": "Thanks for the additional info"
-      ]'
+      )'
 
   utter_input_phone_again:
-    - text: '[
+    - text: '(
         "message": "please enter your phone in a valid format"
-      ]'
+      )'
+
+  utter_wellcome:
+    - text: '(
+        "message": [
+          "Wellcome to Elite Dental",
+          "We provide diagnostics, dental care, general, and specialized treatment...",
+          "Do you want to use the following information to make an appointment?"
+        ],
+        "state": "chatbot_wellcome"
+      )'
+
+  utter_select_location:
+    - text: '(
+        "message": "Select your location",
+        "state": "select_location"
+      )'
 
   utter_hi_human:
-    - text: '[
+    - text: '(
         "message": "hello {name}",
         "state": "hello_human",
-        "data": ["name": "{name}"]
-      ]'
+        "data": ("name": "{name}")
+      )'
 
   utter_bye_human:
-    - text: '[
+    - text: '(
         "message": "bye {name}"
-      ]'
+      )'
 
   utter_submit:
-    - text: '[
+    - text: '(
         "message": "All done! \n
                   email: {email} \n
                   phone: {phone}"
-      ]'
+      )'
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+
+

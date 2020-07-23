@@ -6,7 +6,7 @@
 - good evening
 - hey there
 - that's greate
-    
+
 ## intent:goodbye
 - bye
 - goodbye
@@ -15,11 +15,13 @@
 
 ## intent:ask_name
 - [oanh](name)
-- [huyen nguyen](name)
 - my name is [oanh](name)
-- my name is [huyen nguyen](name)
 - name is [oanh](name)
-- name is [huyen nguyen](name)
+
+## intent:hi_rasa
+- hello rasa
+- hi rasae
+- hey rasa
 
 ## intent:ask_email
 - [longvox98@gmail.com](email)
@@ -39,5 +41,6 @@
 - /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
 
 ## lookup:name
+
 data/_lookup/name.txt
 

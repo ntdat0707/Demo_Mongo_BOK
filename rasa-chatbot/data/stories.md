@@ -1,6 +1,6 @@
 ## greet 
 * greet
-  - utter_question_name
+  - utter_select_location
 
 ## ask_name
 * ask_name{"name": "a name"}
@@ -29,3 +29,8 @@
 * ask_phone
   - info_form
   - utter_thank_you_update
+    
+## hello_rasa
+* hello_rasa
+  - utter_wellcome
+
