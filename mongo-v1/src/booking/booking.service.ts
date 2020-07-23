@@ -24,22 +24,29 @@ export class BookingService {
       throw new NotFoundException(
         `Can not found booking by provider id :"${provider_id}" `,
       );
-    }
-    else {
+    } else {
       return provider;
     }
   }
 
-  // async getProduct(id:number):Promise<Booking>{
-  //   const product_find = await this.bookingRepository.findOne({['product_id']:id});
-  //   console.log('Product',product_find);
-  //   if(!product_find){
-  //     throw new NotFoundException(`Not found this Product id: ${product_id}`);
-  //   }
-  //   else {
-  //     return product;
-  //   }
-  // }
+  async getProduct(id: number): Promise<Booking> {
+    // const product_find = await this.bookingRepository.findOne({['product_id']:id});
+    // console.log('Product',product_find);
+    // if(!product_find){
+    //   throw new NotFoundException(`Not found this Product id: ${product_id}`);
+    // }
+    // else {
+    //   return product;
+    // }
+    
+    let found = await this.bookingRepository
+      .createQueryBuilder('booking')
+      .select('booking')
+      .where('product.product_id = :id', { id: id })
+      .getRawOne();
+    console.log('Found', found);
+    return found;
+  }
 
   async getDentist(dentist_id: number): Promise<Booking> {
     const dentist = await this.bookingRepository.findOne({
@@ -47,10 +54,9 @@ export class BookingService {
     });
     if (!dentist) {
       throw new NotFoundException(
-        `Can not found booking by provider id :"${dentist_id}" `
+        `Can not found booking by provider id :"${dentist_id}" `,
       );
-    }
-    else{
+    } else {
       return dentist;
     }
   }

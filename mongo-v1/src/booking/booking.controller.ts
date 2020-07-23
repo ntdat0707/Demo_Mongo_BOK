@@ -20,10 +20,10 @@ export class BookingController {
     return this.bookingService.getProvider(id);
   }
 
-  // @Get('/product/:id')
-  // getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
-  //   return this.bookingService.getProduct(id);
-  // }
+  @Get('/product/:id')
+  getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
+    return this.bookingService.getProduct(id);
+  }
 
   @Get('/dentist/:id')
   getDentist(@Param('id',ParseIntPipe) id: number): Promise<Booking> {

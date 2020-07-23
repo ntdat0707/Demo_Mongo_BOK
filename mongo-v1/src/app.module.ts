@@ -11,6 +11,7 @@ import { ChatbotModule } from './chatbot/chatbot.module';
 import { ConservationModule } from './conservation/conservation.module';
 import { CustomerModule } from './customer/customer.module';
 import { NotificationModule } from './notification/notification.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { NotificationModule } from './notification/notification.module';
     ConservationModule,
     CustomerModule,
     NotificationModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

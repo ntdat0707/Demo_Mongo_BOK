@@ -1,4 +1,10 @@
-import { Entity, BaseEntity, Column, ObjectIdColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  ObjectIdColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Chatbot extends BaseEntity {
@@ -13,4 +19,11 @@ export class Chatbot extends BaseEntity {
 
   @Column()
   response: string;
+
+  @Column()
+  type: Language;
+}
+export enum Language {
+  en = 'EN',
+  vn = 'VN',
 }

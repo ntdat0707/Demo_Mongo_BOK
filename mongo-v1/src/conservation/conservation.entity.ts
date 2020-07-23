@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, ObjectIdColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, ObjectIdColumn, Column } from 'typeorm';
+import { CreateCustomerDTO } from 'src/customer/middleware/create-customer-dto';
 
 @Entity()
 export class Conservation extends BaseEntity {
@@ -10,4 +11,8 @@ export class Conservation extends BaseEntity {
 
   @CreateDateColumn({ type: 'timestamp' })
   timestamp = new Date();
+
+  @Column()
+  conversation:{content:string,user:CreateCustomerDTO};
+  
 }
