@@ -8,8 +8,9 @@ import { AuthDTO } from "./middleware/auth-dto";
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
     async signUp(authDTO: AuthDTO): Promise<string> {
-        const { username, password } = authDTO;
+        const { id,username, password } = authDTO;
         const user = new User();
+        user.id = id;
         user.username = username;
         user.salt = await bcrypt.genSalt();
         user.password = await this.hashPassword(password, user.salt);
