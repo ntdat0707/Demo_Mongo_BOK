@@ -26,21 +26,40 @@ class action_get_name(Action):
         return [SlotSet("name", name)]
 
 
-class action_check_email(Action):
-    def name(self) -> Text:
-        return action_check_email
+# class action_check_email(Action):
+#     def name(self) -> Text:
+#         return "action_check_email"
 
-    @staticmethod
-    def valid_email(email):
-        return bool(
-            re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
+#     @staticmethod
+#     def valid_email(email):
+#         return bool(
+#             re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        if self.valid(tracker.slost['email']):
-    
-        dispatcher.utter_template('') 
-        return None
+#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         if self.valid(tracker.slost['email']):
+
+#         dispatcher.utter_template('')
+#         return None
+
+# class acction_check_phone(Action):
+#     def name(self) -> text:
+#         return "action_check_phone"
+
+#     @staticmethod
+#     def valid_phone(phone):
+#         return bool(
+#             re.search(
+#                 r"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
+#                 phone))
+
+#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         if self.valid(tracker.slots['phone']):
+#             dispatcher.utter_template('')
+#         else:
+#             dispatcher.utter_template('')
+#         return None
 
 
 class InfoForm(FormAction):
