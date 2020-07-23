@@ -27,8 +27,10 @@ def is_json(myjson):
 def format_message(item):
     object_default = {"message": None, "state": None, "data": {}}
 
-    item['text'] = item['text'].replace('[', '{')
-    item['text'] = item['text'].replace(']', '}')
+    item['text'] = item['text'].replace('(', '{')
+    item['text'] = item['text'].replace(')', '}')
+    print(item['text'])
+
     if is_json(item['text']):
         data = json.loads(item['text'])
     else:
@@ -39,7 +41,12 @@ def format_message(item):
 
 
 def merge_message(current_value, item):
-    current_value['message'].append(item['message'])
+    if isinstance(item['message'], list):
+        print(item['message'])
+        current_value['message'] = current_value['message'] + item['message']
+    else:
+        current_value['message'].append(item['message'])
+
     current_value['state'] = current_value['state'] == None \
         and item['state'] or current_value['state']
     current_value['data'].update(item['data'])
