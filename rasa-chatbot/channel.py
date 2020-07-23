@@ -43,6 +43,7 @@ def merge_message(current_value, item):
     current_value['state'] = current_value['state'] == None \
         and item['state'] or current_value['state']
     current_value['data'].update(item['data'])
+
     return current_value
 
 
@@ -160,12 +161,16 @@ class MyRestInput(InputChannel):
                 except Exception:
                     logger.exception("An exception occured while handling "
                                      "user message '{}'.".format(text))
-                logger.info(collector)
+
                 collector_messages = list(
                     map(format_message, collector.messages))
                 collector_messages = reduce(merge_message, collector_messages,
-                                            INIT_VALUE_MESSAGE)
-                logger.info(collector_messages)
+                                            {
+                                                'message': [],
+                                                'state': None,
+                                                'data': {}
+                                            })
+
                 return response.json(collector_messages)
 
         return custom_webhook
