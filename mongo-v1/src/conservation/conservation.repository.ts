@@ -8,9 +8,10 @@ export class ConservationRepository extends Repository<Conservation> {
   async createConservation(
     conversationDTO: CreateConversationDTO,
   ): Promise<Conservation> {
-    const { conservation_id } = conversationDTO;
+    const { conservation_id,conversation } = conversationDTO;
     const conservation = new Conservation();
     conservation.conversation_id = conservation_id;
+    conservation.conversation = conversation;
     //conservation.timestamp = timestamp;
     try {
       await conservation.save();
