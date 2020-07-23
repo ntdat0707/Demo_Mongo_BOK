@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class AuthDTO {
     @IsOptional()
     @ApiProperty({type:String,description:'user id'})
-    id:string;
+    id:number;
 
     @IsString()
     @MinLength(2)
