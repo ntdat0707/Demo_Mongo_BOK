@@ -33,12 +33,12 @@ actions:
 responses:
   utter_question_name:
     - text: "(
-        \"message\": \"Hello, What's your name?\"
+        \"message\": \"How many i call you?\"
       )"
 
   utter_question_email:
     - text: "(
-        \"message\": \"what's your email address?\"
+        \"message\": \"Where can can we send the appointment confirmation? Your email address please?\"
       )"
 
   utter_input_email_again:
@@ -48,7 +48,7 @@ responses:
 
   utter_question_phone:
     - text: "(
-        \"message\": \"what's your telephone number?\"
+        \"message\": \"Great {name}! And your phone number?\"
       )" 
 
   utter_thank_you_update:
@@ -96,6 +96,58 @@ responses:
                   phone: {phone}"
       )'
 
+  utter_selected_location:
+    - text: '(
+        "message": "Those are the nearest branches that we found for you."
+        "state": "select_location"
+      )'
+
+  utter_select_service:
+    - text: '(
+        "messge": "Thanks you! What kind of service are you looking for... ?",
+        "state": "select_service"
+      )'
+
+  utter_select_service:
+    - text: '(
+        "message": "Which kind of <service> in specific?",
+      )'        
+  
+  utter_select_doctor:
+    - text: '(
+        "message": [
+          "Which doctor do you want?",
+          "Choose no refernce to get the maxium availiability"
+        ]
+      )'
+
+  utter_great:
+    - text: '(
+        "message": "Perfect"
+      )'
+    - text: '(
+        "message": "Great"
+      )'
+  
+  utter_thank_you_booking:
+    - text: "(
+        \"message\": [
+          \"Thank you. Please carefully check your booking information.\"
+          \"Don't worry, you can edit the booking info later on \\\"My appointment\\\" section.\"  
+        ]
+      )"
+
+  utter_thank_you_comfirm:
+    - text: '(
+        "message": [
+          "Thank you for your time {name}",
+          "Hope you have a nice and pleasant treatment at our place."
+          "Please check your email for the booking details."
+        ]
+      )'
+
+
+   
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

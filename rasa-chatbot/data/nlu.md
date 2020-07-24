@@ -13,6 +13,10 @@
 - see you around
 - see you later
 
+##intent: selected_city
+- selected city
+
+##intent: 
 ## intent:ask_name
 - [oanh](name)
 - my name is [oanh](name)
