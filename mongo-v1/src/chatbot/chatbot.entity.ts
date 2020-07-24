@@ -15,10 +15,11 @@ export class Chatbot extends BaseEntity {
   channel_id: string;
 
   @Column()
-  message: string;
+
+  message: object;
 
   @Column()
-  response: string;
+  response_Rasa: object;
 
   @Column()
   type: Language;
