@@ -17,7 +17,9 @@
 - [oanh](name)
 - [huyen nguyen](name)
 - my name is [oanh](name)
+- my name is [huyen nguyen](name)
 - name is [oanh](name)
+- name is [huyen nguyen](name)
 
 ## intent:ask_email
 - [longvox98@gmail.com](email)
