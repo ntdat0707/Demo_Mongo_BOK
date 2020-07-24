@@ -38,7 +38,7 @@ class action_check_email(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid(tracker.slost['email']):
-            
+    
         dispatcher.utter_template('') 
         return None
 
