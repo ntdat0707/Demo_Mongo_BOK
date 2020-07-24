@@ -21,6 +21,7 @@ export class ServiceproviderController {
   async getServiceProviders(): Promise<ServiceProvider[]> {
     return await this.ServiceProviderService.getServiceProviders();
   }
+  
   @Post()
   async createSP(
     @Body(ValidationPipe) serviceproviderDTO: CreateServiceProviderDTO,
