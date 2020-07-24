@@ -26,6 +26,23 @@ class action_get_name(Action):
         return [SlotSet("name", name)]
 
 
+class action_check_email(Action):
+    def name(self) -> Text:
+        return action_check_email
+
+    @staticmethod
+    def valid_email(email):
+        return bool(
+            re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        if self.valid(tracker.slost['email']):
+            
+        dispatcher.utter_template('') 
+        return None
+
+
 class InfoForm(FormAction):
     def name(self) -> Text:
         return "info_form"
