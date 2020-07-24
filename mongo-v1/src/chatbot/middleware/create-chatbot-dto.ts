@@ -1,18 +1,13 @@
-import { IsNotEmpty, IsOptional, IsIn } from "class-validator";
-import { Language } from "../chatbot.entity";
+import { IsNotEmpty, IsOptional, IsIn } from 'class-validator';
+import { Language } from '../chatbot.entity';
 
 export class CreateChatbotDTO {
-    @IsNotEmpty()
-    channel_id: string;
-  
-    @IsNotEmpty()
-    message: string;
-  
-    @IsOptional()
-    response: string;
+  @IsNotEmpty()
+  channel_id: string;
 
-    @IsNotEmpty()
-    @IsIn([Language.en,Language.vn])
-    type:Language;
-  }
-  
+  @IsNotEmpty()
+  message: { message: string[]; state: string; data: object };
+
+  @IsOptional()
+  type: Language;
+}
