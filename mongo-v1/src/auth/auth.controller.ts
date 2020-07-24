@@ -28,8 +28,8 @@ export class AuthController {
     }
 
     @Post('/test')
-    @UseGuards(JwtAuthGuard)  //error challenge cannot undefine when use AuthGuard()
-    test(@GetUser() user: Customer) {
+    @UseGuards(AuthGuard('jwt'))  //error challenge cannot undefine when use AuthGuard()
+    test(@GetUser() user: User) {
         console.log('Test User:', user);
     }
 }

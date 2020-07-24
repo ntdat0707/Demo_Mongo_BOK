@@ -2,10 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CustomerRepository } from './customer.repository';
 import { CreateCustomerDTO } from './middleware/create-customer-dto';
 import { Customer } from './customer.entity';
+import { User } from 'src/auth/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CustomerService {
-  constructor(private customerRepository: CustomerRepository) {}
+ 
+  constructor(
+    @InjectRepository(CustomerRepository)
+    private customerRepository: CustomerRepository) {}
 
   async createUser(customerDTO: CreateCustomerDTO): Promise<Customer> {
     return this.customerRepository.createUser(customerDTO);
@@ -15,7 +20,6 @@ export class CustomerService {
     return this.customerRepository.find();
   }
   async getUser(userID: number): Promise<Customer> {
-
     const user = await this.customerRepository.findOne({ user_id: userID });
     if (!user) {
       throw new NotFoundException(`Not found this User id: ${userID}`);
@@ -25,4 +29,9 @@ export class CustomerService {
   }
 
   async connectChatbot() {}
+
+  async getUserLoggedInfo(user: User):Promise<Customer> { 
+    const customer = await this.getUser(Number(user.id));
+    return customer;
+  }
 }

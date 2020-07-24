@@ -1,7 +1,6 @@
 import { User } from "./user.entity";
 import { Repository, EntityRepository } from "typeorm";
 import * as bcrypt from 'bcrypt';
-
 import { ConflictException, InternalServerErrorException } from "@nestjs/common";
 import { AuthDTO } from "./middleware/auth-dto";
 
@@ -15,7 +14,6 @@ export class UserRepository extends Repository<User> {
         user.salt = await bcrypt.genSalt();
         user.password = await this.hashPassword(password, user.salt);
 
-        console.log('User:',user);
         try {
             await user.save();
             return 'Signup Successfully';
