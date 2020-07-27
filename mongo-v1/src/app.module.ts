@@ -12,6 +12,7 @@ import { ConservationModule } from './conservation/conservation.module';
 import { CustomerModule } from './customer/customer.module';
 import { NotificationModule } from './notification/notification.module';
 import { AuthModule } from './auth/auth.module';
+import { GlobalCityModule } from './globalcity/globalcity.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from './auth/auth.module';
     CustomerModule,
     NotificationModule,
     AuthModule,
+    GlobalCityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

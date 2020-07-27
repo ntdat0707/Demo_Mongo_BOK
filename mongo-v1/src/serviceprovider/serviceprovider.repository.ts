@@ -1,4 +1,4 @@
-import { GlobalLocation } from './../global-location';
+
 import { ServiceProvider } from './serviceprovider.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
@@ -46,29 +46,25 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
   edit_products() {}
   edit_dentist() {}
 
-
-
   async updateLocation(provider_id: number, location: string) {}
 
-  getCity() {
-    let cities: GlobalLocation;
-    console.log('Cities: ', cities);
-    return cities;
-  }
-  
   async getAddresses(selectedCity: string): Promise<string[]> {
     let dentals = await this.getServiceProviders();
-    let address: string[];
+    let address: string[] = [];
     for (let dental of dentals) {
       if (dental.location['city'] == selectedCity) {
-        address = dental.location['addresses']['address'];
+        address =
+          address.length != 0
+            ? address.concat(dental.location['addresses'])
+            : dental.location['addresses'];
       }
-      return address;
     }
+    console.log('Address:', address);
+    return address;
   }
 
   async createProduct(productDTO: CreateProductDTO): Promise<string> {
-    const { product_id, product_kind,product_price_quote } = productDTO;
+    const { product_id, product_kind, product_price_quote } = productDTO;
     const product = new Product();
     product.product_id = product_id;
     product.product_kind = product_kind;

@@ -45,13 +45,8 @@ export class ServiceproviderController {
     return this.ServiceProviderService.updateSPLocation(provider_id, location);
   }
 
-  @Get('/cities')
-  async getCities (){
-    return this.ServiceProviderService.getCity();
-  }
-
-  @Post('/address')
-  async getAddresses(@Query('city')city:string){
+  @Get('/address')
+  async getAddresses(@Query('city')city:string):Promise<string[]>{
     return this.ServiceProviderService.getAddresses(city);
   }
 }
