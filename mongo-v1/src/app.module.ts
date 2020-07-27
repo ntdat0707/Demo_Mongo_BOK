@@ -12,6 +12,8 @@ import { ConservationModule } from './conservation/conservation.module';
 import { CustomerModule } from './customer/customer.module';
 import { NotificationModule } from './notification/notification.module';
 import { AuthModule } from './auth/auth.module';
+import { BotbookingModule } from './botbooking/botbooking.module';
+
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
     CustomerModule,
     NotificationModule,
     AuthModule,
+    BotbookingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
