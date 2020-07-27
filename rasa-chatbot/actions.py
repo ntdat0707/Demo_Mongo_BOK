@@ -21,9 +21,9 @@ class action_get_name(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         print(tracker.slots)
         print(tracker.latest_message['text'])
-        name = tracker.latest_message['text'].split(' ')[-1]
+        # name = tracker.latest_message['text'].split(' ')[-1]
 
-        return [SlotSet("name", name)]
+        return None
 
 
 class action_check_email(Action):
