@@ -40,8 +40,8 @@ def format_message(item):
 
 
 def merge_message(current_value, item):
+    print(item)
     if type(item['message']) is list:
-        print(item)
         current_value['message'] = current_value['message'] + item['message']
     else:
         current_value['message'].append(item['message'])

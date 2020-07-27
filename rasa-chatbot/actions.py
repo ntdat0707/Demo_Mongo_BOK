@@ -37,10 +37,10 @@ class action_check_email(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        if self.valid(tracker.slost['email']):
-            dispatcher.utter_template('utter_select_service')
+        if self.valid_email(tracker.slots['email']):
+            dispatcher.utter_template('utter_select_service', tracker)
         else:
-            dispatcher.utter_template('utter_input_email_again')
+            dispatcher.utter_template('utter_input_email_again', tracker)
         return None
 
 
@@ -57,8 +57,8 @@ class acction_check_phone(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        if self.valid(tracker.slots['phone']):
-            dispatcher.utter_template('utter_questions_email')
+        if self.valid_phone(tracker.slots['phone']):
+            dispatcher.utter_template('utter_questions_email', tracker)
         else:
-            dispatcher.utter_template('utter_input_phone_again')
+            dispatcher.utter_template('utter_input_phone_again', tracker)
         return None

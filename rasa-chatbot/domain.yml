@@ -12,6 +12,7 @@ intents:
   - selected_location
   - selected_near_location
   - confirmed
+
 forms:
   - info_form
 
@@ -39,8 +40,7 @@ actions:
 responses:
   utter_question_name:
     - text: "(
-        \"message\": \"How many i call you?\",
-        "state": "flow"
+        \"message\": \"How many i call you?\"
       )"
 
   utter_question_email:
@@ -110,7 +110,7 @@ responses:
 
   utter_select_service:
     - text: '(
-        "messge": "Thanks you! What kind of service are you looking for... ?",
+        "message": "Thanks you! What kind of service are you looking for... ?",
         "state": "select_service"
       )'
 

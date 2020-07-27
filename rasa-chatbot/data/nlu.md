@@ -15,9 +15,11 @@
 
 ## intent: selected_location
 - selected location
+- select city
 
 ## intent: selected_near_location
 - selected service near location
+- nearest branch
 
 ## intent:ask_name
 - [oanh](name)
@@ -31,6 +33,7 @@
 
 ## intent: new_booking_info
 - new booking info
+- new info
 
 ## intent: select_service
 - Implant
@@ -41,13 +44,16 @@
 
 ## intent: selected_doctor
 - selected doctor
+- choice doctor
 
 ## intent: selected_date_booking
-- selected date [booking](bookingu)
-
+- selected date booking
+- choice date booking
+- 
 ## intent: confirmed
 - confirmed 
-
+- submited
+    
 ## intent:ask_email
 - [longvox98@gmail.com](email)
 - [example@example.com](email)

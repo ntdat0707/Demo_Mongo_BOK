@@ -29,8 +29,9 @@
 
 ## ask_name
 > check_new_booking_info
-* ask_name{"name": "a name"}
+* ask_name
   - action_get_name
+  - utter_question_phone
 > check_ask_name
 
 ## ask_mail
@@ -42,6 +43,7 @@
 ## ask_phone
 > check_ask_name
 * ask_phone
+  - utter_bye_human
   - action_check_phone
 > check_ask_phone
 
