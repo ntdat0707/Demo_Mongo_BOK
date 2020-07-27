@@ -5,7 +5,13 @@ intents:
   - ask_email
   - ask_phone
   - hello_rasa
-
+  - select_service
+  - new_booking_info
+  - selected_doctor
+  - selected_date_booking
+  - selected_location
+  - selected_near_location
+  - confirmed
 forms:
   - info_form
 
@@ -33,7 +39,8 @@ actions:
 responses:
   utter_question_name:
     - text: "(
-        \"message\": \"How many i call you?\"
+        \"message\": \"How many i call you?\",
+        "state": "flow"
       )"
 
   utter_question_email:
@@ -86,8 +93,7 @@ responses:
 
   utter_bye_human:
     - text: '(
-        "message": "bye {name}"
-      )'
+        "message": "bye {name}")'
 
   utter_submit:
     - text: '(
@@ -98,8 +104,8 @@ responses:
 
   utter_selected_location:
     - text: '(
-        "message": "Those are the nearest branches that we found for you."
-        "state": "select_location"
+        "message": "Those are the nearest branches that we found for you.",
+        "state": "nearest_branches"
       )'
 
   utter_select_service:
@@ -108,7 +114,7 @@ responses:
         "state": "select_service"
       )'
 
-  utter_select_service:
+  utter_selected_service:
     - text: '(
         "message": "Which kind of <service> in specific?",
       )'        
@@ -129,6 +135,11 @@ responses:
         "message": "Great"
       )'
   
+  utter_question_choice_date:
+    - text: '(
+        "message": "Which date would you like to book?"
+      )'
+  
   utter_thank_you_booking:
     - text: "(
         \"message\": [
@@ -137,7 +148,7 @@ responses:
         ]
       )"
 
-  utter_thank_you_comfirm:
+  utter_thank_you_confirm:
     - text: '(
         "message": [
           "Thank you for your time {name}",

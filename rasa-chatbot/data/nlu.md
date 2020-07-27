@@ -5,7 +5,7 @@
 - good morning
 - good evening
 - hey there
-- that's greate
+- that's great
 
 ## intent:goodbye
 - bye
@@ -13,19 +13,40 @@
 - see you around
 - see you later
 
-##intent: selected_city
-- selected city
+## intent: selected_location
+- selected location
 
-##intent: 
+## intent: selected_near_location
+- selected service near location
+
 ## intent:ask_name
 - [oanh](name)
 - my name is [oanh](name)
 - name is [oanh](name)
 
-## intent:hi_rasa
+## intent:hello_rasa
 - hello rasa
-- hi rasae
+- hi rasa
 - hey rasa
+
+## intent: new_booking_info
+- new booking info
+
+## intent: select_service
+- Implant
+- Whitening
+- checks-up
+- Braces
+- Fillings
+
+## intent: selected_doctor
+- selected doctor
+
+## intent: selected_date_booking
+- selected date [booking](bookingu)
+
+## intent: confirmed
+- confirmed 
 
 ## intent:ask_email
 - [longvox98@gmail.com](email)
@@ -45,6 +66,5 @@
 - /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
 
 ## lookup:name
-
 data/_lookup/name.txt
 

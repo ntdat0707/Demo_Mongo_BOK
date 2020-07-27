@@ -26,56 +26,27 @@ class action_get_name(Action):
         return [SlotSet("name", name)]
 
 
-# class action_check_email(Action):
-#     def name(self) -> Text:
-#         return "action_check_email"
-
-#     @staticmethod
-#     def valid_email(email):
-#         return bool(
-#             re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
-
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#         if self.valid(tracker.slost['email']):
-
-#         dispatcher.utter_template('')
-#         return None
-
-# class acction_check_phone(Action):
-#     def name(self) -> text:
-#         return "action_check_phone"
-
-#     @staticmethod
-#     def valid_phone(phone):
-#         return bool(
-#             re.search(
-#                 r"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
-#                 phone))
-
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#         if self.valid(tracker.slots['phone']):
-#             dispatcher.utter_template('')
-#         else:
-#             dispatcher.utter_template('')
-#         return None
-
-
-class InfoForm(FormAction):
+class action_check_email(Action):
     def name(self) -> Text:
-        return "info_form"
-
-    @staticmethod
-    def required_slots(tracker: Tracker) -> List[Text]:
-        """A list of required slots that the form has to fill"""
-
-        return ["email", "phone"]
+        return "action_check_email"
 
     @staticmethod
     def valid_email(email):
         return bool(
             re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        if self.valid(tracker.slost['email']):
+            dispatcher.utter_template('utter_select_service')
+        else:
+            dispatcher.utter_template('utter_input_email_again')
+        return None
+
+
+class acction_check_phone(Action):
+    def name(self) -> Text:
+        return "action_check_phone"
 
     @staticmethod
     def valid_phone(phone):
@@ -84,57 +55,10 @@ class InfoForm(FormAction):
                 r"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
                 phone))
 
-    def validate(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-                 domain: Dict[Text, Any]) -> List[Dict]:
-        """Validate extracted requested slot
-            else reject the execution of the form action
-        """
-        # extract other slots that were not requested
-        # but set by corresponding entity
-        slot_values = get_dict_certain_keys(tracker.slots,
-                                            self.required_slots(tracker))
-
-        # extract requested slot
-        slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
-        if slot_to_fill:
-            slot_values.update(
-                self.extract_requested_slot(dispatcher, tracker, domain))
-            if not slot_values:
-                # reject form action execution
-                # if some slot was requested but nothing was extracted
-                # it will allow other policies to predict another action
-                raise ActionExecutionRejection(
-                    self.name(), "Failed to validate slot {0} "
-                    "with action {1}"
-                    "".format(slot_to_fill, self.name()))
-
-        is_valid = True
-        for slot, value in slot_values.items():
-            if slot == 'email':
-                if not self.valid_email(value.lower()):
-                    dispatcher.utter_template('utter_input_email_again',
-                                              tracker)
-                    is_valid = False
-                    break
-
-            elif slot == 'phone':
-                if not self.valid_phone(value.lower()):
-                    dispatcher.utter_template('utter_input_phone_again',
-                                              tracker)
-                    is_valid = False
-                    break
-
-        if is_valid:
-            dispatcher.utter_template('utter_submit', tracker)
-
-        return []
-
-    async def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-                     domain: Dict[Text, Any]) -> List[Dict]:
-        """Define what the form has to do
-            after all required slots are filled"""
-        # print(tracker.current_state())
-        # utter submit template
-        # dispatcher.utter_template('utter_submit', tracker)
-        print(tracker.slots)
-        return []
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        if self.valid(tracker.slots['phone']):
+            dispatcher.utter_template('utter_questions_email')
+        else:
+            dispatcher.utter_template('utter_input_phone_again')
+        return None
