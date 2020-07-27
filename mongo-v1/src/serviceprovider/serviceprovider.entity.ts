@@ -18,7 +18,7 @@ export class ServiceProvider extends BaseEntity {
   provider_name: string;
 
   @Column()
-  location: string;
+  location: object;
 
   @Column()
   products: object;

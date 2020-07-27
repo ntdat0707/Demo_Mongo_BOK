@@ -1,3 +1,4 @@
+import { GlobalLocation } from './../global-location';
 import { ServiceProvider } from './serviceprovider.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
@@ -38,23 +39,40 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
       await provider.save();
       return provider;
     } catch (error) {
-      throw new InternalServerErrorException("Can not create this provider");
+      throw new InternalServerErrorException('Can not create this provider');
     }
   }
 
   edit_products() {}
   edit_dentist() {}
- 
-  async updateLocation(provider_id:number,location:string) {
 
+
+
+  async updateLocation(provider_id: number, location: string) {}
+
+  getCity() {
+    let cities: GlobalLocation;
+    console.log('Cities: ', cities);
+    return cities;
+  }
+  
+  async getAddresses(selectedCity: string): Promise<string[]> {
+    let dentals = await this.getServiceProviders();
+    let address: string[];
+    for (let dental of dentals) {
+      if (dental.location['city'] == selectedCity) {
+        address = dental.location['addresses']['address'];
+      }
+      return address;
+    }
   }
 
   async createProduct(productDTO: CreateProductDTO): Promise<string> {
-    const { product_id, product_name, product_price } = productDTO;
+    const { product_id, product_kind,product_price_quote } = productDTO;
     const product = new Product();
     product.product_id = product_id;
-    product.product_name = product_name;
-    product.product_price = product_price;
+    product.product_kind = product_kind;
+    product.product_price_quote = product_price_quote;
     await product.save();
     return await 'New product created';
   }
@@ -75,4 +93,7 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
     return await 'New dentist created';
   }
 
+  async getServiceProviders(): Promise<ServiceProvider[]> {
+    return this.find();
+  }
 }

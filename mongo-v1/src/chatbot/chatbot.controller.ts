@@ -1,7 +1,4 @@
-import {
-  Controller,
-  Post,
-} from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 
 @Controller('chatbot')
 export class ChatbotController {
@@ -10,17 +7,22 @@ export class ChatbotController {
   //Demo connect - get request --- response
   @Post()
   async getReply() {
-    const axios = require('axios').create({baseURL:'http://192.168.1.101:5005'});
+    const token_access =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QgMiIsImlhdCI6MTU5NTgxODY3MiwiZXhwIjoxNTk1ODIyMjcyfQ.YptTb1FYHYfPOu5pX7mm4VNCabiBjWAePxEoykz1NEc';
+    //get token  -- return user details
+    const axios = require('axios').create({
+      baseURL: 'http://localhost:3000',
+      headers: {
+        Authorization: `Bearer ${token_access}`,
+      },
+    });
     axios
-      .post('webhooks/restnew/webhook', {
-          message: 'bye'
-      })
+      .post('/customer/logged')
       .then(response => {
         console.log(response.data);
       })
       .catch(error => {
         console.log(error);
       });
-
   }
 }

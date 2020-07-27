@@ -24,9 +24,9 @@ export class ServiceproviderController {
   
   @Post()
   async createSP(
-    @Body(ValidationPipe) serviceproviderDTO: CreateServiceProviderDTO,
+    @Body(ValidationPipe) dentalDTO: CreateServiceProviderDTO,
   ): Promise<ServiceProvider> {
-    return this.ServiceProviderService.createSP(serviceproviderDTO);
+    return this.ServiceProviderService.createSP(dentalDTO);
   }
 
   @Patch('/name')
@@ -40,8 +40,18 @@ export class ServiceproviderController {
   @Patch('/location')
   async updateSPLocation(
     @Query('provider_id', ParseIntPipe) provider_id: number,
-    @Query('location') location: string,
+    @Body('location') location: object,
   ): Promise<ServiceProvider> {
     return this.ServiceProviderService.updateSPLocation(provider_id, location);
+  }
+
+  @Get('/cities')
+  async getCities (){
+    return this.ServiceProviderService.getCity();
+  }
+
+  @Post('/address')
+  async getAddresses(@Query('city')city:string){
+    return this.ServiceProviderService.getAddresses(city);
   }
 }

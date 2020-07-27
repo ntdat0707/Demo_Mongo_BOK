@@ -8,8 +8,8 @@ export class CreateProductDTO {
     product_kind:string;
 
     @IsNotEmpty()
-    product_name:string;
+    product_price_quote:[{name:string,price:number,quantum:string}];
 
-    @IsNotEmpty()
-    product_price:number;
+    // @IsNotEmpty()
+    // product_price:number;
 }

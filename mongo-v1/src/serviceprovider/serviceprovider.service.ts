@@ -34,7 +34,7 @@ export class ServiceproviderService {
 
   async updateSPLocation(
     provider_id: number,
-    location: string,
+    location: object,
   ): Promise<ServiceProvider> {
     const provider = await this.serviceproviderRepositorys.findOne({
       provider_id,
@@ -52,5 +52,13 @@ export class ServiceproviderService {
 
   async getServiceProviders():Promise<ServiceProvider[]>{
     return this.serviceproviderRepositorys.find();
+  }
+
+  async getCity(){
+    return this.serviceproviderRepositorys.getCity();
+  }
+
+  async getAddresses(city:string):Promise<string[]>{
+    return this.serviceproviderRepositorys.getAddresses(city);
   }
 }

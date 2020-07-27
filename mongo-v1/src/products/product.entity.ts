@@ -12,10 +12,13 @@ export class Product extends BaseEntity {
     product_kind:string;
 
     @Column()
-    product_name:string;
+    product_price_quote:object[];
 
-    @Column()
-    product_price:number;
+    // @Column()
+    // product_name:string;
+
+    // @Column()
+    // product_price:number;
     
     // @ManyToOne(type => User, user => user.tasks, { eager: false })
     // user: User;

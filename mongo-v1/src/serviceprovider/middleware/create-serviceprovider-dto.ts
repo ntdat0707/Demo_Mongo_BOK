@@ -11,7 +11,7 @@ export class CreateServiceProviderDTO {
   provider_name: string;
 
   @IsOptional()
-  location: string;
+  location: {city:string,addresses:{address:string}[]};
 
   @ValidateNested()
   @Type(() => CreateProductDTO)
