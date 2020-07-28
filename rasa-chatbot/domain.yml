@@ -107,7 +107,7 @@ responses:
 
   utter_state_follow_information:
     - text: '(
-        "state": "follow_infomation"
+        "state": "follow_information"
       )'
 
   utter_question_select_location:
