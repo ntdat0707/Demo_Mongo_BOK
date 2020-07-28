@@ -1,35 +1,27 @@
 import { BotBooking } from './botbooking.entity';
 import { EntityRepository, Repository } from 'typeorm';
-
-import { RasaDTO } from 'src/rasa/middleware/rasa-dto';
 import { Rasa } from 'src/rasa/rasa.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
-import { response } from 'express';
 
 @EntityRepository(BotBooking)
 export class BotBookingRepository extends Repository<BotBooking> {
-  async helloToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
-    let response_FE = new BotBooking();
-
+  async responseRasa(requestFE: MessageFEDTO): Promise<Rasa> {
     let mess = await this.setStateToFE(requestFE);
-    let response_Rasa = await this.sendReplyToRasa(mess);
-    console.log('response_Rasa', await this.sendReplyToRasa(mess));
-
-    response_FE.reply_fe.state = response_Rasa.message_rasa.state;
-
-    //return await this.sendReplyToRasa(mess);
-    return response_FE;
+    let rasa = new Rasa();
+    rasa.message_rasa = await this.sendReplyToRasa(mess);
+    console.log("Rasa",rasa.message_rasa);
+    return rasa;
   }
 
   setStateToFE(requestFE: MessageFEDTO): string {
-    const { message_fe } = requestFE;
+    const { message_fe } = requestFE; 
     let message_Rasa = '';
-    switch (message_fe.state) {
+    switch (requestFE.message_fe.state) {
       case 'start':
         message_Rasa = 'hello rasa';
         break;
 
-      case 'welcome_rasa':
+      case 'follow_information':
         message_Rasa = message_fe.data.message;
         break;
 
@@ -63,6 +55,4 @@ export class BotBookingRepository extends Repository<BotBooking> {
       });
   }
 
-  async setDataToFE(response_rasa: RasaDTO): Promise<any> {
-  }
 }

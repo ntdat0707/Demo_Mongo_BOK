@@ -1,14 +1,15 @@
-import { Entity, BaseEntity, Column, ObjectIdColumn } from "typeorm";
+import { Entity, BaseEntity, Column, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class BotBooking extends BaseEntity {
-    @ObjectIdColumn()
-    _id:string;
-    
-    @Column()
-    message_fe: { state: string, data: {message:string,data:string} };
+  @ObjectIdColumn()
+  _id: string;
 
-    @Column()
-    reply_fe: { state: string, data: object };
+  @Column()
+  //message_fe:object;
+  message_fe: { state: string; data: { message: string; data: any } };
 
+  @Column()
+  //reply_fe: object;
+  reply_fe: { state: string; data: any };
 }

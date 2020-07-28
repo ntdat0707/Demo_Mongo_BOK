@@ -11,7 +11,7 @@ export class BotbookingController {
   @Post()
   async sendReplyToFE(
     @Body(ValidationPipe) requestFE: MessageFEDTO,
-  ): Promise<any> {
+  ): Promise<BotBooking> {
     return this.botService.sendReplyToFE(requestFE);
   }
 }

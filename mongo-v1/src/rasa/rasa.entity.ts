@@ -6,6 +6,6 @@ export class Rasa extends BaseEntity {
     _id:number;
 
     @Column()
-    message_rasa: { message: string[]; state: string; data: string[] };
-
+   // message_rasa: { message: string[]; state: string; data: any };
+    message_rasa: object;
 }

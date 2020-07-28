@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports:[TypeOrmModule.forFeature([GlobalCityRepository])],
   providers: [GlobalCityService],
-  controllers: [GlobalCityController]
+  controllers: [GlobalCityController],
+  exports:[GlobalCityService]
 })
 export class GlobalCityModule {}

@@ -22,7 +22,7 @@ export class ServiceproviderController {
   async getServiceProviders(): Promise<ServiceProvider[]> {
     return await this.ServiceProviderService.getServiceProviders();
   }
-  
+
   @Post()
   @ApiCreatedResponse({ description: 'Create new Service Provider' })
   async createSP(
@@ -48,7 +48,7 @@ export class ServiceproviderController {
   }
 
   @Get('/address')
-  async getAddresses(@Query('city')city:string):Promise<string[]>{
+  async getAddresses(@Query('city') city: string): Promise<string[]> {
     return this.ServiceProviderService.getAddresses(city);
   }
 }
