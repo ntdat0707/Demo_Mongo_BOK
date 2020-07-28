@@ -1,4 +1,4 @@
-## intent:greet
+## intent: MES_greet
 - hey
 - hello
 - hi
@@ -7,70 +7,70 @@
 - hey there
 - that's great
 
-## intent:goodbye
+## intent: MES_goodbye
 - bye
 - goodbye
 - see you around
 - see you later
 
-## intent: selected_location
-- selected location
-- select city
+## intent: ASK_name
+- [oanh]{"entity":"name", "value":"LK_name"}
+- my name is [oanh]{"entity":"name", "value":"LK_name"}
+- name is [oanh]{"entity":"name", "value":"LK_name")
 
-## intent: selected_near_location
-- selected service near location
-- nearest branch
+## intent: ASK_email
+- [longvox98@gmail.com]{"entity":"email", "value": "RG_email"}
+- [example@example.com]{"entity":"email", "value": "RG_email"}
 
-## intent:ask_name
-- [oanh]{"entity":"name", "value":"name"}
-- my name is [oanh]{"entity":"name", "value":"name"}
-- name is [oanh]{"entity":"name", "value":"name")
+## intent: ASK_phone_number
+- [0349305375](phone)
+- [0987654311]{"entity":"phone", "value":"RG_phone_number"}
+- [0123456781]{"entity":"phone", "value":"RG_phone_number"}
 
-## intent:hello_rasa
+## intent: HM_message_hello_rasa
 - hello rasa
 - hi rasa
 - hey rasa
+- chatbot wellcome
 
-## intent: new_booking_info
+## intent: HM_message_new_booking
 - new booking info
 - new info
 
-## intent: select_service
+## intent: HM_message_confirmed
+- confirmed 
+- submited
+
+## intent: HM_select_location
+- selected location
+- select city
+
+## intent: HM_select_nearest_branch
+- selected service near location
+- nearest branch
+
+## intent: HM_select_service
 - Implant
 - Whitening
 - checks-up
 - Braces
 - Fillings
+- select_service
 
-## intent: selected_doctor
-- selected doctor
+## intent: HM_select_doctor
+- select doctor
 - choice doctor
 
-## intent: selected_date_booking
-- selected date booking
+## intent: HM_select_date_booking
+- select date booking
 - choice date booking
-- 
-## intent: confirmed
-- confirmed 
-- submited
-    
-## intent:ask_email
-- [longvox98@gmail.com]{"entity":"email", "value": "email"}
-- [example@example.com]{"entity":"email", "value": "email"}
 
-## intent: ask_phone
-- [0987654311]{"entity":"phone", "value":"phone_number"}
-- [0123456781]{"entity":"phone", "value":"phone_number"}
-
-## regex:phone_number
+## regex: RG_phone_number
 - ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
 
-## regex:email
+## regex: RG_email
 - [a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$
 
-## regex:name
-- /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-
-## lookup:name
+## lookup: LK_name
 data/_lookup/name.txt
 
