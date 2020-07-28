@@ -14,6 +14,8 @@ import { NotificationModule } from './notification/notification.module';
 import { AuthModule } from './auth/auth.module';
 import { GlobalCityModule } from './globalcity/globalcity.module';
 import { BotbookingModule } from './botbooking/botbooking.module';
+import { RasaModule } from './rasa/rasa.module';
+
 
 
 
@@ -31,6 +33,7 @@ import { BotbookingModule } from './botbooking/botbooking.module';
     AuthModule,
     GlobalCityModule,
     BotbookingModule,
+    RasaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

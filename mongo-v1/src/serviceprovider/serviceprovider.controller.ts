@@ -12,8 +12,9 @@ import {
 import { ServiceproviderService } from './serviceprovider.service';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
 import { ServiceProvider } from './serviceprovider.entity';
+import { ApiCreatedResponse } from '@nestjs/swagger';
 
-@Controller('sp')
+@Controller('serviceprovider')
 export class ServiceproviderController {
   constructor(private ServiceProviderService: ServiceproviderService) {}
 
@@ -23,6 +24,7 @@ export class ServiceproviderController {
   }
   
   @Post()
+  @ApiCreatedResponse({ description: 'Create new Service Provider' })
   async createSP(
     @Body(ValidationPipe) dentalDTO: CreateServiceProviderDTO,
   ): Promise<ServiceProvider> {
