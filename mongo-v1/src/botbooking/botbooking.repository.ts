@@ -9,12 +9,12 @@ export class BotBookingRepository extends Repository<BotBooking> {
     let mess = await this.setStateToFE(requestFE);
     let rasa = new Rasa();
     rasa.message_rasa = await this.sendReplyToRasa(mess);
-    console.log("Rasa",rasa.message_rasa);
+    console.log('Rasa', rasa.message_rasa);
     return rasa;
   }
 
   setStateToFE(requestFE: MessageFEDTO): string {
-    const { message_fe } = requestFE; 
+    const { message_fe } = requestFE;
     let message_Rasa = '';
     switch (requestFE.message_fe.state) {
       case 'start':
@@ -22,19 +22,47 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'follow_information':
-        message_Rasa = message_fe.data.message;
+        message_Rasa = message_fe.message;
         break;
 
       case 'select_location':
         message_Rasa = 'selected_location';
         break;
 
-      case 'nearest_branches':
+      case 'nearest_branch':
         message_Rasa = 'selected_nearest_branches';
         break;
 
       case 'select_service':
         message_Rasa = 'select_service';
+        break;
+
+      case 'question_name':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'question_phone_number':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'question_email':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'select_doctor':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'date_booking':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'thankyou_booking':
+        message_Rasa = message_fe.message;
+        break;
+
+      case 'thankyou_confirm':
+        message_Rasa = message_fe.message;
         break;
     }
     return message_Rasa;
@@ -54,5 +82,4 @@ export class BotBookingRepository extends Repository<BotBooking> {
         console.log(error);
       });
   }
-
 }

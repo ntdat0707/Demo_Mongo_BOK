@@ -57,4 +57,5 @@ export class ServiceproviderService {
   async getAddresses(city:string):Promise<string[]>{
     return this.serviceproviderRepositorys.getAddresses(city);
   }
+
 }

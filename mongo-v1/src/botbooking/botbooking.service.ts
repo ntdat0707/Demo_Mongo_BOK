@@ -6,6 +6,7 @@ import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 import { GlobalCityService } from 'src/globalcity/globalcity.service';
 import { ServiceproviderService } from 'src/serviceprovider/serviceprovider.service';
 import { Rasa } from 'src/rasa/rasa.entity';
+import { DentistService } from 'src/dentist/dentist.service';
 
 @Injectable()
 export class BotBookingService {
@@ -13,6 +14,7 @@ export class BotBookingService {
     private botRepository: BotBookingRepository,
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
+    private dentistService: DentistService,
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
@@ -22,52 +24,88 @@ export class BotBookingService {
     let botbooking = new BotBooking();
     botbooking.reply_fe = {
       state: rasa.message_rasa['state'],
-      data: await this.setDataToFE(requestFE),
+      data: await this.setDataToFE(requestFE, rasa),
     };
+
+    if (botbooking.reply_fe['state'] == 'follow_infomation') {
+      if (botbooking.reply_fe['data'].length == 0) {
+        botbooking.reply_fe['data'] = rasa.message_rasa;
+      } else {
+        botbooking.reply_fe['message_rasa'] = rasa.message_rasa;
+      }
+    }
     console.log('Bot Booking state', botbooking.reply_fe);
     return botbooking;
   }
 
-  async setDataToFE(requestFE: MessageFEDTO): Promise<any> {
-   let data = [];
+  async setDataToFE(requestFE: MessageFEDTO, rasa: Rasa): Promise<any> {
+    let data = [];
+
     switch (requestFE.message_fe.state) {
-      case 'start': data = ((requestFE.message_fe.data['message'])!="")?await this.getUserLoggedInfo(requestFE.message_fe.data['message']):[];
+      case 'start':
+        var user_infor =
+          requestFE.message_fe.message == null
+            ? []
+            : await this.getUserLoggedInfo(requestFE.message_fe.message);
         break;
+
       case 'follow_information':
-        data = await this.stateWelcome();
+        data = await this.stateWelcome(requestFE.message_fe.message);
         break;
+
       case 'select_location':
-        data =  await this.stateSelectLocation(
+        data = await this.stateSelectLocation(
           requestFE.message_fe.data['message'],
         );
         break;
+      
+      case 'nearest_branch':
+        return rasa.message_rasa;
+
+      case 'select_service':
+       return data = ["Whitening","Checks-up","Braces","Implant","Fillings"];  
+
+      case 'question_name':
+        return rasa.message_rasa;
+
+      case 'question_phone_number':
+        return rasa.message_rasa;
+
+      case 'question_email':
+        return rasa.message_rasa;
+      
+      case 'select_doctor':
+        return await this.getDentists();
     }
-    return data;
+    return !user_infor ? data : user_infor;
   }
 
-  async getUserLoggedInfo(token:string):Promise<any>{
+  async getUserLoggedInfo(token: string): Promise<any> {
     const token_access = token;
-    //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QgMiIsImlhdCI6MTU5NTgxODY3MiwiZXhwIjoxNTk1ODIyMjcyfQ.YptTb1FYHYfPOu5pX7mm4VNCabiBjWAePxEoykz1NEc';
-  //get token  -- return user details
-  const axios = require('axios').create({
-    baseURL: 'http://localhost:3000',
-    headers: {
-      Authorization: `Bearer ${token_access}`,
-    },
-  });
-  axios
-    .post('/customer/logged')
-    .then(response => {
-      console.log("User Logged",response.data);
-      return response.data;
-    })
-    .catch(error => {
-      console.log(error);
+    const axios = require('axios').create({
+      baseURL: 'http://localhost:3000',
+      headers: {
+        Authorization: `Bearer ${token_access}`,
+      },
     });
+    return await axios
+      .post('/customer/logged')
+      .then(response => {
+        console.log('User Logged', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  async stateWelcome(): Promise<object[]> {
-    return await this.globalcityService.getCities();
+  async stateWelcome(message: string): Promise<any> {
+    let data = [];
+    if (message == "That's great") {
+      return this.globalcityService.getCities();
+    } else {
+      return data;
+    }
   }
 
   async stateSelectLocation(city: string): Promise<string[]> {
@@ -79,4 +117,7 @@ export class BotBookingService {
     return await this.serviceproviderService.getAddresses(city);
   }
 
+  async getDentists():Promise<any>{
+    return this.dentistService.getDentists();
+  }
 }

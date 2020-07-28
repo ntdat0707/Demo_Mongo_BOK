@@ -7,7 +7,7 @@ export class BotBooking extends BaseEntity {
 
   @Column()
   //message_fe:object;
-  message_fe: { state: string; data: { message: string; data: any } };
+  message_fe: { state: string; message: string; data: any  };
 
   @Column()
   //reply_fe: object;
