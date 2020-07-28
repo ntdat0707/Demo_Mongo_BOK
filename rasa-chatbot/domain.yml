@@ -35,199 +35,162 @@ actions:
   - action_get_name
   - action_check_email
   - action_check_phone
-  - UT_input_email_again
-  - UT_input_phone_number_again
-  - UT_response_great
-  - UT_response_submit
-  - UT_response_welcome
-  - UT_response_hi_human
-  - UT_response_bye_human
-  - UT_response_thankyou_booking
-  - UT_response_thankyou_confirm
-  - UT_question_name
-  - UT_question_email
-  - UT_question_date_booking
-  - UT_question_phone_number
-  - UT_question_nearest_branch
-  - UT_question_follow_information
-  - UT_question_select_doctor
-  - UT_question_select_service
-  - UT_question_select_location
-  - UT_question_select_specific_services
-  - UT_state_question_name
-  - UT_state_question_email
-  - UT_state_question_email_again
-  - UT_state_question_phone_number
-  - UT_state_question_phone_number_again
-  - UT_state_select_date
-  - UT_state_select_doctor
-  - UT_state_select_service
-  - UT_state_select_location
-  - UT_state_select_specific_service
-  - UT_state_bye_human
-  - UT_state_hello_human
-  - UT_state_date_booking
-  - UT_state_nearest_branch
-  - UT_state_chatbot_welcome 
-  - UT_state_thankyou_confirm
-  - UT_state_thankyou_booking
-  - UT_state_follow_information
 
 responses:
-  UT_question_name:
+  utter_question_name:
     - text: "(
         \"message\": \"How may i call you?\"
       )"
 
-  UT_state_question_name:
+  utter_state_question_name:
     - text: '(
         "state": "question_name"
       )'
 
-  UT_question_email:
+  utter_question_email:
     - text: "(
         \"message\": \"Where can can we send the appointment confirmation? Your email address please?\"
       )"
 
-  UT_state_question_email:
+  utter_state_question_email:
     - text: '(
         "state": "question_email"
       )'
 
-  UT_question_phone_number:
+  utter_question_phone_number:
     - text: "(
         \"message\": \"Great {name}! And your phone number?\"
       )"
   
-  UT_state_question_phone_number:
+  utter_state_question_phone_number:
     - text: '(
         "state": "question_phone_number"
       )'
 
-  UT_input_email_again:
+  utter_input_email_again:
     - text: '(
         "message": "please enter your email address in a valid format!"
       )'
 
-  UT_state_question_email_again:
+  utter_state_question_email_again:
     - text: '(
         "state": "question_email_again"
       )'
 
-  UT_input_phone_number_again:
+  utter_input_phone_number_again:
     - text: '(
         "message": "please enter your phone in a valid format"
       )'
   
-  UT_state_question_phone_number_again:
+  utter_state_question_phone_number_again:
     - text: '(
         "state": "question_phone_number_again" 
       )'
 
-  UT_response_welcome:
+  utter_response_welcome:
     - text: '(
         "message": [
           "Wellcome to Elite Dental",
-          "We provide diagnostics, dental care, general, and specialized treatment...",
+          "We provide diagnostics, dental care, general, and specialized treatment..."
         ]
       )'
 
-  UT_state_chatbot_welcome: 
+  utter_state_chatbot_welcome: 
     - text: '(
         "state": "chatbot_welcome"
       )'
   
-  UT_question_follow_information:
+  utter_question_follow_information:
     - text: '(
         "message": "do you want to use the following information to make an appointment?"
       )' 
 
-  UT_state_follow_information:
+  utter_state_follow_information:
     - text: '(
-        "state"": "follow_infomation"
+        "state": "follow_infomation"
       )'
 
-  UT_question_select_location:
+  utter_question_select_location:
     - text: '(
-        "message": "Select your location",
+        "message": "Select your location"
       )'
 
-  UT_state_select_location:
+  utter_state_select_location:
     - text: '(
         "state": "select_location"
       )'
 
-  UT_response_hi_human:
+  utter_response_hi_human:
     - text: '(
         "message": "hello {name}",
         "data": ("name": "{name}")
       )'
 
-  UT_state_hello_human:
+  utter_state_hello_human:
     - text: '(
           "state": "hello_human"
       )'        
 
-  UT_response_bye_human:
+  utter_response_bye_human:
     - text: '(
         "message": "bye {name}"
       )'
 
-  UT_state_bye_human:
+  utter_state_bye_human:
     - text: '(
         "state": "bye human"
       )'
 
-  UT_response_submit:
+  utter_response_submit:
     - text: '(
         "message": "All done! \n
                   email: {email} \n
                   phone: {phone}"
       )'
 
-  UT_question_nearest_branch:
+  utter_question_nearest_branch:
     - text: '(
-        "message": "Those are the nearest branches that we found for you.",
+        "message": "Those are the nearest branches that we found for you."
       )'
-  UT_state_nearest_branch:
+  utter_state_nearest_branch:
     - text: '(
         "state": "nearest_branch"
       )'
 
-  UT_question_select_service:
+  utter_question_select_service:
     - text: '(
         "message": "Thanks you! What kind of service are you looking for... ?",
         "state": "select_service"
       )'
 
-  UT_state_select_service:
+  utter_state_select_service:
     - text: '(
         "state": "select_service"
       )'
 
-  UT_question_select_specific_services:
+  utter_question_select_specific_services:
     - text: '(
-        "message": "Which kind of <service> in specific?",
+        "message": "Which kind of <service> in specific?"
       )'
   
-  UT_state_select_specific_service:
+  utter_state_select_specific_service:
     - text: '(
         "state": "select_specific_service"
       )'
   
-  UT_question_select_doctor:
+  utter_question_select_doctor:
     - text: '(
         "message": [
           "Which doctor do you want?",
           "Choose no refernce to get the maxium availiability"
         ]
       )'
-  UT_state_select_doctor:
+  utter_state_select_doctor:
     - text: '(
         "state": "select_doctor"
       )'
 
-  UT_response_great:
+  utter_response_great:
     - text: '(
         "message": "Perfect"
       )'
@@ -235,38 +198,38 @@ responses:
         "message": "Great"
       )'
   
-  UT_question_date_booking:
+  utter_question_date_booking:
     - text: '(
         "message": "Which date would you like to book?"
       )'
   
-  UT_state_date_booking:
+  utter_state_date_booking:
     - text: '(
         "state": "date_booking"
       )'
   
-  UT_response_thankyou_booking:
+  utter_response_thankyou_booking:
     - text: "(
         \"message\": [
-          \"Thank you. Please carefully check your booking information.\"
+          \"Thank you. Please carefully check your booking information.\",
           \"Don't worry, you can edit the booking info later on \\\"My appointment\\\" section.\"  
         ]
       )"
-  UT_stae_thankyou_booking:
+  utter_state_thankyou_booking:
     - text: '(
         "state": "thankyou_boonking"
       )'    
 
-  UT_response_thankyou_confirm:
+  utter_response_thankyou_confirm:
     - text: '(
         "message": [
           "Thank you for your time {name}",
-          "Hope you have a nice and pleasant treatment at our place."
+          "Hope you have a nice and pleasant treatment at our place.",
           "Please check your email for the booking details."
         ]
       )'
 
-  UT_state_thankyou_confirm:
+  utter_state_thankyou_confirm:
     - text: '(
         "state": "thankyou_confirm"
       )'

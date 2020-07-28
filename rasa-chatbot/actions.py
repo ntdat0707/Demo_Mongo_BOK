@@ -38,11 +38,11 @@ class action_check_email(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_email(tracker.slots['email']):
-            dispatcher.utter_template('UT_question_select_service', tracker)
-            dispatcher.utter_template('UT_state_select_service', tracker)
+            dispatcher.utter_template('utter_question_select_service', tracker)
+            dispatcher.utter_template('utter_state_select_service', tracker)
         else:
-            dispatcher.utter_template('UT_input_email_again', tracker)
-            dispatcher.utter_template('UT_state_question_email_again', tracker)
+            dispatcher.utter_template('utter_input_email_again', tracker)
+            dispatcher.utter_template('utter_state_question_email_again', tracker)
 
         return None
 
@@ -61,9 +61,9 @@ class acction_check_phone(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_phone(tracker.slots['phone']):
-            dispatcher.utter_template('UT_question_email', tracker)
-            dispatcher.utter_template('UT_state_question_email', tracker)
+            dispatcher.utter_template('utter_question_email', tracker)
+            dispatcher.utter_template('utter_state_question_email', tracker)
         else:
-            dispatcher.utter_template('UT_input_phone_number_again', tracker)
-            dispatcher.utter_template('UT_state_phone_number_again', tracker)
+            dispatcher.utter_template('utter_input_phone_number_again', tracker)
+            dispatcher.utter_template('utter_state_phone_number_again', tracker)
         return None

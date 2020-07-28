@@ -30,6 +30,8 @@ def format_message(item):
     item['text'] = item['text'].replace('(', '{')
     item['text'] = item['text'].replace(')', '}')
 
+    print(item['text'])
+
     if is_json(item['text']):
         data = json.loads(item['text'])
     else:
@@ -40,14 +42,14 @@ def format_message(item):
 
 
 def merge_message(current_value, item):
-    print(item)
     if type(item['message']) is list:
         current_value['message'] = current_value['message'] + item['message']
-    else:
+    elif item['message'] != None:
         current_value['message'].append(item['message'])
 
-    current_value['state'] = current_value['state'] == None \
-        and item['state'] or current_value['state']
+    if current_value['state'] == None:
+        current_value['state'] = item['state']
+
     current_value['data'].update(item['data'])
 
     return current_value
