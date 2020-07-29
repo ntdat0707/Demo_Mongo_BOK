@@ -1,4 +1,3 @@
-
 import { ServiceProvider } from './serviceprovider.entity';
 import { Repository, EntityRepository } from 'typeorm';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
@@ -63,30 +62,41 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
     return address;
   }
 
-  
-  async createProduct(productDTO: CreateProductDTO): Promise<string> {
-    const { product_id, product_kind, product_price_quote } = productDTO;
-    const product = new Product();
-    product.product_id = product_id;
-    product.product_kind = product_kind;
-    product.product_price_quote = product_price_quote;
-    await product.save();
+  async createProduct(productsDTO: CreateProductDTO[]): Promise<string> {
+    for (let productDTO of productsDTO) {
+      const { product_id, product_kind, product_price_quote } = productDTO;
+      const product = new Product();
+      product.product_id = product_id;
+      product.product_kind = product_kind;
+      product.product_price_quote = product_price_quote;
+      await product.save();
+    }
     return await 'New product created';
+
+    // const { product_id, product_kind, product_price_quote } = productsDTO;
+    // const product = new Product();
+    // product.product_id = product_id;
+    // product.product_kind = product_kind;
+    // product.product_price_quote = product_price_quote;
+    // await product.save();
+    // return await 'New product created';
   }
 
-  async createDentist(dentistDTO: CreateDentistDTO): Promise<string> {
-    const {
-      dentist_id,
-      dentist_name,
-      dentist_email,
-      dentist_phone,
-    } = dentistDTO;
-    const dentist = new Dentist();
-    dentist.dentist_id = dentist_id;
-    dentist.dentist_name = dentist_name;
-    dentist.dentist_email = dentist_email;
-    dentist.dentist_phone = dentist_phone;
-    await dentist.save();
+  async createDentist(dentistsDTO: CreateDentistDTO[]): Promise<string> {
+    for (let dentistDTO of dentistsDTO) {
+      const {
+        dentist_id,
+        dentist_name,
+        dentist_email,
+        dentist_phone,
+      } = dentistDTO;
+      const dentist = new Dentist();
+      dentist.dentist_id = dentist_id;
+      dentist.dentist_name = dentist_name;
+      dentist.dentist_email = dentist_email;
+      dentist.dentist_phone = dentist_phone;
+      await dentist.save();
+    }
     return await 'New dentist created';
   }
 

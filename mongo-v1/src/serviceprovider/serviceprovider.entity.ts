@@ -21,8 +21,8 @@ export class ServiceProvider extends BaseEntity {
   location: object;
 
   @Column()
-  products: object;
+  products: object[];
 
   @Column()
-  dentists: object;
+  dentists: object[];
 }

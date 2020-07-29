@@ -46,11 +46,11 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'question_email':
-        message_Rasa = message_fe.message;
+        message_Rasa =  message_fe.message;
         break;
 
       case 'select_doctor':
-        message_Rasa = message_fe.message;
+        message_Rasa = 'select_doctor';
         break;
 
       case 'date_booking':
@@ -61,9 +61,9 @@ export class BotBookingRepository extends Repository<BotBooking> {
         message_Rasa = message_fe.message;
         break;
 
-      case 'thankyou_confirm':
-        message_Rasa = message_fe.message;
-        break;
+      // case 'thankyou_confirm':
+      //   message_Rasa = message_fe.message;
+      //   break;
     }
     return message_Rasa;
   }

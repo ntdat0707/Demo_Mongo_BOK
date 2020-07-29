@@ -20,10 +20,10 @@ export class CreateServiceProviderDTO {
   @ApiProperty({ type: CreateProductDTO })
   @ValidateNested()
   @Type(() => CreateProductDTO)
-  products: CreateProductDTO;
+  products: CreateProductDTO[];
 
   @ApiProperty({ type: CreateDentistDTO })
   @ValidateNested()
   @Type(() => CreateDentistDTO)
-  dentists: CreateDentistDTO;
+  dentists: CreateDentistDTO[];
 }

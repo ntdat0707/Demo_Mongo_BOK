@@ -22,9 +22,7 @@ export class ServiceproviderService {
     });
 
     if (!provider) {
-      throw new NotFoundException(
-        `Not fount this id Provider`,
-      );
+      throw new NotFoundException(`Not fount this id Provider`);
     } else {
       provider.provider_name = provider_name;
       await provider.save();
@@ -40,9 +38,7 @@ export class ServiceproviderService {
       provider_id,
     });
     if (!provider) {
-      throw new NotFoundException(
-        `Not fount this id Provider`,
-      );
+      throw new NotFoundException(`Not fount this id Provider`);
     } else {
       provider.location = location;
       await provider.save();
@@ -50,12 +46,40 @@ export class ServiceproviderService {
     }
   }
 
-  async getServiceProviders():Promise<ServiceProvider[]>{
+  async getServiceProviders(): Promise<ServiceProvider[]> {
     return this.serviceproviderRepositorys.find();
   }
 
-  async getAddresses(city:string):Promise<string[]>{
+  async getAddresses(city: string): Promise<string[]> {
     return this.serviceproviderRepositorys.getAddresses(city);
   }
 
+  async getProducts(provider_id: number, kind: string): Promise<object> {
+    let provider = await this.serviceproviderRepositorys.findOne({
+      provider_id: provider_id,
+    });
+    if (!provider) {
+      throw new NotFoundException(`Not found Provider by id:${provider_id}`);
+    }
+    for (let product of provider.products) {
+      if (product['product_kind'] == kind) {
+        return product;
+      }
+    }
+  }
+
+  async getDentists(provider_id: number):Promise<object[]> {
+    let provider = await this.serviceproviderRepositorys.findOne({
+      provider_id: provider_id,
+    });
+
+    if (!provider) {
+      throw new NotFoundException(`Not found Provider by id:${provider_id}`);
+    }
+    else{
+      return provider.dentists;
+    }
+  }
+
+  
 }

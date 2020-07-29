@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { BotBookingRepository } from './botbooking.repository';
-
 import { BotBooking } from './botbooking.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 import { GlobalCityService } from 'src/globalcity/globalcity.service';
@@ -51,19 +50,25 @@ export class BotBookingService {
 
       case 'follow_information':
         data = await this.stateWelcome(requestFE.message_fe.message);
-        break;
+        return data;
 
       case 'select_location':
         data = await this.stateSelectLocation(
-          requestFE.message_fe.data['message'],
+          requestFE.message_fe['message'],
         );
-        break;
-      
+        return data;
+
       case 'nearest_branch':
-        return rasa.message_rasa;
+        return (data = [
+          'Whitening',
+          'Checks-up',
+          'Braces',
+          'Implant',
+          'Fillings',
+        ]);
 
       case 'select_service':
-       return data = ["Whitening","Checks-up","Braces","Implant","Fillings"];  
+        return await this.getDentists();
 
       case 'question_name':
         return rasa.message_rasa;
@@ -73,9 +78,16 @@ export class BotBookingService {
 
       case 'question_email':
         return rasa.message_rasa;
-      
+
       case 'select_doctor':
-        return await this.getDentists();
+        return rasa.message_rasa;
+
+      case 'date_booking':
+        return rasa.message_rasa;
+
+      case 'thankyou_booking':
+        this.sendEmailNotification();
+        return rasa.message_rasa;
     }
     return !user_infor ? data : user_infor;
   }
@@ -117,7 +129,30 @@ export class BotBookingService {
     return await this.serviceproviderService.getAddresses(city);
   }
 
-  async getDentists():Promise<any>{
-    return this.dentistService.getDentists();
+  async getDentists(): Promise<any> {
+    return await this.dentistService.getDentists();
+  }
+
+  async sendEmailNotification():Promise<any>{
+    const nodemailer = require("nodemailer");
+    //let testAccount = await nodemailer.createTestAccount();
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: 'nguyentandat.email07@gmail.com', // generated ethereal user
+        pass: '091392134112', // generated ethereal password
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: 'nguyentandat.email07@gmail.com', // sender address
+      to: "nguyentandat.email07@gmail.com", // list of receivers
+      subject: "This is your appointment ✔", // Subject line
+      text: "Hello Ms.A,This is your appointment. Please check it again Time Doctor Service Jan 02 2020-15:30 Cameron Implant Korea - Dentium --- Ziconia" , // plain text body
+      html: `<p>Hello<b>Ms.A,</b><br>This is your appointment.Please check it again<br><style type='text/css'>.tg {border-collapse:collapse;border-spacing:0;}.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px; overflow:hidden;padding:10px 5px;word-break:normal;}.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px; font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}.tg .tg-0lax{text-align:left;vertical-align:top}</style><table class="tg"><thead> <tr> <th class='tg-0lax>Time</th> <th class="tg-0lax">Doctor</th> <th class="tg-0lax">Service</th> </tr></thead><tbody> <tr> <td class="tg-0lax">Jan 02 2020 - 15:00</td> <td class="tg-0lax">Cameron</td> <td class="tg-0lax">Implant Korea - Dentium --- Ziconia</td> </tr></tbody></table></p>`, // html body
+    });
+    await transporter.sendMail(info);
   }
 }
