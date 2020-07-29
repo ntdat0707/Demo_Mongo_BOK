@@ -14,18 +14,21 @@
 - see you later
 
 ## intent: ASK_name
-- [oanh]{"entity":"name", "value":"LK_name"}
-- my name is [oanh]{"entity":"name", "value":"LK_name"}
-- name is [oanh]{"entity":"name", "value":"LK_name")
+- [oanh](name)
+- [huyen nguyen](name)
+- [huy](name)
+- [dat nguyen](name)
+- my name is [oanh](name)
+- name is [oanh](name)
 
 ## intent: ASK_email
-- [longvox98@gmail.com]{"entity":"email", "value": "RG_email"}
-- [example@example.com]{"entity":"email", "value": "RG_email"}
+- [longvox98@gmail.com](email)
+- [example@example.com](email)
 
 ## intent: ASK_phone_number
 - [0349305375](phone)
-- [0987654311]{"entity":"phone", "value":"RG_phone_number"}
-- [0123456781]{"entity":"phone", "value":"RG_phone_number"}
+- [0987654311](phone)
+- [0123456781](phone)
 
 ## intent: HM_message_hello_rasa
 - hello rasa
@@ -65,12 +68,12 @@
 - select date booking
 - choice date booking
 
-## regex: RG_phone_number
+## regex: phone
 - ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
 
-## regex: RG_email
+## regex: email
 - [a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$
 
-## lookup: LK_name
+## lookup: name
 data/_lookup/name.txt
 

@@ -21,7 +21,6 @@ class action_get_name(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         print(tracker.slots)
         print(tracker.latest_message['text'])
-        # name = tracker.latest_message['text'].split(' ')[-1]
 
         return None
 
@@ -39,10 +38,12 @@ class action_check_email(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_email(tracker.slots['email']):
             dispatcher.utter_template('utter_question_select_service', tracker)
+            dispatcher.utter_template('utter_data_email', tracker)
             dispatcher.utter_template('utter_state_select_service', tracker)
         else:
             dispatcher.utter_template('utter_input_email_again', tracker)
-            dispatcher.utter_template('utter_state_question_email_again', tracker)
+            dispatcher.utter_template('utter_state_question_email_again',
+                                      tracker)
 
         return None
 
@@ -62,8 +63,11 @@ class acction_check_phone(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_phone(tracker.slots['phone']):
             dispatcher.utter_template('utter_question_email', tracker)
+            dispatcher.utter_template('utter_data_phone', tracker)
             dispatcher.utter_template('utter_state_question_email', tracker)
         else:
-            dispatcher.utter_template('utter_input_phone_number_again', tracker)
-            dispatcher.utter_template('utter_state_phone_number_again', tracker)
+            dispatcher.utter_template('utter_input_phone_number_again',
+                                      tracker)
+            dispatcher.utter_template('utter_state_phone_number_again',
+                                      tracker)
         return None

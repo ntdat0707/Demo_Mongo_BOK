@@ -169,7 +169,6 @@ class MyRestInput(InputChannel):
                 except Exception:
                     logger.exception("An exception occured while handling "
                                      "user message '{}'.".format(text))
-
                 collector_messages = list(
                     map(format_message, collector.messages))
                 collector_messages = reduce(merge_message, collector_messages,

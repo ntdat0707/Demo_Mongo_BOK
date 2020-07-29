@@ -38,6 +38,7 @@
 > check_new_booking_info
 * ASK_name
   - action_get_name
+  - utter_data_name
   - utter_question_phone_number
   - utter_state_question_phone_number
 > check_ask_name

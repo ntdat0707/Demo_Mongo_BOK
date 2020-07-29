@@ -37,6 +37,21 @@ actions:
   - action_check_phone
 
 responses:
+  utter_data_name:
+     - text: '(
+      "data": ("name": "{name}")
+    )'
+
+  utter_data_phone:
+    - text: '(
+      "data": ("phone": "{phone}")
+    )'
+
+  utter_data_email:
+    - text: '(
+      "data": ("email": "{email}")
+    )'
+
   utter_question_name:
     - text: "(
         \"message\": \"How may i call you?\"
@@ -215,9 +230,10 @@ responses:
           \"Don't worry, you can edit the booking info later on \\\"My appointment\\\" section.\"  
         ]
       )"
+
   utter_state_thankyou_booking:
     - text: '(
-        "state": "thankyou_boonking"
+        "state": "thankyou_booking"
       )'    
 
   utter_response_thankyou_confirm:
