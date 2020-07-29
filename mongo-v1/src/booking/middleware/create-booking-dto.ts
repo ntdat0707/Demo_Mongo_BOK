@@ -9,7 +9,7 @@ export class CreateBookingDTO {
   @IsNotEmpty()
   booking_id: number;
 
-  @ApiProperty({type:CreateCustomerDTO})
+  @ApiProperty({type:()=>CreateCustomerDTO})
   @ValidateNested()
   @Type(() => CreateCustomerDTO)
   user: CreateCustomerDTO;
@@ -22,7 +22,7 @@ export class CreateBookingDTO {
   @IsNotEmpty()
   provider_name: string;
 
-  @ApiProperty({type:CreateProductDTO})
+  @ApiProperty({type:()=>CreateProductDTO})
   @ValidateNested()
   @Type(() => CreateProductDTO)
   product: CreateProductDTO;

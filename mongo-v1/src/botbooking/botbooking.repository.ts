@@ -8,6 +8,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
   async responseRasa(requestFE: MessageFEDTO): Promise<Rasa> {
     let mess = await this.setStateToFE(requestFE);
     let rasa = new Rasa();
+    requestFE.message_fe['sender'] = requestFE.message_fe['sender'] || "0";
     rasa.message_rasa = await this.sendReplyToRasa(mess);
     console.log('Rasa', rasa.message_rasa);
     return rasa;
@@ -46,7 +47,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'question_email':
-        message_Rasa =  message_fe.message;
+        message_Rasa = message_fe.message;
         break;
 
       case 'select_doctor':
@@ -69,7 +70,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
       baseURL: 'http://192.168.1.101:5005',
     });
     return await axios
-      .post('webhooks/restnew/webhook', { message: mess })
+      .post('webhooks/restnew/webhook', { sender: '123', message: mess })
       .then(response => {
         //console.log(response.data);
         return response.data;

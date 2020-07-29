@@ -2,27 +2,28 @@ import { IsNotEmpty, ValidateNested, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateDentistDTO } from 'src/dentist/middleware/create-dentist-dto';
 import { CreateProductDTO } from 'src/products/middleware/create-product-dto';
-import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateServiceProviderDTO {
-  @ApiProperty({ type: Number })
+  @ApiProperty()
   @IsNotEmpty()
   provider_id: number;
 
-  @ApiProperty({ type: String })
+  @ApiProperty()
   @IsNotEmpty()
   provider_name: string;
 
-  @ApiProperty({ type: Object })
+  @ApiProperty({type:Object})
   @IsOptional()
-  location: { city: string; addresses: { address: string }[] };
-
-  @ApiProperty({ type: CreateProductDTO })
+  //location: { city: string; addresses: { address: string }[] };
+  location: object;
+  
+  @ApiProperty({ type:()=> CreateProductDTO })
   @ValidateNested()
   @Type(() => CreateProductDTO)
   products: CreateProductDTO[];
 
-  @ApiProperty({ type: CreateDentistDTO })
+  @ApiProperty({ type:()=> CreateDentistDTO })
   @ValidateNested()
   @Type(() => CreateDentistDTO)
   dentists: CreateDentistDTO[];

@@ -13,7 +13,6 @@ export class BotBookingService {
     private botRepository: BotBookingRepository,
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
-    private dentistService: DentistService,
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
