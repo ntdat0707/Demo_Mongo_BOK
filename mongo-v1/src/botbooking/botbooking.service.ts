@@ -102,11 +102,11 @@ export class BotBookingService {
     });
     return await axios
       .post('/customer/logged')
-      .then(response => {
+      .then((response: any) => {
         console.log('User Logged', response.data);
         return response.data;
       })
-      .catch(error => {
+      .catch((error: any) => {
         console.log(error);
       });
   }
