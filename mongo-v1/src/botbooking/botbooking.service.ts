@@ -16,43 +16,62 @@ export class BotBookingService {
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
-    let rasa = new Rasa();
-    rasa = await this.botRepository.responseRasa(requestFE);
+    let mess = await this.botRepository.setStateToFE(requestFE);
+    let rasa = new BotBooking();
+    requestFE['sender'] = requestFE['sender'] || "0";
+    rasa = await this.botRepository.sendReplyToRasa(mess);
+
+    console.log('Rasa', rasa);
+
+    //let rasa = new Rasa();
+    //rasa = await this.botRepository.responseRasa(requestFE);
 
     let botbooking = new BotBooking();
-    botbooking.reply_fe = {
-      state: rasa.message_rasa['state'],
-      message: rasa.message_rasa['message'],
-      data: await this.setDataToFE(requestFE, rasa),
-    };
 
-    if (botbooking.reply_fe['state'] == 'follow_information') {
-      if (botbooking.reply_fe['data'].length == 0) {
-        botbooking.reply_fe['message'] = rasa.message_rasa['message'];
+   botbooking.sender=rasa.sender;
+   botbooking.state = rasa.state;
+   botbooking.message= rasa.message;
+   botbooking.data = await this.setDataToFE(requestFE, rasa);
+
+
+    // botbooking 
+    // { sender:rasa.sender,
+    //   state: rasa['state'],
+    //   message: rasa['message'],
+    //   data: await this.setDataToFE(requestFE, rasa),
+    // };
+
+
+    botbooking = await this.botRepository.sendReplyToRasa(mess);
+    botbooking.data = await this.setDataToFE(requestFE, rasa);
+
+    if (botbooking['state'] == 'follow_information') {
+      if (botbooking['data'].length == 0) {
+        botbooking['message'] = rasa['message'];
       } else {
-        botbooking.reply_fe['message'] = rasa.message_rasa['message'];
+        botbooking['message'] = rasa['message'];
       }
     }
-    console.log('Bot Booking state', botbooking.reply_fe);
+    console.log('Bot Booking state', botbooking);
     return botbooking;
   }
 
-  async setDataToFE(requestFE: MessageFEDTO, rasa: Rasa): Promise<any> {
+  async setDataToFE(requestFE: MessageFEDTO, rasa: BotBooking): Promise<any> {
     let data = [];
-    switch (requestFE.message_fe.state) {
+    switch (requestFE.state) {
       case 'start':
         var user_infor =
-          requestFE.message_fe.message == null
+          requestFE.message == null
             ? []
-            : await this.getUserLoggedInfo(requestFE.message_fe.message);
+            : await this.getUserLoggedInfo(requestFE.message);
         break;
 
       case 'follow_information':
-        data = await this.stateWelcome(requestFE.message_fe.message);
+        data = await this.stateWelcome(requestFE.message);
         return data;
 
       case 'select_location':
-        data = await this.stateSelectLocation(requestFE.message_fe['message']);
+        data = await this.stateSelectLocation(requestFE['message']);
         return data;
 
       case 'nearest_branch':
@@ -65,7 +84,7 @@ export class BotBookingService {
         ]);
 
       case 'select_service':
-        return await this.getProducts(70,requestFE.message_fe['message']);
+        return await this.getProducts(70,requestFE['message']);
 
       case 'question_name':
         return data;

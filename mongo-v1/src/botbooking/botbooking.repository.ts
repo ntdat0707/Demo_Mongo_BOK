@@ -8,22 +8,22 @@ export class BotBookingRepository extends Repository<BotBooking> {
   async responseRasa(requestFE: MessageFEDTO): Promise<Rasa> {
     let mess = await this.setStateToFE(requestFE);
     let rasa = new Rasa();
-    requestFE.message_fe['sender'] = requestFE.message_fe['sender'] || "0";
+    requestFE['sender'] = requestFE['sender'] || "0";
     rasa.message_rasa = await this.sendReplyToRasa(mess);
     console.log('Rasa', rasa.message_rasa);
     return rasa;
   }
 
   setStateToFE(requestFE: MessageFEDTO): string {
-    const { message_fe } = requestFE;
+    //const { sender,state,message,data } = requestFE;
     let message_Rasa = '';
-    switch (requestFE.message_fe.state) {
+    switch (requestFE.state) {
       case 'start':
         message_Rasa = 'hello rasa';
         break;
 
       case 'follow_information':
-        message_Rasa = message_fe.message;
+        message_Rasa = requestFE.message;
         break;
 
       case 'select_location':
@@ -39,15 +39,15 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'question_name':
-        message_Rasa = message_fe.message;
+        message_Rasa = requestFE.message;
         break;
 
       case 'question_phone_number':
-        message_Rasa = message_fe.message;
+        message_Rasa = requestFE.message;
         break;
 
       case 'question_email':
-        message_Rasa = message_fe.message;
+        message_Rasa = requestFE.message;
         break;
 
       case 'select_doctor':
@@ -59,13 +59,13 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'thankyou_booking':
-        message_Rasa = message_fe.message;
+        message_Rasa = requestFE.message;
         break;
     }
     return message_Rasa;
   }
 
-  async sendReplyToRasa(mess: string): Promise<Rasa> {
+  async sendReplyToRasa(mess: string): Promise<BotBooking> {
     const axios = require('axios').create({
       baseURL: 'http://192.168.1.101:5005',
     });
