@@ -54,16 +54,12 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'date_booking':
-        message_Rasa = message_fe.message;
+        message_Rasa = 'choice_date_booking';
         break;
 
       case 'thankyou_booking':
         message_Rasa = message_fe.message;
         break;
-
-      // case 'thankyou_confirm':
-      //   message_Rasa = message_fe.message;
-      //   break;
     }
     return message_Rasa;
   }

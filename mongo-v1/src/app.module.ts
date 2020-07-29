@@ -8,7 +8,6 @@ import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ChatbotModule } from './chatbot/chatbot.module';
-import { ConservationModule } from './conservation/conservation.module';
 import { CustomerModule } from './customer/customer.module';
 import { NotificationModule } from './notification/notification.module';
 import { AuthModule } from './auth/auth.module';
@@ -27,7 +26,6 @@ import { RasaModule } from './rasa/rasa.module';
     ServiceproviderModule,
     ProductsModule,
     ChatbotModule,
-    ConservationModule,
     CustomerModule,
     NotificationModule,
     AuthModule,

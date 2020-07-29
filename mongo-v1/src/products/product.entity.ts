@@ -14,12 +14,4 @@ export class Product extends BaseEntity {
     @Column()
     product_price_quote:object[];
 
-    // @Column()
-    // product_name:string;
-
-    // @Column()
-    // product_price:number;
-    
-    // @ManyToOne(type => User, user => user.tasks, { eager: false })
-    // user: User;
 }

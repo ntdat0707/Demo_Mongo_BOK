@@ -63,6 +63,7 @@ export class ServiceproviderService {
     }
     for (let product of provider.products) {
       if (product['product_kind'] == kind) {
+        console.log("Product:",product);
         return product;
       }
     }
