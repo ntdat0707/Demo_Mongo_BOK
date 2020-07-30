@@ -2,7 +2,8 @@ import { IState } from "../interface/IState.interface"
 
 export class State implements IState {
   public name: string;
-  public hashMessage: string
+  public hashMessage: string;
+  public service: object; 
   
   constructor() {
     this.name = "";

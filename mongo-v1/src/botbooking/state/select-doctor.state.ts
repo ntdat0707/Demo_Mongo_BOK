@@ -4,9 +4,8 @@ import {MessageFEDTO} from '../middleware/getmessage-fe-dto';
 import {ServiceproviderService} from 'src/serviceprovider/serviceprovider.service';
 
 export class StateSelectDoctor extends State {
-  constructor(
-      private serviceproviderService: ServiceproviderService
-  ) {
+
+  constructor() {
     super();
     this.name = "select_doctor";
     this.hashMessage = "select_doctor";
@@ -17,6 +16,6 @@ export class StateSelectDoctor extends State {
   }
 
   async getDentists(provider_id: number): Promise<any> {
-    return await this.serviceproviderService.getDentists(provider_id);
+    return await this.service['serviceproviderService'].getDentists(provider_id);
   }
 }

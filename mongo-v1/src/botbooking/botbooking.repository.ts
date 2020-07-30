@@ -5,11 +5,9 @@ import { StateService } from "./state.service"
 
 @EntityRepository(BotBooking)
 export class BotBookingRepository extends Repository<BotBooking> {
-  
-  constructor(
-    private stateService: StateService
-  ) {}
- 
+
+  stateService: StateService = new StateService();
+
   setStateToFE(requestFE: MessageFEDTO): string {
     let state = this.stateService.getState(requestFE.state)
     console.log("namestate: ", state.getMessage(requestFE)); 

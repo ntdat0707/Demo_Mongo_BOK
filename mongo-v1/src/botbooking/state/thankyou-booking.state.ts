@@ -3,11 +3,9 @@ import { State } from './class/state.class';
 import {MessageFEDTO} from '../middleware/getmessage-fe-dto';
 import {CreateBookingDTO} from 'src/booking/middleware/create-booking-dto';
 import {Booking} from 'src/booking/booking.entity';
-import {BookingService} from 'src/booking/booking.service';
 
 export class StateThankYouBooking extends State {
   constructor(
-    private bookingservice: BookingService
   ) {
     super();
     this.name = "thankyou_booking";
@@ -59,7 +57,7 @@ export class StateThankYouBooking extends State {
   }
 
   async generateBooking(booking: CreateBookingDTO): Promise<Booking> {
-    return await this.bookingservice.generateBooking(booking);
+    return await this.service['bookingservice'].generateBooking(booking);
   }
   
   async setServices(products: object[]): Promise<string> {

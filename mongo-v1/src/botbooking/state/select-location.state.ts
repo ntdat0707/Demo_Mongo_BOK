@@ -5,7 +5,6 @@ import {ServiceproviderService} from 'src/serviceprovider/serviceprovider.servic
 
 export class StateSelectLocation extends State {
   constructor(
-    private serviceproviderService: ServiceproviderService
   ) {
     super();
     this.name = "select_location";
@@ -20,8 +19,8 @@ export class StateSelectLocation extends State {
     console.log('City', city);
     console.log(
       'response_FE.Data',
-      await this.serviceproviderService.getAddresses(city),
+      await this.service['serviceproviderService'].getAddresses(city),
     );
-    return await this.serviceproviderService.getAddresses(city);
+    return await this.service['serviceproviderService'].getAddresses(city);
   }
 }
