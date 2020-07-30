@@ -24,7 +24,7 @@ export class Booking extends BaseEntity {
   provider_name: string;
 
   @Column()
-  product: object;
+  products: object;
 
   @Column()
   dentist_id: number;

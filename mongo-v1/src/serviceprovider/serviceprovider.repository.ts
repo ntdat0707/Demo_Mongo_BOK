@@ -9,7 +9,6 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(ServiceProvider)
 export class ServiceProviderRepository extends Repository<ServiceProvider> {
-  //Function test for entity
   async createProvider(
     createProviderDTO: CreateServiceProviderDTO,
   ): Promise<ServiceProvider> {
@@ -72,14 +71,6 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
       await product.save();
     }
     return await 'New product created';
-
-    // const { product_id, product_kind, product_price_quote } = productsDTO;
-    // const product = new Product();
-    // product.product_id = product_id;
-    // product.product_kind = product_kind;
-    // product.product_price_quote = product_price_quote;
-    // await product.save();
-    // return await 'New product created';
   }
 
   async createDentist(dentistsDTO: CreateDentistDTO[]): Promise<string> {

@@ -28,20 +28,4 @@ export class BookingController {
   getProvider(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
     return this.bookingService.getProvider(id);
   }
-
-  // @ApiOperation({ summary: 'Get Product' })
-  // @ApiOkResponse({ description: 'successs' })
-  // @ApiNotFoundResponse({ description:'Bad requets - input invalid'})
-  // @Get('/product/:id')
-  // getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
-  //   return this.bookingService.getProduct(id);
-  // }
-
-  // @ApiOperation({ summary: 'Get Dentists' })
-  // @ApiOkResponse({ description: 'successs' })
-  // @ApiNotFoundResponse({ description:'Bad requets - input invalid'})
-  // @Get('/dentist/:id')
-  // getDentist(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
-  //   return this.bookingService.getDentist(id);
-  // }
 }

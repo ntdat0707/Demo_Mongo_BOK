@@ -7,7 +7,6 @@ import { ServiceproviderModule } from './serviceprovider/serviceprovider.module'
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
-import { ChatbotModule } from './chatbot/chatbot.module';
 import { CustomerModule } from './customer/customer.module';
 import { AuthModule } from './auth/auth.module';
 import { GlobalCityModule } from './globalcity/globalcity.module';
@@ -20,7 +19,6 @@ import { BotbookingModule } from './botbooking/botbooking.module';
     DentistModule,
     ServiceproviderModule,
     ProductsModule,
-    ChatbotModule,
     CustomerModule,
     AuthModule,
     GlobalCityModule,

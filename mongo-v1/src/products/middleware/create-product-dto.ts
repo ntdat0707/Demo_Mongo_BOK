@@ -12,7 +12,7 @@ export class CreateProductDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  product_price_quote: [{ name: string; price: number; quantum: string }];
+  product_price_quote: [{id:number, name: string; price: number; quantum: string }];
 
   // @IsNotEmpty()
   // product_price:number;

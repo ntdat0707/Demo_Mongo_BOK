@@ -5,14 +5,14 @@ import { BotBookingRepository } from './botbooking.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GlobalCityModule } from 'src/globalcity/globalcity.module';
 import { ServiceproviderModule } from 'src/serviceprovider/serviceprovider.module';
-import { DentistModule } from 'src/dentist/dentist.module';
+import { BookingModule } from 'src/booking/booking.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([BotBookingRepository]),
     GlobalCityModule,
     ServiceproviderModule,
-    DentistModule,
+    BookingModule,
   ],
   controllers: [BotbookingController],
   providers: [BotBookingService],

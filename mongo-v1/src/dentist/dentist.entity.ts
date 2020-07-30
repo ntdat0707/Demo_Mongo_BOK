@@ -17,6 +17,4 @@ export class Dentist extends BaseEntity {
   @Column()
   dentist_phone: string;
 
-  // @ManyToOne(type => User, user => user.tasks, { eager: false })
-  // user: User;
 }

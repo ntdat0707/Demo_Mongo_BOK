@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, ValidateNested, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsEmail, ValidateNested, IsDateString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { CreateCustomerDTO } from 'src/customer/middleware/create-customer-dto';
@@ -6,7 +6,7 @@ import { CreateProductDTO } from 'src/products/middleware/create-product-dto';
 export class CreateBookingDTO {
   
   @ApiProperty({type:Number})
-  @IsNotEmpty()
+  @IsOptional()
   booking_id: number;
 
   @ApiProperty({type:()=>CreateCustomerDTO})
@@ -25,7 +25,7 @@ export class CreateBookingDTO {
   @ApiProperty({type:()=>CreateProductDTO})
   @ValidateNested()
   @Type(() => CreateProductDTO)
-  product: CreateProductDTO;
+  products: CreateProductDTO;
 
   @ApiProperty({type:Number})
   @IsNotEmpty()

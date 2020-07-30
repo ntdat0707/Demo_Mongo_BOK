@@ -4,6 +4,9 @@ import { BotBooking } from './botbooking.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 import { GlobalCityService } from 'src/globalcity/globalcity.service';
 import { ServiceproviderService } from 'src/serviceprovider/serviceprovider.service';
+import { CreateBookingDTO } from 'src/booking/middleware/create-booking-dto';
+import { BookingService } from 'src/booking/booking.service';
+import { Booking } from 'src/booking/booking.entity';
 
 @Injectable()
 export class BotBookingService {
@@ -11,11 +14,12 @@ export class BotBookingService {
     private botRepository: BotBookingRepository,
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
+    private bookingService: BookingService,
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     let mess = await this.botRepository.setStateToFE(requestFE);
-     let botbooking = new BotBooking();    
+    let botbooking = new BotBooking();
     botbooking = await this.botRepository.sendReplyToRasa(mess);
     botbooking.data = await this.setDataToFE(requestFE);
 
@@ -69,6 +73,7 @@ export class BotBookingService {
         return data;
 
       case 'thankyou_booking':
+        await this.generateBooking(requestFE['data']);
         this.sendEmailNotification(requestFE['data']);
         return data;
     }
@@ -121,7 +126,11 @@ export class BotBookingService {
     return await this.serviceproviderService.getProducts(provider_id, kind);
   }
 
-  async sendEmailNotification(data:object): Promise<any> {
+  async generateBooking(booking: CreateBookingDTO): Promise<Booking> {
+    return await this.bookingService.generateBooking(booking);
+  }
+
+  async sendEmailNotification(data: CreateBookingDTO): Promise<any> {
     const nodemailer = require('nodemailer');
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -133,14 +142,35 @@ export class BotBookingService {
       },
     });
 
+    let services = await this.setServices(data.products['product_price_quote']);
+
     let info = await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
-      to: data['email'], // list of receivers
+      to: data.user['email'], // list of receivers
       subject: 'This is your appointment ✔', // Subject line
       text: '', // plain text body
       html:
-        '<p>Hi,Ms.A</p><p>This is your appoinment information. Please check it again</p><p>Time:&nbsp;<strong>'+data['time']+'</strong></p><p>Doctor:&nbsp;<strong>'+data['doctor']+'</strong></p><p>Service:&nbsp;<strong>'+data['service']+'</strong></p>',
+        '<p>Hi,Mr/Ms:&nbsp;<strong>' +
+        data.user['name'] +
+        '</strong></p><p>This is your appoinment information. Please check it again:</p><p>Service Provider:&nbsp;<strong>' +
+        data['provider_name'] +
+        '</strong></p><p>Time:&nbsp;<strong>' +
+        data['cus_booking_time'] +
+        '</strong></p><p>Doctor:&nbsp;<strong>' +
+        data['dentist_name'] +
+        '</strong></p><p>Service:&nbsp;<strong>' +
+        services +
+        '</strong></p>',
     });
     await transporter.sendMail(info);
+  }
+
+  async setServices(products: object[]): Promise<string> {
+    let services = '';
+    for (let product of products) {
+      services =
+        services == '' ? product['name'] : services + ' & ' + product['name'];
+    }
+    return await services;
   }
 }
