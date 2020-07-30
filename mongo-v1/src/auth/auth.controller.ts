@@ -1,29 +1,40 @@
-import { Controller, Post, Body, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiCreatedResponse, ApiBody, ApiOkResponse, ApiUnauthorizedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiBody,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiPropertyOptional,
+  ApiProperty,
+  ApiHeader,
+} from '@nestjs/swagger';
 import { AuthDTO } from './middleware/auth-dto';
-import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from './get-user.decorator';
-import { User } from './user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-    @Post('/signup')
-    @ApiCreatedResponse({ description: 'User Registration' })
-    @ApiBody({ type: AuthDTO })
-    signUp(@Body(ValidationPipe) authDTO: AuthDTO): Promise<string> {
-        return this.authService.signUp(authDTO);
-    }
+  @ApiOperation({ summary: 'SignUp New User'})
+  @Post('/signup')
+  @ApiCreatedResponse({ description: 'User Registration' })
+  @ApiBody({ type: AuthDTO })
+  signUp(@Body(ValidationPipe) authDTO: AuthDTO): Promise<string> {
+    return this.authService.signUp(authDTO);
+  }
 
-    @Post('/signin')
-    @ApiOkResponse({ description: 'User Login' })
-    @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-    @ApiBody({ type: AuthDTO })
-    signIn(@Body(ValidationPipe) authDTO: AuthDTO): Promise<{ accessToken: string }> {
-        return this.authService.signIn(authDTO);
-    }
-
+  @ApiOperation({ summary: 'User Login and get token'})
+  @ApiOkResponse({ description: 'success' })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  @ApiBody({ type: AuthDTO })
+  @Post('/signin')
+  signIn(
+    @Body(ValidationPipe) authDTO: AuthDTO,
+  ): Promise<{ accessToken: string }> {
+    return this.authService.signIn(authDTO);
+  }
 }

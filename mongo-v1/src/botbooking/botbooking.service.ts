@@ -4,8 +4,6 @@ import { BotBooking } from './botbooking.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 import { GlobalCityService } from 'src/globalcity/globalcity.service';
 import { ServiceproviderService } from 'src/serviceprovider/serviceprovider.service';
-import { Rasa } from 'src/rasa/rasa.entity';
-import { DentistService } from 'src/dentist/dentist.service';
 
 @Injectable()
 export class BotBookingService {
@@ -17,46 +15,15 @@ export class BotBookingService {
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     let mess = await this.botRepository.setStateToFE(requestFE);
-    let rasa = new BotBooking();
-    requestFE['sender'] = requestFE['sender'] || "0";
-    rasa = await this.botRepository.sendReplyToRasa(mess);
-
-    console.log('Rasa', rasa);
-
-    //let rasa = new Rasa();
-    //rasa = await this.botRepository.responseRasa(requestFE);
-
-    let botbooking = new BotBooking();
-
-   botbooking.sender=rasa.sender;
-   botbooking.state = rasa.state;
-   botbooking.message= rasa.message;
-   botbooking.data = await this.setDataToFE(requestFE, rasa);
-
-
-    // botbooking 
-    // { sender:rasa.sender,
-    //   state: rasa['state'],
-    //   message: rasa['message'],
-    //   data: await this.setDataToFE(requestFE, rasa),
-    // };
-
-
+     let botbooking = new BotBooking();    
     botbooking = await this.botRepository.sendReplyToRasa(mess);
-    botbooking.data = await this.setDataToFE(requestFE, rasa);
+    botbooking.data = await this.setDataToFE(requestFE);
 
-    if (botbooking['state'] == 'follow_information') {
-      if (botbooking['data'].length == 0) {
-        botbooking['message'] = rasa['message'];
-      } else {
-        botbooking['message'] = rasa['message'];
-      }
-    }
     console.log('Bot Booking state', botbooking);
     return botbooking;
   }
 
-  async setDataToFE(requestFE: MessageFEDTO, rasa: BotBooking): Promise<any> {
+  async setDataToFE(requestFE: MessageFEDTO): Promise<any> {
     let data = [];
     switch (requestFE.state) {
       case 'start':
@@ -84,7 +51,7 @@ export class BotBookingService {
         ]);
 
       case 'select_service':
-        return await this.getProducts(70,requestFE['message']);
+        return await this.getProducts(70, requestFE['message']);
 
       case 'question_name':
         return data;
@@ -102,7 +69,7 @@ export class BotBookingService {
         return data;
 
       case 'thankyou_booking':
-        this.sendEmailNotification();
+        this.sendEmailNotification(requestFE['data']);
         return data;
     }
     return !user_infor ? data : user_infor;
@@ -146,7 +113,7 @@ export class BotBookingService {
     return await this.serviceproviderService.getAddresses(city);
   }
 
-  async getDentists(provider_id:number): Promise<any> {
+  async getDentists(provider_id: number): Promise<any> {
     return await this.serviceproviderService.getDentists(provider_id);
   }
 
@@ -154,7 +121,7 @@ export class BotBookingService {
     return await this.serviceproviderService.getProducts(provider_id, kind);
   }
 
-  async sendEmailNotification(): Promise<any> {
+  async sendEmailNotification(data:object): Promise<any> {
     const nodemailer = require('nodemailer');
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -168,11 +135,11 @@ export class BotBookingService {
 
     let info = await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
-      to: 'nguyentandat.email07@gmail.com', // list of receivers
+      to: data['email'], // list of receivers
       subject: 'This is your appointment ✔', // Subject line
       text: '', // plain text body
       html:
-        '<p>Hi,Ms.A</p><p>This is your appoinment information. Please check it again</p><p>Time:&nbsp;<strong>Jan 02 2020 - 15:00</strong></p><p>Doctor:&nbsp;<strong>Cameron</strong></p><p>Service:&nbsp;<strong>Implant Korea - Dentium --- Ziconia</strong></p>',
+        '<p>Hi,Ms.A</p><p>This is your appoinment information. Please check it again</p><p>Time:&nbsp;<strong>'+data['time']+'</strong></p><p>Doctor:&nbsp;<strong>'+data['doctor']+'</strong></p><p>Service:&nbsp;<strong>'+data['service']+'</strong></p>',
     });
     await transporter.sendMail(info);
   }

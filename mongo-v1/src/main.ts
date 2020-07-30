@@ -12,6 +12,7 @@ async function bootstrap() {
     .setTitle('Demo Chat Bot Management')
     .setDescription('Demo Chat Bot API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

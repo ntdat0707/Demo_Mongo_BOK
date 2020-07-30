@@ -1,21 +1,10 @@
 import { BotBooking } from './botbooking.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { Rasa } from 'src/rasa/rasa.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 
 @EntityRepository(BotBooking)
 export class BotBookingRepository extends Repository<BotBooking> {
-  async responseRasa(requestFE: MessageFEDTO): Promise<Rasa> {
-    let mess = await this.setStateToFE(requestFE);
-    let rasa = new Rasa();
-    requestFE['sender'] = requestFE['sender'] || "0";
-    rasa.message_rasa = await this.sendReplyToRasa(mess);
-    console.log('Rasa', rasa.message_rasa);
-    return rasa;
-  }
-
   setStateToFE(requestFE: MessageFEDTO): string {
-    //const { sender,state,message,data } = requestFE;
     let message_Rasa = '';
     switch (requestFE.state) {
       case 'start':
@@ -67,7 +56,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
 
   async sendReplyToRasa(mess: string): Promise<BotBooking> {
     const axios = require('axios').create({
-      baseURL: 'http://192.168.1.101:5005',
+      baseURL: 'http://192.168.1.104:5005',
     });
     return await axios
       .post('webhooks/restnew/webhook', { sender: '123', message: mess })

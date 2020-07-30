@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class MessageFEDTO {
@@ -15,10 +15,10 @@ export class MessageFEDTO {
   state:string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   message:string;
   
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   data:any
 }

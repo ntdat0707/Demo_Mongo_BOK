@@ -12,10 +12,6 @@ import { CustomerModule } from './customer/customer.module';
 import { AuthModule } from './auth/auth.module';
 import { GlobalCityModule } from './globalcity/globalcity.module';
 import { BotbookingModule } from './botbooking/botbooking.module';
-import { RasaModule } from './rasa/rasa.module';
-
-
-
 
 @Module({
   imports: [
@@ -29,7 +25,6 @@ import { RasaModule } from './rasa/rasa.module';
     AuthModule,
     GlobalCityModule,
     BotbookingModule,
-    RasaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

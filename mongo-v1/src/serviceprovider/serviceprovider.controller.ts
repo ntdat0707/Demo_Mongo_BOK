@@ -12,7 +12,7 @@ import {
 import { ServiceproviderService } from './serviceprovider.service';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
 import { ServiceProvider } from './serviceprovider.entity';
-import { ApiCreatedResponse, ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse, ApiProperty, ApiBody, ApiQuery } from '@nestjs/swagger';
 
 @ApiTags('Service Provider')
 @Controller('serviceprovider')
@@ -30,6 +30,7 @@ export class ServiceproviderController {
   @ApiOkResponse({ description: 'successs' })
   @ApiBadRequestResponse({ description:"Input invalid format"})
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
+  @ApiBody({type:CreateServiceProviderDTO})
   @Post()
   async createSP(
     @Body(ValidationPipe) dentalDTO: CreateServiceProviderDTO,

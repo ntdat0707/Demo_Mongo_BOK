@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, Param, ValidationPipe, ParseIntPipe} from 
 import { BookingService } from './booking.service';
 import { Booking } from './booking.entity';
 import { CreateBookingDTO } from './middleware/create-booking-dto';
-import { ApiOkResponse, ApiTags, ApiOperation, ApiNotFoundResponse, ApiInternalServerErrorResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags, ApiOperation, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Booking')
 @Controller('booking')
@@ -13,6 +13,8 @@ export class BookingController {
   @ApiOkResponse({ description: 'successs' })
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @Post()
+
+  @ApiBody({type:CreateBookingDTO})
   generateBooking(
     @Body(ValidationPipe) createBookingDTO: CreateBookingDTO,
   ): Promise<Booking> {
