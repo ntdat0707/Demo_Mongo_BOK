@@ -1,14 +1,10 @@
-import { ServiceProvider } from './../serviceprovider/serviceprovider.entity';
 import {
   Column,
-  PrimaryGeneratedColumn,
   Entity,
   BaseEntity,
   ObjectIdColumn,
   PrimaryColumn,
 } from 'typeorm';
-import { Customer } from 'src/customer/customer.entity';
-import { Product } from 'src/products/product.entity';
 
 @Entity()
 export class Booking extends BaseEntity {
@@ -19,7 +15,7 @@ export class Booking extends BaseEntity {
   booking_id: number;
 
   @Column()
-  user:object;
+  user: object;
 
   @Column()
   provider_id: number;
@@ -28,7 +24,7 @@ export class Booking extends BaseEntity {
   provider_name: string;
 
   @Column()
-  product:object;
+  product: object;
 
   @Column()
   dentist_id: number;

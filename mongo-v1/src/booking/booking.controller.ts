@@ -2,31 +2,46 @@ import { Controller, Post, Body, Get, Param, ValidationPipe, ParseIntPipe} from 
 import { BookingService } from './booking.service';
 import { Booking } from './booking.entity';
 import { CreateBookingDTO } from './middleware/create-booking-dto';
-import { Product } from 'src/products/product.entity';
+import { ApiOkResponse, ApiTags, ApiOperation, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('Booking')
 @Controller('booking')
 export class BookingController {
   constructor(private bookingService: BookingService) {}
 
+  @ApiOperation({ summary: 'Create Booking' })
+  @ApiOkResponse({ description: 'successs' })
+  @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @Post()
+
+  @ApiBody({type:CreateBookingDTO})
   generateBooking(
     @Body(ValidationPipe) createBookingDTO: CreateBookingDTO,
   ): Promise<Booking> {
     return this.bookingService.generateBooking(createBookingDTO);
   }
 
+  @ApiOperation({ summary: 'Get Provider' })
+  @ApiOkResponse({ description: 'successs' })
+  @ApiNotFoundResponse({ description:'Bad requets - input invalid'})
   @Get('/provider/:id')
   getProvider(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
     return this.bookingService.getProvider(id);
   }
 
-  @Get('/product/:id')
-  getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
-    return this.bookingService.getProduct(id);
-  }
+  // @ApiOperation({ summary: 'Get Product' })
+  // @ApiOkResponse({ description: 'successs' })
+  // @ApiNotFoundResponse({ description:'Bad requets - input invalid'})
+  // @Get('/product/:id')
+  // getProduct(@Param('id',ParseIntPipe) id:number):Promise<Booking>{
+  //   return this.bookingService.getProduct(id);
+  // }
 
-  @Get('/dentist/:id')
-  getDentist(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
-    return this.bookingService.getDentist(id);
-  }
+  // @ApiOperation({ summary: 'Get Dentists' })
+  // @ApiOkResponse({ description: 'successs' })
+  // @ApiNotFoundResponse({ description:'Bad requets - input invalid'})
+  // @Get('/dentist/:id')
+  // getDentist(@Param('id',ParseIntPipe) id: number): Promise<Booking> {
+  //   return this.bookingService.getDentist(id);
+  // }
 }

@@ -4,8 +4,6 @@ import { BotBooking } from './botbooking.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
 import { GlobalCityService } from 'src/globalcity/globalcity.service';
 import { ServiceproviderService } from 'src/serviceprovider/serviceprovider.service';
-import { Rasa } from 'src/rasa/rasa.entity';
-import { DentistService } from 'src/dentist/dentist.service';
 
 @Injectable()
 export class BotBookingService {
@@ -13,49 +11,34 @@ export class BotBookingService {
     private botRepository: BotBookingRepository,
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
-    private dentistService: DentistService,
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
-    let rasa = new Rasa();
-    rasa = await this.botRepository.responseRasa(requestFE);
+    let mess = await this.botRepository.setStateToFE(requestFE);
+     let botbooking = new BotBooking();    
+    botbooking = await this.botRepository.sendReplyToRasa(mess);
+    botbooking.data = await this.setDataToFE(requestFE);
 
-    let botbooking = new BotBooking();
-    botbooking.reply_fe = {
-      state: rasa.message_rasa['state'],
-      data: await this.setDataToFE(requestFE, rasa),
-    };
-
-    if (botbooking.reply_fe['state'] == 'follow_infomation') {
-      if (botbooking.reply_fe['data'].length == 0) {
-        botbooking.reply_fe['data'] = rasa.message_rasa;
-      } else {
-        botbooking.reply_fe['message_rasa'] = rasa.message_rasa;
-      }
-    }
-    console.log('Bot Booking state', botbooking.reply_fe);
+    console.log('Bot Booking state', botbooking);
     return botbooking;
   }
 
-  async setDataToFE(requestFE: MessageFEDTO, rasa: Rasa): Promise<any> {
+  async setDataToFE(requestFE: MessageFEDTO): Promise<any> {
     let data = [];
-
-    switch (requestFE.message_fe.state) {
+    switch (requestFE.state) {
       case 'start':
         var user_infor =
-          requestFE.message_fe.message == null
+          requestFE.message == null
             ? []
-            : await this.getUserLoggedInfo(requestFE.message_fe.message);
+            : await this.getUserLoggedInfo(requestFE.message);
         break;
 
       case 'follow_information':
-        data = await this.stateWelcome(requestFE.message_fe.message);
+        data = await this.stateWelcome(requestFE.message);
         return data;
 
       case 'select_location':
-        data = await this.stateSelectLocation(
-          requestFE.message_fe['message'],
-        );
+        data = await this.stateSelectLocation(requestFE['message']);
         return data;
 
       case 'nearest_branch':
@@ -68,26 +51,26 @@ export class BotBookingService {
         ]);
 
       case 'select_service':
-        return await this.getDentists();
+        return await this.getProducts(70, requestFE['message']);
 
       case 'question_name':
-        return rasa.message_rasa;
+        return data;
 
       case 'question_phone_number':
-        return rasa.message_rasa;
+        return data;
 
       case 'question_email':
-        return rasa.message_rasa;
+        return data;
 
       case 'select_doctor':
-        return rasa.message_rasa;
+        return await this.getDentists(71);
 
       case 'date_booking':
-        return rasa.message_rasa;
+        return data;
 
       case 'thankyou_booking':
-        this.sendEmailNotification();
-        return rasa.message_rasa;
+        this.sendEmailNotification(requestFE['data']);
+        return data;
     }
     return !user_infor ? data : user_infor;
   }
@@ -100,6 +83,7 @@ export class BotBookingService {
         Authorization: `Bearer ${token_access}`,
       },
     });
+
     return await axios
       .post('/customer/logged')
       .then((response: any) => {
@@ -129,15 +113,18 @@ export class BotBookingService {
     return await this.serviceproviderService.getAddresses(city);
   }
 
-  async getDentists(): Promise<any> {
-    return await this.dentistService.getDentists();
+  async getDentists(provider_id: number): Promise<any> {
+    return await this.serviceproviderService.getDentists(provider_id);
   }
 
-  async sendEmailNotification():Promise<any>{
-    const nodemailer = require("nodemailer");
-    //let testAccount = await nodemailer.createTestAccount();
+  async getProducts(provider_id: number, kind: string): Promise<any> {
+    return await this.serviceproviderService.getProducts(provider_id, kind);
+  }
+
+  async sendEmailNotification(data:object): Promise<any> {
+    const nodemailer = require('nodemailer');
     let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: 'smtp.gmail.com',
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
@@ -148,10 +135,11 @@ export class BotBookingService {
 
     let info = await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
-      to: "nguyentandat.email07@gmail.com", // list of receivers
-      subject: "This is your appointment ✔", // Subject line
-      text: "Hello Ms.A,This is your appointment. Please check it again Time Doctor Service Jan 02 2020-15:30 Cameron Implant Korea - Dentium --- Ziconia" , // plain text body
-      html: `<p>Hello<b>Ms.A,</b><br>This is your appointment.Please check it again<br><style type='text/css'>.tg {border-collapse:collapse;border-spacing:0;}.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px; overflow:hidden;padding:10px 5px;word-break:normal;}.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px; font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}.tg .tg-0lax{text-align:left;vertical-align:top}</style><table class="tg"><thead> <tr> <th class='tg-0lax>Time</th> <th class="tg-0lax">Doctor</th> <th class="tg-0lax">Service</th> </tr></thead><tbody> <tr> <td class="tg-0lax">Jan 02 2020 - 15:00</td> <td class="tg-0lax">Cameron</td> <td class="tg-0lax">Implant Korea - Dentium --- Ziconia</td> </tr></tbody></table></p>`, // html body
+      to: data['email'], // list of receivers
+      subject: 'This is your appointment ✔', // Subject line
+      text: '', // plain text body
+      html:
+        '<p>Hi,Ms.A</p><p>This is your appoinment information. Please check it again</p><p>Time:&nbsp;<strong>'+data['time']+'</strong></p><p>Doctor:&nbsp;<strong>'+data['doctor']+'</strong></p><p>Service:&nbsp;<strong>'+data['service']+'</strong></p>',
     });
     await transporter.sendMail(info);
   }

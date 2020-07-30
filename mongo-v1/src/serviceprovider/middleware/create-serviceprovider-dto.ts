@@ -5,24 +5,25 @@ import { CreateProductDTO } from 'src/products/middleware/create-product-dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateServiceProviderDTO {
-  @ApiProperty({ type: Number })
+  @ApiProperty()
   @IsNotEmpty()
   provider_id: number;
 
-  @ApiProperty({ type: String})
+  @ApiProperty()
   @IsNotEmpty()
   provider_name: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({type:Object})
   @IsOptional()
-  location: { city: string; addresses: { address: string }[] };
-
-  @ApiProperty({ type: CreateProductDTO })
+  //location: { city: string; addresses: { address: string }[] };
+  location: object;
+  
+  @ApiProperty({ type:()=> CreateProductDTO })
   @ValidateNested()
   @Type(() => CreateProductDTO)
   products: CreateProductDTO[];
 
-  @ApiProperty({ type: CreateDentistDTO })
+  @ApiProperty({ type:()=> CreateDentistDTO })
   @ValidateNested()
   @Type(() => CreateDentistDTO)
   dentists: CreateDentistDTO[];
