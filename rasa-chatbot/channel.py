@@ -41,14 +41,14 @@ def format_message(item):
 
 
 def merge_message(current_value, item):
-    if isinstance(item['message'], list):
-        print(item['message'])
+    if type(item['message']) is list:
         current_value['message'] = current_value['message'] + item['message']
-    else:
+    elif item['message'] != None:
         current_value['message'].append(item['message'])
 
-    current_value['state'] = current_value['state'] == None \
-        and item['state'] or current_value['state']
+    if current_value['state'] == None:
+        current_value['state'] = item['state']
+
     current_value['data'].update(item['data'])
 
     return current_value
@@ -91,6 +91,7 @@ class MyRestInput(InputChannel):
         return req.json.get("message", None)
 
     def get_metadata(self, req: Request):
+        print("customdata", req.json.get("customData"))
         return req.json.get("customData", None)
 
     def _extract_input_channel(self, req: Request) -> Text:
@@ -168,7 +169,6 @@ class MyRestInput(InputChannel):
                 except Exception:
                     logger.exception("An exception occured while handling "
                                      "user message '{}'.".format(text))
-
                 collector_messages = list(
                     map(format_message, collector.messages))
                 collector_messages = reduce(merge_message, collector_messages,

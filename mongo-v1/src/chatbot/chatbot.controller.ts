@@ -1,11 +1,9 @@
 import { Controller, Post } from '@nestjs/common';
-
 @Controller('chatbot')
 export class ChatbotController {
   constructor() {}
 
   //Demo connect - get request --- response
-
   // @Post()
   // async getReply() {
   //   const token_access =
@@ -26,4 +24,5 @@ export class ChatbotController {
   //       console.log(error);
   //     });
   // }
+
 }

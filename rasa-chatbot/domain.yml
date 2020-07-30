@@ -1,11 +1,17 @@
 intents:
-  - greet
-  - goodbye
-  - ask_name
-  - ask_email
-  - ask_phone
-  - hello_rasa
-
+  - MES_greet
+  - MES_goodbye
+  - ASK_name
+  - ASK_email
+  - ASK_phone_number
+  - HM_message_confirmed
+  - HM_message_hello_rasa
+  - HM_message_new_booking
+  - HM_select_doctor
+  - HM_select_service
+  - HM_select_location
+  - HM_select_date_booking
+  - HM_select_nearest_branch
 forms:
   - info_form
 
@@ -31,71 +37,219 @@ actions:
   - action_check_phone
 
 responses:
+  utter_data_name:
+    - text: '(
+      "data": ("name": "{name}")
+    )'
+
+  utter_data_phone:
+    - text: '(
+      "data": ("phone": "{phone}")
+    )'
+
+  utter_data_email:
+    - text: '(
+      "data": ("email": "{email}")
+    )'
+
   utter_question_name:
     - text: "(
-        \"message\": \"Hello, What's your name?\"
+        \"message\": \"How may i call you?\"
       )"
+
+  utter_state_question_name:
+    - text: '(
+        "state": "question_name"
+      )'
 
   utter_question_email:
     - text: "(
-        \"message\": \"what's your email address?\"
+        \"message\": \"Where can can we send the appointment confirmation? Your email address please?\"
       )"
+
+  utter_state_question_email:
+    - text: '(
+        "state": "question_email"
+      )'
+
+  utter_question_phone_number:
+    - text: "(
+        \"message\": \"Great {name}! And your phone number?\"
+      )"
+  
+  utter_state_question_phone_number:
+    - text: '(
+        "state": "question_phone_number"
+      )'
 
   utter_input_email_again:
     - text: '(
         "message": "please enter your email address in a valid format!"
       )'
 
-  utter_question_phone:
-    - text: "(
-        \"message\": \"what's your telephone number?\"
-      )" 
-
-  utter_thank_you_update:
+  utter_state_question_email_again:
     - text: '(
-        "message": "Thanks for the additional info"
+        "state": "question_email_again"
       )'
 
-  utter_input_phone_again:
+  utter_input_phone_number_again:
     - text: '(
         "message": "please enter your phone in a valid format"
       )'
+  
+  utter_state_question_phone_number_again:
+    - text: '(
+        "state": "question_phone_number_again" 
+      )'
 
-  utter_wellcome:
+  utter_response_welcome:
     - text: '(
         "message": [
           "Wellcome to Elite Dental",
-          "We provide diagnostics, dental care, general, and specialized treatment...",
-          "Do you want to use the following information to make an appointment?"
-        ],
-        "state": "chatbot_wellcome"
+          "We provide diagnostics, dental care, general, and specialized treatment..."
+        ]
       )'
 
-  utter_select_location:
+  utter_state_chatbot_welcome: 
     - text: '(
-        "message": "Select your location",
+        "state": "chatbot_welcome"
+      )'
+  
+  utter_question_follow_information:
+    - text: '(
+        "message": "do you want to use the following information to make an appointment?"
+      )' 
+
+  utter_state_follow_information:
+    - text: '(
+        "state": "follow_information"
+      )'
+
+  utter_question_select_location:
+    - text: '(
+        "message": "Select your location"
+      )'
+
+  utter_state_select_location:
+    - text: '(
         "state": "select_location"
       )'
 
-  utter_hi_human:
+  utter_response_hi_human:
     - text: '(
         "message": "hello {name}",
-        "state": "hello_human",
         "data": ("name": "{name}")
       )'
 
-  utter_bye_human:
+  utter_state_hello_human:
+    - text: '(
+          "state": "hello_human"
+      )'        
+
+  utter_response_bye_human:
     - text: '(
         "message": "bye {name}"
       )'
 
-  utter_submit:
+  utter_state_bye_human:
+    - text: '(
+        "state": "bye human"
+      )'
+
+  utter_response_submit:
     - text: '(
         "message": "All done! \n
                   email: {email} \n
                   phone: {phone}"
       )'
 
+  utter_question_nearest_branch:
+    - text: '(
+        "message": "Those are the nearest branches that we found for you."
+      )'
+  utter_state_nearest_branch:
+    - text: '(
+        "state": "nearest_branch"
+      )'
+
+  utter_question_select_service:
+    - text: '(
+        "message": "Thanks you! What kind of service are you looking for... ?",
+        "state": "select_service"
+      )'
+
+  utter_state_select_service:
+    - text: '(
+        "state": "select_service"
+      )'
+
+  utter_question_select_specific_services:
+    - text: '(
+        "message": "Which kind of <service> in specific?"
+      )'
+  
+  utter_state_select_specific_service:
+    - text: '(
+        "state": "select_specific_service"
+      )'
+  
+  utter_question_select_doctor:
+    - text: '(
+        "message": [
+          "Which doctor do you want?",
+          "Choose no refernce to get the maxium availiability"
+        ]
+      )'
+  utter_state_select_doctor:
+    - text: '(
+        "state": "select_doctor"
+      )'
+
+  utter_response_great:
+    - text: '(
+        "message": "Perfect"
+      )'
+    - text: '(
+        "message": "Great"
+      )'
+  
+  utter_question_date_booking:
+    - text: '(
+        "message": "Which date would you like to book?"
+      )'
+  
+  utter_state_date_booking:
+    - text: '(
+        "state": "date_booking"
+      )'
+  
+  utter_response_thankyou_booking:
+    - text: "(
+        \"message\": [
+          \"Thank you. Please carefully check your booking information.\",
+          \"Don't worry, you can edit the booking info later on \\\"My appointment\\\" section.\"  
+        ]
+      )"
+
+  utter_state_thankyou_booking:
+    - text: '(
+        "state": "thankyou_booking"
+      )'    
+
+  utter_response_thankyou_confirm:
+    - text: '(
+        "message": [
+          "Thank you for your time {name}",
+          "Hope you have a nice and pleasant treatment at our place.",
+          "Please check your email for the booking details."
+        ]
+      )'
+
+  utter_state_thankyou_confirm:
+    - text: '(
+        "state": "thankyou_confirm"
+      )'
+ 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

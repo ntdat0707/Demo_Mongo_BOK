@@ -15,6 +15,7 @@ export class Chatbot extends BaseEntity {
   channel_id: string;
 
   @Column()
+
   message: object;
 
   @Column()
