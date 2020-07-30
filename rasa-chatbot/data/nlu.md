@@ -23,8 +23,13 @@
 - name is [oanh](name)
 
 ## intent: ASK_email
-- [longvox98@gmail.com](email)
+- [human@gmail.com](email)
 - [example@example.com](email)
+- [human@yahoo](email)
+- [human@outlook](email)
+- [human@gmail](email)
+- [human@live](email)
+- [example@example](email) 
 
 ## intent: ASK_phone_number
 - [0349305375](phone)

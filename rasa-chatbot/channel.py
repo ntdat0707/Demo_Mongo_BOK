@@ -92,6 +92,7 @@ class MyRestInput(InputChannel):
         return req.json.get("message", None)
 
     def get_metadata(self, req: Request):
+        print("customdata", req.json.get("customData"))
         return req.json.get("customData", None)
 
     def _extract_input_channel(self, req: Request) -> Text:

@@ -38,7 +38,7 @@ actions:
 
 responses:
   utter_data_name:
-     - text: '(
+    - text: '(
       "data": ("name": "{name}")
     )'
 
