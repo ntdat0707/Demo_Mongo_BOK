@@ -15,7 +15,6 @@ export class CreateServiceProviderDTO {
 
   @ApiProperty({type:Object})
   @IsOptional()
-  //location: { city: string; addresses: { address: string }[] };
   location: object;
   
   @ApiProperty({ type:()=> CreateProductDTO })

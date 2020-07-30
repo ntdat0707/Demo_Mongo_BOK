@@ -6,11 +6,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
   ApiTags,
-  ApiBearerAuth,
   ApiOperation,
-  ApiPropertyOptional,
-  ApiProperty,
-  ApiHeader,
 } from '@nestjs/swagger';
 import { AuthDTO } from './middleware/auth-dto';
 

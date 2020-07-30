@@ -32,7 +32,7 @@ export class BotBookingService {
     switch (requestFE.state) {
       case 'start':
         var user_infor =
-          requestFE.message == null
+          !requestFE.message
             ? []
             : await this.getUserLoggedInfo(requestFE.message);
         break;
@@ -77,7 +77,7 @@ export class BotBookingService {
         this.sendEmailNotification(requestFE['data']);
         return data;
     }
-    return !user_infor ? data : user_infor;
+    return user_infor || data;
   }
 
   async getUserLoggedInfo(token: string): Promise<any> {
@@ -144,7 +144,7 @@ export class BotBookingService {
 
     let services = await this.setServices(data.products['product_price_quote']);
 
-    let info = await transporter.sendMail({
+    await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
       to: data.user['email'], // list of receivers
       subject: 'This is your appointment ✔', // Subject line
@@ -152,17 +152,16 @@ export class BotBookingService {
       html:
         '<p>Hi,Mr/Ms:&nbsp;<strong>' +
         data.user['name'] +
-        '</strong></p><p>This is your appoinment information. Please check it again:</p><p>Service Provider:&nbsp;<strong>' +
+        '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
         data['provider_name'] +
-        '</strong></p><p>Time:&nbsp;<strong>' +
-        data['cus_booking_time'] +
-        '</strong></p><p>Doctor:&nbsp;<strong>' +
+        '</td><td>' +
         data['dentist_name'] +
-        '</strong></p><p>Service:&nbsp;<strong>' +
+        '</td><td>' +
         services +
-        '</strong></p>',
+        '</td><td>' +
+        data['cus_booking_time'] +
+        '</td></tr></tbody></table>',
     });
-    await transporter.sendMail(info);
   }
 
   async setServices(products: object[]): Promise<string> {

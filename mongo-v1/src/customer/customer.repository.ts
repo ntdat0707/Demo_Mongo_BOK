@@ -3,7 +3,6 @@ import { Repository, EntityRepository } from 'typeorm';
 import { CreateCustomerDTO } from './middleware/create-customer-dto';
 import {
   InternalServerErrorException,
-  NotFoundException,
 } from '@nestjs/common';
 
 @EntityRepository(Customer)

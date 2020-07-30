@@ -22,7 +22,7 @@ export class ServiceproviderService {
     });
 
     if (!provider) {
-      throw new NotFoundException(`Not fount this id Provider`);
+      throw new NotFoundException(`Not found this id Provider`);
     } else {
       provider.provider_name = provider_name;
       await provider.save();
@@ -82,5 +82,4 @@ export class ServiceproviderService {
     }
   }
 
-  
 }

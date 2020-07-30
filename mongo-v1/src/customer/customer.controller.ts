@@ -15,7 +15,6 @@ import { JwtAuthGuard } from 'src/auth/middleware/jwt-auth.guard';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
 import { ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Customer')
 @Controller('customer')

@@ -2,7 +2,6 @@ import {
   Controller,
   Post,
   Body,
-  UsePipes,
   ValidationPipe,
   Query,
   Patch,
@@ -12,7 +11,7 @@ import {
 import { ServiceproviderService } from './serviceprovider.service';
 import { CreateServiceProviderDTO } from './middleware/create-serviceprovider-dto';
 import { ServiceProvider } from './serviceprovider.entity';
-import { ApiCreatedResponse, ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse, ApiProperty, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Service Provider')
 @Controller('serviceprovider')
@@ -20,14 +19,14 @@ export class ServiceproviderController {
   constructor(private ServiceProviderService: ServiceproviderService) {}
 
   @ApiOperation({ summary: 'Get All Service Providers' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'success' })
   @Get()
   async getServiceProviders(): Promise<ServiceProvider[]> {
     return await this.ServiceProviderService.getServiceProviders();
   }
 
   @ApiOperation({ summary: 'Create New Service Provider' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'success' })
   @ApiBadRequestResponse({ description:"Input invalid format"})
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @ApiBody({type:CreateServiceProviderDTO})
@@ -39,7 +38,7 @@ export class ServiceproviderController {
   }
 
   @ApiOperation({ summary: 'Update Service Provider' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'success' })
   @ApiBadRequestResponse({ description:"Input invalid format"})
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @Patch('/name')
@@ -51,7 +50,7 @@ export class ServiceproviderController {
   }
 
   @ApiOperation({ summary: 'Update Location' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'Success' })
   @ApiBadRequestResponse({ description:"Input invalid format"})
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @Patch('/location')
@@ -63,7 +62,7 @@ export class ServiceproviderController {
   }
 
   @ApiOperation({ summary: 'Get Addresses by city' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'success' })
   @ApiBadRequestResponse({ description:"Input invalid format"})
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
   @Get('/address')
