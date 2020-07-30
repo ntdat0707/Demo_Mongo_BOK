@@ -1,5 +1,4 @@
-import { ReplyDTO } from "../middleware/sendreply-fe-dto"
-import { IState } from "./IState.interface"
+import { IState } from "../interface/IState.interface"
 
 export class State implements IState {
   public name: string;
@@ -11,7 +10,7 @@ export class State implements IState {
   }
 
   getMessage (data: any) {
-    if (!this.hashMessage) {
+    if (this.hashMessage) {
       return this.hashMessage;
     } 
     return data.message;
@@ -21,8 +20,8 @@ export class State implements IState {
     console.log("excute")
   }
 
-  getRely (data: any) {
+  getDataRely (data: any) {
     console.log('getRely')
-    return new ReplyDTO();
+    return;
   }
 }

@@ -1,57 +1,19 @@
 import { BotBooking } from './botbooking.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
+import { StateService } from "./state.service"
 
 @EntityRepository(BotBooking)
 export class BotBookingRepository extends Repository<BotBooking> {
+  
+  constructor(
+    private stateService: StateService
+  ) {}
+ 
   setStateToFE(requestFE: MessageFEDTO): string {
-    let message_Rasa = '';
-    switch (requestFE.state) {
-      case 'start':
-        message_Rasa = 'hello rasa';
-        break;
-
-      case 'follow_information':
-        message_Rasa = requestFE.message;
-        break;
-
-      case 'select_location':
-        message_Rasa = 'selected_location';
-        break;
-
-      case 'nearest_branch':
-        message_Rasa = 'selected_nearest_branches';
-        break;
-
-      case 'select_service':
-        message_Rasa = 'select_service';
-        break;
-
-      case 'question_name':
-        message_Rasa = requestFE.message;
-        break;
-
-      case 'question_phone_number':
-        message_Rasa = requestFE.message;
-        break;
-
-      case 'question_email':
-        message_Rasa = requestFE.message;
-        break;
-
-      case 'select_doctor':
-        message_Rasa = 'select_doctor';
-        break;
-
-      case 'date_booking':
-        message_Rasa = 'choice_date_booking';
-        break;
-
-      case 'thankyou_booking':
-        message_Rasa = requestFE.message;
-        break;
-    }
-    return message_Rasa;
+    let state = this.stateService.getState(requestFE.state)
+    console.log("namestate: ", state.getMessage(requestFE)); 
+    return state.getMessage(requestFE);
   }
 
   async sendReplyToRasa(mess: string): Promise<BotBooking> {
