@@ -11,6 +11,7 @@ import { CustomerModule } from './customer/customer.module';
 import { AuthModule } from './auth/auth.module';
 import { GlobalCityModule } from './globalcity/globalcity.module';
 import { BotbookingModule } from './botbooking/botbooking.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { BotbookingModule } from './botbooking/botbooking.module';
     AuthModule,
     GlobalCityModule,
     BotbookingModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

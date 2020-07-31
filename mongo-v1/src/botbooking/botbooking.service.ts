@@ -130,6 +130,7 @@ export class BotBookingService {
     return await this.bookingService.generateBooking(booking);
   }
 
+  //use nodemailer for send email notifications with parameters Data
   async sendEmailNotification(data: CreateBookingDTO): Promise<any> {
     const nodemailer = require('nodemailer');
     let transporter = nodemailer.createTransport({

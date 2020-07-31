@@ -36,6 +36,7 @@
     "express": "^4.17.1",
     "fastify-swagger": "^3.1.2",
     "mongodb": "^3.5.9",
+    "multer": "^1.4.2",
     "nodemailer": "^2.7.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
