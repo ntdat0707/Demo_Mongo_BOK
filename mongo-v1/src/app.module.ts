@@ -11,7 +11,7 @@ import { ChatbotModule } from './chatbot/chatbot.module';
 import { CustomerModule } from './customer/customer.module';
 import { AuthModule } from './auth/auth.module';
 import { GlobalCityModule } from './globalcity/globalcity.module';
-import { BotbookingModule } from './botbooking/botbooking.module';
+import { BotBookingModule } from './botbooking/botbooking.module';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { BotbookingModule } from './botbooking/botbooking.module';
     CustomerModule,
     AuthModule,
     GlobalCityModule,
-    BotbookingModule,
+    BotBookingModule
   ],
   controllers: [AppController],
   providers: [AppService],

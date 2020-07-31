@@ -1,4 +1,5 @@
 import { IState } from "../interface/IState.interface"
+import {MessageFEDTO} from "src/botbooking/middleware/getmessage-fe-dto";
 
 export class State implements IState {
   public name: string;
@@ -10,18 +11,18 @@ export class State implements IState {
     this.hashMessage = "";
   }
 
-  getMessage (data: any) {
+  getMessage (data: MessageFEDTO) {
     if (this.hashMessage) {
       return this.hashMessage;
     } 
     return data.message;
   }
   
-  excute (data: any) {
+  excute (data: MessageFEDTO) {
     console.log("excute")
   }
 
-  getDataRely (data: any) {
+  getDataReply (data: MessageFEDTO) {
     console.log('getRely')
     return;
   }

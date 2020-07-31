@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { State } from './class/state.class';
 import {MessageFEDTO} from '../middleware/getmessage-fe-dto';
 
@@ -9,7 +8,7 @@ export class StateNeartestBranch extends State {
     this.hashMessage = "selected_nearest_branches";
   }
   
-  getDataRely(requestFE: MessageFEDTO) {
+  getDataReply(requestFE: MessageFEDTO): any {
     return [
         'Whitening',
         'Checks-up',

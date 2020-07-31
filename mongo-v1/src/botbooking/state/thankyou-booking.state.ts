@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { State } from './class/state.class';
 import {MessageFEDTO} from '../middleware/getmessage-fe-dto';
 import {CreateBookingDTO} from 'src/booking/middleware/create-booking-dto';
@@ -17,13 +16,13 @@ export class StateThankYouBooking extends State {
     await this.generateBooking(requestFE.data);
   }
 
-  getDataRely(requestFE: MessageFEDTO) {
+  getDataReply(requestFE: MessageFEDTO) {
       return [];
   }
 
-  async sendEmailNotification(data:object): Promise<any> {
+  async sendEmailNotification(data: object): Promise<void> {
     const nodemailer = require('nodemailer');
-    let transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
       secure: false, // true for 465, false for other ports
@@ -33,9 +32,9 @@ export class StateThankYouBooking extends State {
       },
     });
     
-    let services = await this.setServices(data['products']['product_price_quote']);
+    const services = await this.setServices(data['products']['product_price_quote']);
     
-    let info = await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
       to: data['email'], // list of receivers
       subject: 'This is your appointment ✔', // Subject line
@@ -60,9 +59,9 @@ export class StateThankYouBooking extends State {
     return await this.service['bookingservice'].generateBooking(booking);
   }
   
-  async setServices(products: object[]): Promise<string> {
+  async setServices(products: any[]): Promise<string> {
     let services = '';
-    for (let product of products) {
+    for (const product of products) {
       services =
         services == '' ? product['name'] : services + ' & ' + product['name'];
     }

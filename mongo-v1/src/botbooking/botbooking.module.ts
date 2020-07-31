@@ -6,15 +6,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GlobalCityModule } from 'src/globalcity/globalcity.module';
 import { ServiceproviderModule } from 'src/serviceprovider/serviceprovider.module';
 import { DentistModule } from 'src/dentist/dentist.module';
+import { BookingModule } from 'src/booking/booking.module';
+import {StateService} from './state.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([BotBookingRepository]),
     GlobalCityModule,
     ServiceproviderModule,
-    DentistModule
+    DentistModule,
+    BookingModule
   ],
   controllers: [BotbookingController],
-  providers: [BotBookingService],
+  providers: [BotBookingService, StateService]
 })
-export class BotbookingModule {}
+export class BotBookingModule {}

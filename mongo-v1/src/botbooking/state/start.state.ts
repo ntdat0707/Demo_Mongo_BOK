@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { State } from './class/state.class';
 import { MessageFEDTO } from '../middleware/getmessage-fe-dto';
 
@@ -9,7 +8,7 @@ export class StateStart extends State {
     this.hashMessage = "hello rasa";
   }
 
-  async getDataRely(requestFE: MessageFEDTO) {
+  async getDataReply(requestFE: MessageFEDTO) {
     if (requestFE.message) {
       let token = requestFE.message;
       return await this.getUserLoggedInfo(token);
@@ -32,8 +31,7 @@ export class StateStart extends State {
         return response.data;
       })
       .catch((error: any) => {
-        console.log(error);
+        console.log("error");
       });
   }
-
 }

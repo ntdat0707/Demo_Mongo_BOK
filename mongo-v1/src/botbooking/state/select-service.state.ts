@@ -1,6 +1,4 @@
-import { Injectable } from '@nestjs/common';
 import { State } from './class/state.class';
-import {ServiceproviderService} from 'src/serviceprovider/serviceprovider.service';
 import {MessageFEDTO} from '../middleware/getmessage-fe-dto';
 
 export class StateSelectService extends State {
@@ -10,7 +8,7 @@ export class StateSelectService extends State {
     this.hashMessage = "select_service";
   }
 
-  async getDataRely(requestFE: MessageFEDTO) {
+  async getDataReply(requestFE: MessageFEDTO) {
     return this.getProducts(70, requestFE.message);
   }
 

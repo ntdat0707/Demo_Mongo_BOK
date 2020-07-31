@@ -10,7 +10,9 @@ import { StateSelectLocation } from "./state/select-location.state";
 import { StateThankYouBooking } from "./state/thankyou-booking.state";
 import { StateQuestionPhoneNumber } from "./state/question-phone-number.state";
 import { StateFollowInformation } from "./state/follow-information.state";
+import {Injectable} from "@nestjs/common";
 
+@Injectable()
 export class StateService  {
   public states: State[]
   constructor() {
@@ -18,7 +20,7 @@ export class StateService  {
     this.initState();
   }
 
-  initState () {
+  initState (): void {
     this.states.push(...[
       new StateStart(),
       new StateDateBooking(),
@@ -35,8 +37,6 @@ export class StateService  {
   }
 
   getState(stateName: string): State {
-    console.log(stateName)
-    console.log(this.states.find(item => item.name === stateName).name)
     return this.states.find(item => item.name === stateName);
   }
 }
