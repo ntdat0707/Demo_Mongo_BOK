@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { BotBookingRepository } from './botbooking.repository';
 import { BotBooking } from './botbooking.entity';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
-import { GlobalCityService } from 'src/globalcity/globalcity.service';
-import { ServiceproviderService } from 'src/serviceprovider/serviceprovider.service';
-import { CreateBookingDTO } from 'src/booking/middleware/create-booking-dto';
-import { BookingService } from 'src/booking/booking.service';
-import { Booking } from 'src/booking/booking.entity';
+import { GlobalCityService } from '../globalcity/globalcity.service';
+import { ServiceproviderService } from '../serviceprovider/serviceprovider.service';
+import { CreateBookingDTO } from '../booking/middleware/create-booking-dto';
+import { BookingService } from '../booking/booking.service';
+import { Booking } from '../booking/booking.entity';
 
 @Injectable()
 export class BotBookingService {
@@ -18,7 +18,7 @@ export class BotBookingService {
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
-    let mess = await this.botRepository.setStateToFE(requestFE);
+    const mess = await this.botRepository.setStateToFE(requestFE);
     let botbooking = new BotBooking();
     botbooking = await this.botRepository.sendReplyToRasa(mess);
     botbooking.data = await this.setDataToFE(requestFE);
@@ -80,6 +80,7 @@ export class BotBookingService {
     return user_infor || data;
   }
 
+  //Use Token to validation and get data of User with Axios
   async getUserLoggedInfo(token: string): Promise<any> {
     const token_access = token;
     const axios = require('axios').create({
@@ -101,7 +102,7 @@ export class BotBookingService {
   }
 
   async stateWelcome(message: string): Promise<any> {
-    let data = [];
+    const data = [];
     if (message == "That's great") {
       return this.globalcityService.getCities();
     } else {
@@ -133,7 +134,7 @@ export class BotBookingService {
   //use nodemailer for send email notifications with parameters Data
   async sendEmailNotification(data: CreateBookingDTO): Promise<any> {
     const nodemailer = require('nodemailer');
-    let transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
       secure: false, // true for 465, false for other ports
@@ -143,7 +144,7 @@ export class BotBookingService {
       },
     });
 
-    let services = await this.setServices(data.products['product_price_quote']);
+    const services = await this.setServices(data.products['product_price_quote']);
 
     await transporter.sendMail({
       from: 'nguyentandat.email07@gmail.com', // sender address
@@ -165,9 +166,9 @@ export class BotBookingService {
     });
   }
 
-  async setServices(products: object[]): Promise<string> {
+  async setServices(products: Array<Object>): Promise<string> {
     let services = '';
-    for (let product of products) {
+    for (const product of products) {
       services =
         services == '' ? product['name'] : services + ' & ' + product['name'];
     }

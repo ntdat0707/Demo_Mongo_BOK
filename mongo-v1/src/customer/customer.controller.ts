@@ -11,9 +11,9 @@ import {
 import { CustomerService } from './customer.service';
 import { CreateCustomerDTO } from './middleware/create-customer-dto';
 import { Customer } from './customer.entity';
-import { JwtAuthGuard } from 'src/auth/middleware/jwt-auth.guard';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { User } from 'src/auth/user.entity';
+import { JwtAuthGuard } from '../auth/middleware/jwt-auth.guard';
+import { GetUser } from '../auth/get-user.decorator';
+import { User } from '../auth/user.entity';
 import { ApiTags, ApiOperation, ApiOkResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Customer')

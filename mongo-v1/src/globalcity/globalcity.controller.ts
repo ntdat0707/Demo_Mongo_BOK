@@ -10,7 +10,7 @@ export class GlobalCityController {
   constructor(private globalcityService: GlobalCityService) {}
 
   @ApiOperation({ summary: 'Get All Cities' })
-  @ApiOkResponse({ description: 'successs' })
+  @ApiOkResponse({ description: 'success' })
   @Get()
 
   async getCities(): Promise<GlobalCity[]> {
@@ -18,8 +18,8 @@ export class GlobalCityController {
   }
 
   @ApiOperation({ summary: 'Create City' })
-  @ApiOkResponse({ description: 'successs' })
-  @ApiInternalServerErrorResponse({ description:'Interal server errors'})
+  @ApiOkResponse({ description: 'success' })
+  @ApiInternalServerErrorResponse({ description:'Internal server errors'})
   @ApiBody({type:GlobalCityDTO})
   @Post()
   async createCity(@Body(ValidationPipe)cityDTO: GlobalCityDTO): Promise<GlobalCity> {

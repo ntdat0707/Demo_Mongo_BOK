@@ -55,13 +55,13 @@ export class ServiceproviderService {
   }
 
   async getProducts(provider_id: number, kind: string): Promise<object> {
-    let provider = await this.serviceproviderRepositorys.findOne({
+    const provider = await this.serviceproviderRepositorys.findOne({
       provider_id: provider_id,
     });
     if (!provider) {
       throw new NotFoundException(`Not found Provider by id:${provider_id}`);
     }
-    for (let product of provider.products) {
+    for (const product of provider.products) {
       if (product['product_kind'] == kind) {
         console.log("Product:",product);
         return product;
@@ -70,7 +70,7 @@ export class ServiceproviderService {
   }
 
   async getDentists(provider_id: number):Promise<object[]> {
-    let provider = await this.serviceproviderRepositorys.findOne({
+    const provider = await this.serviceproviderRepositorys.findOne({
       provider_id: provider_id,
     });
 

@@ -12,7 +12,7 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
   async createProvider(
     createProviderDTO: CreateServiceProviderDTO,
   ): Promise<ServiceProvider> {
-    let {
+    const {
       provider_id,
       provider_name,
       location,
@@ -27,8 +27,8 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
     provider.products = products;
     provider.dentists = dentists;
 
-    let product_mess = await this.createProduct(products);
-    let dentist_mess = await this.createDentist(dentists);
+    const product_mess = await this.createProduct(products);
+    const dentist_mess = await this.createDentist(dentists);
 
     console.log(product_mess);
     console.log(dentist_mess);
@@ -47,9 +47,9 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
   async updateLocation(provider_id: number, location: string) {}
 
   async getAddresses(selectedCity: string): Promise<string[]> {
-    let dentals = await this.getServiceProviders();
+    const dentals = await this.getServiceProviders();
     let address: string[] = [];
-    for (let dental of dentals) {
+    for (const dental of dentals) {
       if (dental.location['city'] == selectedCity) {
         address =
           address.length != 0
@@ -62,7 +62,7 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
   }
 
   async createProduct(productsDTO: CreateProductDTO[]): Promise<string> {
-    for (let productDTO of productsDTO) {
+    for (const productDTO of productsDTO) {
       const { product_id, product_kind, product_price_quote } = productDTO;
       const product = new Product();
       product.product_id = product_id;
@@ -74,7 +74,7 @@ export class ServiceProviderRepository extends Repository<ServiceProvider> {
   }
 
   async createDentist(dentistsDTO: CreateDentistDTO[]): Promise<string> {
-    for (let dentistDTO of dentistsDTO) {
+    for (const dentistDTO of dentistsDTO) {
       const {
         dentist_id,
         dentist_name,
