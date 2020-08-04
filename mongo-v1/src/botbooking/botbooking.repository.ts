@@ -26,6 +26,10 @@ export class BotBookingRepository extends Repository<BotBooking> {
       case 'select_service':
         message_Rasa = 'select_service';
         break;
+      
+      case 'select_specific_service':
+        message_Rasa = 'select_specific_service';
+        break;
 
       case 'question_name':
         message_Rasa = requestFE.message;
@@ -56,7 +60,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
 
   async sendReplyToRasa(mess: string): Promise<BotBooking> {
     const axios = require('axios').create({
-      baseURL: 'http://192.168.1.104:5005',
+      baseURL: 'http://159.65.137.118:5005',
     });
     return await axios
       .post('webhooks/restnew/webhook', { sender: '123', message: mess })

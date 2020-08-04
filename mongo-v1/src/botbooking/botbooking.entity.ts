@@ -12,8 +12,11 @@ export class BotBooking extends BaseEntity {
   state:string;
 
   @Column()
-  message:string;
+  message:any;
  
+  @Column()
+  type:string;
+
   @Column()
   data:any
 }

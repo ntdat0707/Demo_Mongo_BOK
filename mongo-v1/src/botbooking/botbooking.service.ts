@@ -21,63 +21,96 @@ export class BotBookingService {
     const mess = await this.botRepository.setStateToFE(requestFE);
     let botbooking = new BotBooking();
     botbooking = await this.botRepository.sendReplyToRasa(mess);
-    botbooking.data = await this.setDataToFE(requestFE);
+
+    if (botbooking.state == 'select_specific_service') {
+      botbooking.message = [`Which kind of ${requestFE.message} in specific?`];
+    }
+
+    let dataRes = await this.setDataToFE(requestFE);
+
+    botbooking.data = dataRes['data'];
+    botbooking.type = dataRes['type'];
 
     console.log('Bot Booking state', botbooking);
     return botbooking;
   }
 
   async setDataToFE(requestFE: MessageFEDTO): Promise<any> {
+    let dataRes = {};
     let data = [];
     switch (requestFE.state) {
       case 'start':
-        var user_infor =
-          !requestFE.message
-            ? []
-            : await this.getUserLoggedInfo(requestFE.message);
-        break;
+        if (!requestFE.message) {
+          dataRes['data'] = data;
+        } else {
+          dataRes['data'] = await this.getUserLoggedInfo(requestFE.message);
+        }
+        dataRes['type'] = 'button';
+        return dataRes;
 
       case 'follow_information':
         data = await this.stateWelcome(requestFE.message);
-        return data;
+        dataRes['type'] = 'select_locations';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'select_location':
         data = await this.stateSelectLocation(requestFE['message']);
-        return data;
+        dataRes['type'] = 'select_address';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'nearest_branch':
-        return (data = [
-          'Whitening',
-          'Checks-up',
-          'Braces',
-          'Implant',
-          'Fillings',
-        ]);
+        data = ['Whitening', 'Checks-up', 'Braces', 'Implant', 'Fillings'];
+
+        dataRes['type'] = 'tags_service';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'select_service':
-        return await this.getProducts(70, requestFE['message']);
+        data = await this.getProducts(70, requestFE['message']);
+        dataRes['type'] = 'select_service';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'question_name':
-        return data;
+        dataRes['type'] = 'text_name';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'question_phone_number':
-        return data;
+        dataRes['type'] = 'text_phone_number';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'question_email':
-        return data;
+        dataRes['type'] = 'text_email';
+        dataRes['data'] = data;
+        return dataRes;
+
+      case 'select_specific_service':
+        dataRes['type'] = 'text_service';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'select_doctor':
-        return await this.getDentists(71);
+        data = await this.getDentists(71);
+        dataRes['type'] = 'select_doctor';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'date_booking':
-        return data;
+        dataRes['type'] = 'select_date_booking';
+        dataRes['data'] = data;
+        return dataRes;
 
       case 'thankyou_booking':
+        dataRes['type'] = 'send_email';
+        dataRes['data'] = data;
         await this.generateBooking(requestFE['data']);
         this.sendEmailNotification(requestFE['data']);
-        return data;
+        return dataRes;
     }
-    return user_infor || data;
   }
 
   //Use Token to validation and get data of User with Axios
@@ -142,36 +175,44 @@ export class BotBookingService {
         user: 'nguyentandat.email07@gmail.com', // generated ethereal user
         pass: '091392134112', // generated ethereal password
       },
+      tls: {
+        rejectUnauthorized: false
+    }
     });
 
-    const services = await this.setServices(data.products['product_price_quote']);
+    const services = this.setServices(data.products['product_price_quote']);
+    console.log('Services', services);
 
-    await transporter.sendMail({
-      from: 'nguyentandat.email07@gmail.com', // sender address
-      to: data.user['email'], // list of receivers
-      subject: 'This is your appointment ✔', // Subject line
-      text: '', // plain text body
-      html:
-        '<p>Hi,Mr/Ms:&nbsp;<strong>' +
-        data.user['name'] +
-        '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
-        data['provider_name'] +
-        '</td><td>' +
-        data['dentist_name'] +
-        '</td><td>' +
-        services +
-        '</td><td>' +
-        data['cus_booking_time'] +
-        '</td></tr></tbody></table>',
-    });
+    try {
+      await transporter.sendMail({
+        from: 'nguyentandat.email07@gmail.com', // sender address
+        to: data.user['email'], // list of receivers
+        subject: 'This is your appointment ✔', // Subject line
+        text: '', // plain text body
+        html:
+          '<p>Hi,Mr/Ms:&nbsp;<strong>' +
+          data.user['name'] +
+          '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
+          data['provider_name'] +
+          '</td><td>' +
+          data['dentist_name'] +
+          '</td><td>' +
+          services +
+          '</td><td>' +
+          data['cus_booking_time'] +
+          '</td></tr></tbody></table>',
+      });
+    } catch (err) {
+      console.log('Err mail', err);
+    }
   }
 
-  async setServices(products: Array<Object>): Promise<string> {
+  setServices(products: Array<Object>): string {
     let services = '';
     for (const product of products) {
       services =
         services == '' ? product['name'] : services + ' & ' + product['name'];
     }
-    return await services;
+    return services;
   }
 }

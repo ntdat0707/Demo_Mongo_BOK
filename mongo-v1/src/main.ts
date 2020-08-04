@@ -6,7 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const logger = new Logger('User Logged');
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors();
   const port = 3000;
   const options = new DocumentBuilder()
     .setTitle('Demo Chat Bot Management')
