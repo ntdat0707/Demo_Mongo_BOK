@@ -42,6 +42,7 @@
 - Implant Staumann SLA
 - Ziconia
 - Implant France SLA
+- select_service_specific
  
 ## intent: HM_message_hello_rasa
 - hello rasa
