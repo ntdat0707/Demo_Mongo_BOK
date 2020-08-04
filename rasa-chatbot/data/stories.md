@@ -31,6 +31,9 @@
 * HM_message_new_booking
   - utter_question_name
   - utter_state_question_name
+  - info_form
+  - form{"name": "name"}
+  - form{"name": null}
 > check_new_booking_info
 
 

@@ -49,8 +49,8 @@ responses:
 
   utter_data_email:
     - text: '(
-      "data": ("email": "{email}")
-    )'
+        "data": ("email": "{email}")
+      )'
 
   utter_question_name:
     - text: "(
@@ -159,8 +159,8 @@ responses:
   utter_response_submit:
     - text: '(
         "message": "All done! \n
-                  email: {email} \n
-                  phone: {phone}"
+            email: {email} \n
+            phone: {phone}"
       )'
 
   utter_question_nearest_branch:
