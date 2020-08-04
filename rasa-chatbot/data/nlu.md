@@ -36,6 +36,13 @@
 - [0987654311](phone)
 - [0123456781](phone)
 
+## intent: HM_select_service_specific
+- Implant korea - Dentium
+- Mini implant
+- Implant Staumann SLA
+- Ziconia
+- Implant France SLA
+ 
 ## intent: HM_message_hello_rasa
 - hello rasa
 - hi rasa

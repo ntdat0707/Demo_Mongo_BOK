@@ -62,13 +62,19 @@
 > check_ask_email
 > check_selected_near_location
 * HM_select_service 
+  - utter_question_select_specific_services
+  - utter_state_select_specific_service
+> check_selected_service
+
+## select specific
+> check_selected_service
+* HM_select_service_specific
   - utter_question_select_doctor
   - utter_state_select_doctor
-> check_selected_service
-
+> check_selected_service_specific
 
 ## selected_doctor
-> check_selected_service
+> check_selected_service_specific
 * HM_select_doctor
   - utter_response_great
   - utter_question_date_booking

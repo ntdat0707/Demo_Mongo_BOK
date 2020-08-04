@@ -12,6 +12,7 @@ intents:
   - HM_select_location
   - HM_select_date_booking
   - HM_select_nearest_branch
+  - HM_select_service_specific
 forms:
   - info_form
 
