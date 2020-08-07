@@ -7,6 +7,8 @@ intents:
   - HM_message_confirmed
   - HM_message_hello_rasa
   - HM_message_new_booking
+  - HM_message_my_appointment
+  - HM_message_new_more_booking
   - HM_select_doctor
   - HM_select_service
   - HM_select_location
@@ -14,7 +16,7 @@ intents:
   - HM_select_nearest_branch
   - HM_select_service_specific
 forms:
-  - info_form
+  - name_form
 
 entities:
   - name
@@ -23,14 +25,14 @@ entities:
 
 slots:
   name:
-    type: text
-    initial_value: "human"
+    type: unfeaturized
+    auto_fill: false
   email:
-    type: text
-    initial_value: "example@example.com"
+    type: unfeaturized
+    auto_fill: false
   phone:
-    type: text
-    initial_value: "000000000000"
+    type: unfeaturized
+    auto_fill: false
 
 actions:
   - action_get_name
@@ -241,14 +243,23 @@ responses:
     - text: '(
         "message": [
           "Thank you for your time {name}",
-          "Hope you have a nice and pleasant treatment at our place.",
-          "Please check your email for the booking details."
+          "Hope you have a nice and pleasant treatment at our place."
         ]
       )'
 
   utter_state_thankyou_confirm:
     - text: '(
         "state": "thankyou_confirm"
+      )'
+
+  utter_response_my_appointment:
+    - text: '(
+        "message": "Please check your email for the booking details." 
+      )'
+
+  utter_state_my_appointment:
+    - text: '(
+        "state": "my_appointment"
       )'
  
 session_config:

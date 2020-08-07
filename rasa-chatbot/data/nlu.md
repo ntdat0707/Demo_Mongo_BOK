@@ -54,6 +54,14 @@
 - new booking info
 - new info
 
+## intent: HM_message_new_more_booking
+- add more booking
+- add more info
+
+## intent: HM_message_my_appointment
+- my appointment
+- appointment
+
 ## intent: HM_message_confirmed
 - confirmed 
 - submited

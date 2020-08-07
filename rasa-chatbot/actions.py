@@ -1,5 +1,4 @@
-from typing import Any, Text, Dict, List
-
+from typing import Any, Text, Dict, List, Union
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
@@ -37,9 +36,10 @@ class action_check_email(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_email(tracker.slots['email']):
-            dispatcher.utter_template('utter_question_select_service', tracker)
+            dispatcher.utter_template('utter_question_select_location',
+                                      tracker)
             dispatcher.utter_template('utter_data_email', tracker)
-            dispatcher.utter_template('utter_state_select_service', tracker)
+            dispatcher.utter_template('utter_state_select_location', tracker)
         else:
             dispatcher.utter_template('utter_input_email_again', tracker)
             dispatcher.utter_template('utter_state_question_email_again',
@@ -71,3 +71,44 @@ class acction_check_phone(Action):
             dispatcher.utter_template('utter_state_phone_number_again',
                                       tracker)
         return None
+
+
+class NameForm(FormAction):
+    """Example of a custom form action"""
+    def name(self) -> Text:
+        """Unique identifier of the form"""
+
+        return "name_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+        """A list of required slots that the form has to fill"""
+        return ["name"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        """A dictionary to map required slots to
+            - an extracted entity
+            - intent: value pairs
+            - a whole message
+            or a list of them, where a first match will be picked"""
+        return {
+            "name": [
+                self.from_text(),
+            ],
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        """Define what the form has to do
+            after all required slots are filled"""
+
+        # utter submit template
+        # dispatcher.utter_template("utter_urlAvailable", tracker)
+        dispatcher.utter_template("utter_data_name", tracker)
+        dispatcher.utter_template("utter_question_phone_number", tracker)
+        dispatcher.utter_template("utter_state_question_phone_number", tracker)
+        return []
