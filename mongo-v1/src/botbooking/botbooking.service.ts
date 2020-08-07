@@ -20,7 +20,7 @@ export class BotBookingService {
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     const mess = await this.botRepository.setStateToFE(requestFE);
     let botbooking = new BotBooking();
-    botbooking = await this.botRepository.sendReplyToRasa(mess);
+    botbooking = await this.botRepository.sendReplyToRasa(requestFE,mess);
 
     if (botbooking.state == 'select_specific_service') {
       botbooking.message = [`Which kind of ${requestFE.message} in specific?`];
@@ -50,7 +50,13 @@ export class BotBookingService {
 
       case 'follow_information':
         data = await this.stateWelcome(requestFE.message);
-        dataRes['type'] = 'select_locations';
+        if (
+          requestFE.message.toUpperCase() != "THAT'S GREAT"
+        ) {
+          dataRes['type'] = 'text';
+        } else {
+          dataRes['type'] = 'select_locations';
+        }
         dataRes['data'] = data;
         return dataRes;
 
@@ -74,41 +80,58 @@ export class BotBookingService {
         return dataRes;
 
       case 'question_name':
-        dataRes['type'] = 'text_name';
+        dataRes['type'] = 'text';
         dataRes['data'] = data;
         return dataRes;
 
       case 'question_phone_number':
-        dataRes['type'] = 'text_phone_number';
+        dataRes['type'] = 'text';
         dataRes['data'] = data;
         return dataRes;
 
       case 'question_email':
-        dataRes['type'] = 'text_email';
+        dataRes['type'] = 'text';
         dataRes['data'] = data;
         return dataRes;
 
       case 'select_specific_service':
-        dataRes['type'] = 'text_service';
-        dataRes['data'] = data;
+        dataRes['type'] = 'select_doctor';
+        dataRes['data'] = await this.getDentists(71);
         return dataRes;
 
       case 'select_doctor':
-        data = await this.getDentists(71);
-        dataRes['type'] = 'select_doctor';
+        //data = await this.getDentists(71);
+        dataRes['type'] = 'select_date_booking';
         dataRes['data'] = data;
         return dataRes;
 
       case 'date_booking':
-        dataRes['type'] = 'select_date_booking';
+        dataRes['type'] = 'text_thankyou_booking';
         dataRes['data'] = data;
         return dataRes;
 
       case 'thankyou_booking':
         dataRes['type'] = 'send_email';
         dataRes['data'] = data;
-        await this.generateBooking(requestFE['data']);
-        this.sendEmailNotification(requestFE['data']);
+        // await this.generateBooking(requestFE['data']);
+        // this.sendEmailNotification(requestFE['data']);
+        return dataRes;
+
+      case 'thankyou_confirm':
+        data = await this.stateWelcome(requestFE.message);
+        if (
+          requestFE.message.toUpperCase() != 'ADD MORE BOOKING'
+        ) {
+          dataRes['type'] = 'text';
+        } else {
+          dataRes['type'] = 'select_locations';
+        }
+        dataRes['data'] = data;
+        return dataRes;
+
+      case 'my_appointment':
+        dataRes['type'] = 'my_appointment';
+        dataRes['data'] = data;
         return dataRes;
     }
   }
@@ -136,7 +159,10 @@ export class BotBookingService {
 
   async stateWelcome(message: string): Promise<any> {
     const data = [];
-    if (message == "That's great") {
+    if (
+      message.toUpperCase() == "THAT'S GREAT" ||
+      message.toUpperCase() == 'ADD MORE BOOKING'
+    ) {
       return this.globalcityService.getCities();
     } else {
       return data;
@@ -176,8 +202,8 @@ export class BotBookingService {
         pass: '091392134112', // generated ethereal password
       },
       tls: {
-        rejectUnauthorized: false
-    }
+        rejectUnauthorized: false,
+      },
     });
 
     const services = this.setServices(data.products['product_price_quote']);
