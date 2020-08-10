@@ -28,11 +28,9 @@ slots:
     type: unfeaturized
     auto_fill: false
   email:
-    type: unfeaturized
-    auto_fill: false
+    type: text
   phone:
-    type: unfeaturized
-    auto_fill: false
+    type: text
 
 actions:
   - action_get_name
@@ -77,7 +75,7 @@ responses:
 
   utter_question_phone_number:
     - text: "(
-        \"message\": \"Great {name}! And your phone number?\"
+        \"message\": \"Great {name} ! And your phone number?\"
       )"
   
   utter_state_question_phone_number:

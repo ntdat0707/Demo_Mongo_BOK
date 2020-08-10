@@ -30,8 +30,6 @@ def format_message(item):
     item['text'] = item['text'].replace('(', '{')
     item['text'] = item['text'].replace(')', '}')
 
-    print(item['text'])
-
     if is_json(item['text']):
         data = json.loads(item['text'])
     else:
@@ -92,7 +90,6 @@ class MyRestInput(InputChannel):
         return req.json.get("message", None)
 
     def get_metadata(self, req: Request):
-        print("customdata", req.json.get("customData"))
         return req.json.get("customData", None)
 
     def _extract_input_channel(self, req: Request) -> Text:
@@ -156,6 +153,7 @@ class MyRestInput(InputChannel):
                 collector = CollectingOutputChannel()
                 # noinspection PyBroadException
                 try:
+                    print(text)
                     await on_new_message(
                         UserMessage(
                             text,
@@ -170,6 +168,7 @@ class MyRestInput(InputChannel):
                 except Exception:
                     logger.exception("An exception occured while handling "
                                      "user message '{}'.".format(text))
+                print(collector.messages)
                 collector_messages = list(
                     map(format_message, collector.messages))
                 collector_messages = reduce(merge_message, collector_messages,

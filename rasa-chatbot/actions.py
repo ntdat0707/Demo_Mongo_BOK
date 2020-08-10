@@ -18,9 +18,6 @@ class action_get_name(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        print(tracker.slots)
-        print(tracker.latest_message['text'])
-
         return None
 
 
@@ -61,6 +58,7 @@ class acction_check_phone(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        print(tracker.slots['phone'])
         if self.valid_phone(tracker.slots['phone']):
             dispatcher.utter_template('utter_question_email', tracker)
             dispatcher.utter_template('utter_data_phone', tracker)
@@ -108,6 +106,7 @@ class NameForm(FormAction):
 
         # utter submit template
         # dispatcher.utter_template("utter_urlAvailable", tracker)
+        # print(tracker.slots)
         dispatcher.utter_template("utter_data_name", tracker)
         dispatcher.utter_template("utter_question_phone_number", tracker)
         dispatcher.utter_template("utter_state_question_phone_number", tracker)
