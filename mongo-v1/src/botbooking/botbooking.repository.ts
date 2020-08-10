@@ -66,14 +66,20 @@ export class BotBookingRepository extends Repository<BotBooking> {
     return message_Rasa;
   }
 
-  async sendReplyToRasa(requestFE: MessageFEDTO,mess:string): Promise<BotBooking> {
+  async sendReplyToRasa(
+    requestFE: MessageFEDTO,
+    mess: string,
+  ): Promise<BotBooking> {
     const axios = require('axios').create({
-      baseURL: 'http://192.168.94.100:5005',
+      baseURL: 'http://159.65.137.118:5005',
     });
     return await axios
-      .post('webhooks/restnew/webhook', { sender:requestFE.sender || "123", message: mess })
+      .post('webhooks/restnew/webhook', {
+        sender: requestFE.sender || '123',
+        message: mess,
+      })
       .then(response => {
-        //console.log(response.data);
+        console.log('Response',response);
         return response.data;
       })
       .catch(error => {

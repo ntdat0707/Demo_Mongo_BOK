@@ -20,8 +20,9 @@ export class BotBookingService {
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     const mess = await this.botRepository.setStateToFE(requestFE);
     let botbooking = new BotBooking();
-    botbooking = await this.botRepository.sendReplyToRasa(requestFE,mess);
+    botbooking = await this.botRepository.sendReplyToRasa(requestFE, mess);
 
+    console.log('Bot-Booking', botbooking);
     if (botbooking.state == 'select_specific_service') {
       botbooking.message = [`Which kind of ${requestFE.message} in specific?`];
     }
@@ -50,9 +51,7 @@ export class BotBookingService {
 
       case 'follow_information':
         data = await this.stateWelcome(requestFE.message);
-        if (
-          requestFE.message.toUpperCase() != "THAT'S GREAT"
-        ) {
+        if (requestFE.message.toUpperCase() != "THAT'S GREAT") {
           dataRes['type'] = 'text';
         } else {
           dataRes['type'] = 'select_locations';
@@ -90,7 +89,8 @@ export class BotBookingService {
         return dataRes;
 
       case 'question_email':
-        dataRes['type'] = 'text';
+        data = await this.afterRegisEmail();
+        dataRes['type'] = 'select_locations';
         dataRes['data'] = data;
         return dataRes;
 
@@ -119,9 +119,7 @@ export class BotBookingService {
 
       case 'thankyou_confirm':
         data = await this.stateWelcome(requestFE.message);
-        if (
-          requestFE.message.toUpperCase() != 'ADD MORE BOOKING'
-        ) {
+        if (requestFE.message.toUpperCase() != 'ADD MORE BOOKING') {
           dataRes['type'] = 'text';
         } else {
           dataRes['type'] = 'select_locations';
@@ -167,6 +165,10 @@ export class BotBookingService {
     } else {
       return data;
     }
+  }
+
+  async afterRegisEmail(){
+    return await this.globalcityService.getCities();
   }
 
   async stateSelectLocation(city: string): Promise<string[]> {
