@@ -7,6 +7,7 @@ import { GlobalCityModule } from 'src/globalcity/globalcity.module';
 import { ServiceproviderModule } from 'src/serviceprovider/serviceprovider.module';
 import { BookingModule } from 'src/booking/booking.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { CustomerModule } from 'src/customer/customer.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { AuthModule } from 'src/auth/auth.module';
     GlobalCityModule,
     ServiceproviderModule,
     BookingModule,
-    AuthModule
+    AuthModule,
+    CustomerModule
   ],
   controllers: [BotbookingController],
   providers: [BotBookingService],

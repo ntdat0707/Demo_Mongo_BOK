@@ -7,7 +7,8 @@ import { ServiceproviderService } from '../serviceprovider/serviceprovider.servi
 import { CreateBookingDTO } from '../booking/middleware/create-booking-dto';
 import { BookingService } from '../booking/booking.service';
 import { Booking } from '../booking/booking.entity';
-import { AuthService } from 'src/auth/auth.service';
+import { CustomerService } from 'src/customer/customer.service';
+import { Customer } from 'src/customer/customer.entity';
 require('dotenv').config();
 @Injectable()
 export class BotBookingService {
@@ -16,8 +17,8 @@ export class BotBookingService {
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
     private bookingService: BookingService,
-    private authService: AuthService,
-  ) {}
+    private customerService: CustomerService
+  ) { }
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     const mess = await this.botRepository.setStateToFE(requestFE);
@@ -116,7 +117,7 @@ export class BotBookingService {
         dataRes['type'] = 'send_email';
         dataRes['data'] = data;
         // await this.generateBooking(requestFE['data']);
-        // this.sendEmailNotification(requestFE['data']);
+         this.sendEmailNotification(requestFE['data']);
         return dataRes;
 
       case 'thankyou_confirm':
@@ -190,26 +191,19 @@ export class BotBookingService {
   }
 
   async createCustomer(requestFE: any) {
-    const axios = require('axios').create({
-      baseURL: 'http://localhost:3000',
-    });
-    return await axios
-      .post('customer/create-customer', {
-        name: requestFE.data.name,
-        phone: requestFE.data.phone,
-        email: requestFE.message,
-      })
-      .then(response => {
-        console.log('Create New Customer Status:', response.status);
-        console.log('Customer', response.data);
-        return response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    let customer = new Customer();
+    customer.name = requestFE.data.name;
+    customer.phone = requestFE.data.phone;
+    customer.email = requestFE.message;
+    try {
+      let newCustomer = await this.customerService.createUser(customer);
+    } catch (error) {
+      console.log('Error', error);
+    }
   }
 
-  async signIn(requestFE: any): Promise<string> {
+  async signIn(requestFE: any): Promise<any> {
+
     const axios = require('axios').create({
       baseURL: 'http://localhost:3000',
     });
@@ -259,7 +253,7 @@ export class BotBookingService {
   }
 
   //use nodemailer for send email notifications with parameters Data
-  async sendEmailNotification(data: CreateBookingDTO): Promise<any> {
+  async sendEmailNotification(dataInput: CreateBookingDTO): Promise<any> {
     const nodemailer = require('nodemailer');
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -274,32 +268,37 @@ export class BotBookingService {
       },
     });
 
-    const services = this.setServices(data.products['product_price_quote']);
+    const services = this.setServices(dataInput.products['product_price_quote']);
     console.log('Services', services);
     const ejs = require('ejs');
-
-    ejs.renderFile(__dirname + '../../ejs', async function(err, data) {
+    let dataEJS = {
+      name:dataInput.user['name'],
+      provider:dataInput['provider_name'],
+      dentist_name:dataInput['dentist_name'],
+      cus_booking_time:dataInput['cus_booking_time'],
+    }
+    ejs.renderFile(__dirname + "../../bookingconfirm.ejs",dataEJS, async function (err, data) {
       if (err) {
         console.log(err);
       } else {
         try {
           await transporter.sendMail({
             from: 'nguyentandat.email07@gmail.com', // sender address
-            to: data.user['email'], // list of receivers
+            to: dataInput.user['email'], // list of receivers
             subject: 'This is your appointment ✔', // Subject line
-            text: '', // plain text body
-            html:
-              '<p>Hi,Mr/Ms:&nbsp;<strong>' +
-              data.user['name'] +
-              '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
-              data['provider_name'] +
-              '</td><td>' +
-              data['dentist_name'] +
-              '</td><td>' +
-              services +
-              '</td><td>' +
-              data['cus_booking_time'] +
-              '</td></tr></tbody></table>',
+            text: 'Hi,Mr/Ms'+dataInput.user['name']+'This is your appointment information. Please check it again:'+dataInput['provider_name']+dataInput['dentist_name']+dataInput['cus_booking_time'], // plain text body
+            html:data
+              // '<p>Hi,Mr/Ms:&nbsp;<strong>' +
+              // dataInput.user['name'] +
+              // '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
+              // dataInput['provider_name'] +
+              // '</td><td>' +
+              // dataInput['dentist_name'] +
+              // '</td><td>' +
+              // services +
+              // '</td><td>' +
+              // dataInput['cus_booking_time'] +
+              // '</td></tr></tbody></table>',
           });
         } catch (err) {
           console.log('Err mail', err);
