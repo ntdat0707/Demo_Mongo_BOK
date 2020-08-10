@@ -7,7 +7,7 @@ import { ServiceproviderService } from '../serviceprovider/serviceprovider.servi
 import { CreateBookingDTO } from '../booking/middleware/create-booking-dto';
 import { BookingService } from '../booking/booking.service';
 import { Booking } from '../booking/booking.entity';
-
+require('dotenv').config();
 @Injectable()
 export class BotBookingService {
   constructor(
@@ -138,7 +138,7 @@ export class BotBookingService {
   async getUserLoggedInfo(token: string): Promise<any> {
     const token_access = token;
     const axios = require('axios').create({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://159.65.137.118:3000',
       headers: {
         Authorization: `Bearer ${token_access}`,
       },
@@ -210,6 +210,7 @@ export class BotBookingService {
 
     const services = this.setServices(data.products['product_price_quote']);
     console.log('Services', services);
+    const ejs = require("ejs");
 
     try {
       await transporter.sendMail({

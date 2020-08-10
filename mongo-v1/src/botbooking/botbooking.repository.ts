@@ -1,7 +1,7 @@
 import { BotBooking } from './botbooking.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { MessageFEDTO } from './middleware/getmessage-fe-dto';
-
+require('dotenv').config();
 @EntityRepository(BotBooking)
 export class BotBookingRepository extends Repository<BotBooking> {
   setStateToFE(requestFE: MessageFEDTO): string {
