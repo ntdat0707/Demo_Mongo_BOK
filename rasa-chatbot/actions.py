@@ -106,8 +106,17 @@ class NameForm(FormAction):
 
         # utter submit template
         # dispatcher.utter_template("utter_urlAvailable", tracker)
-        # print(tracker.slots)
-        dispatcher.utter_template("utter_data_name", tracker)
-        dispatcher.utter_template("utter_question_phone_number", tracker)
-        dispatcher.utter_template("utter_state_question_phone_number", tracker)
+        print(tracker.slots)
+        dispatcher.utter_message('(\
+            data": ("name": "{name}")\
+        )'.format(name=tracker.slots['name']))
+
+        dispatcher.utter_message('(\
+            "message": "Great {name} ! And your phone number?"\
+        )'.format(name=tracker.slots['name']))
+
+        dispatcher.utter_message('(\
+            "state": "question_phone_number"\
+        )')
+
         return []

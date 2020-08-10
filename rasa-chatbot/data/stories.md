@@ -34,7 +34,7 @@
   - utter_question_name
   - utter_state_question_name
   - name_form
-  - form{"name": "name"}
+  - form{"name": "name_form"}
   - form{"name": null} 
   - utter_data_name
 > check_new_booking_info

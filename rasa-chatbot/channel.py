@@ -134,7 +134,6 @@ class MyRestInput(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request):
-
             sender_id = await self._extract_sender(request)
             text = self._extract_message(request)
             should_use_stream = rasa.utils.endpoints.bool_arg(request,
@@ -169,6 +168,7 @@ class MyRestInput(InputChannel):
                     logger.exception("An exception occured while handling "
                                      "user message '{}'.".format(text))
                 print(collector.messages)
+                print(collector)
                 collector_messages = list(
                     map(format_message, collector.messages))
                 collector_messages = reduce(merge_message, collector_messages,
