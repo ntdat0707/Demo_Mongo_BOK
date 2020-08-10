@@ -32,7 +32,7 @@ export class CustomerController {
   @ApiOperation({ summary: 'Create User' })
   @ApiOkResponse({ description: 'successs' })
   @ApiInternalServerErrorResponse({ description:'Interal server errors'})
-  @Post()
+  @Post('/create-customer')
   async createUser(
     @Body(ValidationPipe) customerDTO: CreateCustomerDTO,
   ): Promise<Customer> {

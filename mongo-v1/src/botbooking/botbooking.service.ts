@@ -7,6 +7,7 @@ import { ServiceproviderService } from '../serviceprovider/serviceprovider.servi
 import { CreateBookingDTO } from '../booking/middleware/create-booking-dto';
 import { BookingService } from '../booking/booking.service';
 import { Booking } from '../booking/booking.entity';
+import { AuthService } from 'src/auth/auth.service';
 require('dotenv').config();
 @Injectable()
 export class BotBookingService {
@@ -15,6 +16,7 @@ export class BotBookingService {
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
     private bookingService: BookingService,
+    private authService: AuthService,
   ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
@@ -89,7 +91,7 @@ export class BotBookingService {
         return dataRes;
 
       case 'question_email':
-        data = await this.afterRegisEmail();
+        data = await this.afterRegisEmail(requestFE);
         dataRes['type'] = 'select_locations';
         dataRes['data'] = data;
         return dataRes;
@@ -120,6 +122,7 @@ export class BotBookingService {
       case 'thankyou_confirm':
         data = await this.stateWelcome(requestFE.message);
         if (requestFE.message.toUpperCase() != 'ADD MORE BOOKING') {
+          // await this.afterRegisEmail(requestFE);
           dataRes['type'] = 'text';
         } else {
           dataRes['type'] = 'select_locations';
@@ -136,11 +139,11 @@ export class BotBookingService {
 
   //Use Token to validation and get data of User with Axios
   async getUserLoggedInfo(token: string): Promise<any> {
-    const token_access = token;
+    const token_access = 'Bearer ' + token;
     const axios = require('axios').create({
-      baseURL: 'http://159.65.137.118:3000',
+      baseURL: 'http://localhost:3000',
       headers: {
-        Authorization: `Bearer ${token_access}`,
+        Authorization: token_access,
       },
     });
 
@@ -167,8 +170,71 @@ export class BotBookingService {
     }
   }
 
-  async afterRegisEmail(){
-    return await this.globalcityService.getCities();
+  async signUpUser(requestFE: any) {
+    const axios = require('axios').create({
+      baseURL: 'http://localhost:3000',
+    });
+    return await axios
+      .post('auth/signup', {
+        username: requestFE.data.name,
+        email: requestFE.message,
+        password: 'abc@123',
+      })
+      .then(response => {
+        console.log('Response SignUpAfter', response.status);
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  async createCustomer(requestFE: any) {
+    const axios = require('axios').create({
+      baseURL: 'http://localhost:3000',
+    });
+    return await axios
+      .post('customer/create-customer', {
+        name: requestFE.data.name,
+        phone: requestFE.data.phone,
+        email: requestFE.message,
+      })
+      .then(response => {
+        console.log('Create New Customer Status:', response.status);
+        console.log('Customer', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  async signIn(requestFE: any): Promise<string> {
+    const axios = require('axios').create({
+      baseURL: 'http://localhost:3000',
+    });
+    return await axios
+      .post('auth/signin', {
+        username: requestFE.data.name,
+        password: 'abc@123',
+      })
+      .then(response => {
+        console.log('Response SignInAfter', response.status);
+        console.log('Token', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  async afterRegisEmail(request: any): Promise<any> {
+    await this.signUpUser(request);
+    await this.createCustomer(request);
+    let firstLogin = {};
+    firstLogin['token'] = await this.signIn(request);
+    firstLogin['cities'] = await this.globalcityService.getCities();
+    return firstLogin;
   }
 
   async stateSelectLocation(city: string): Promise<string[]> {
@@ -210,30 +276,36 @@ export class BotBookingService {
 
     const services = this.setServices(data.products['product_price_quote']);
     console.log('Services', services);
-    const ejs = require("ejs");
+    const ejs = require('ejs');
 
-    try {
-      await transporter.sendMail({
-        from: 'nguyentandat.email07@gmail.com', // sender address
-        to: data.user['email'], // list of receivers
-        subject: 'This is your appointment ✔', // Subject line
-        text: '', // plain text body
-        html:
-          '<p>Hi,Mr/Ms:&nbsp;<strong>' +
-          data.user['name'] +
-          '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
-          data['provider_name'] +
-          '</td><td>' +
-          data['dentist_name'] +
-          '</td><td>' +
-          services +
-          '</td><td>' +
-          data['cus_booking_time'] +
-          '</td></tr></tbody></table>',
-      });
-    } catch (err) {
-      console.log('Err mail', err);
-    }
+    ejs.renderFile(__dirname + '../../ejs', async function(err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        try {
+          await transporter.sendMail({
+            from: 'nguyentandat.email07@gmail.com', // sender address
+            to: data.user['email'], // list of receivers
+            subject: 'This is your appointment ✔', // Subject line
+            text: '', // plain text body
+            html:
+              '<p>Hi,Mr/Ms:&nbsp;<strong>' +
+              data.user['name'] +
+              '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
+              data['provider_name'] +
+              '</td><td>' +
+              data['dentist_name'] +
+              '</td><td>' +
+              services +
+              '</td><td>' +
+              data['cus_booking_time'] +
+              '</td></tr></tbody></table>',
+          });
+        } catch (err) {
+          console.log('Err mail', err);
+        }
+      }
+    });
   }
 
   setServices(products: Array<Object>): string {
