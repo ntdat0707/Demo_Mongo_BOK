@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GlobalCityModule } from 'src/globalcity/globalcity.module';
 import { ServiceproviderModule } from 'src/serviceprovider/serviceprovider.module';
 import { BookingModule } from 'src/booking/booking.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BookingModule } from 'src/booking/booking.module';
     GlobalCityModule,
     ServiceproviderModule,
     BookingModule,
+    AuthModule
   ],
   controllers: [BotbookingController],
   providers: [BotBookingService],

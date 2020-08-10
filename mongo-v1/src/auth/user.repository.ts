@@ -7,13 +7,13 @@ import { AuthDTO } from "./middleware/auth-dto";
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
     async signUp(authDTO: AuthDTO): Promise<string> {
-        const { id,username, password } = authDTO;
+        const { id,username, password,email } = authDTO;
         const user = new User();
-        user.id = id;
+        user.id = id||123;
         user.username = username;
         user.salt = await bcrypt.genSalt();
         user.password = await this.hashPassword(password, user.salt);
-
+        user.email = email;
         try {
             await user.save();
             return 'Signup Successfully';
@@ -42,6 +42,20 @@ export class UserRepository extends Repository<User> {
         }
         else{
             return null;
+        }
+    }
+
+    async getUser(authDTO: AuthDTO):Promise<any>{
+        const {username,email}=authDTO;
+        const userByName = await this.find({ username });
+        console.log("User get by Name",userByName);
+        if(userByName.length>1){
+            const userByMail = await this.findOne({email});
+            console.log("User get by mail",userByMail);
+            return userByMail;
+        }
+        else{
+            return userByName;
         }
     }
 }

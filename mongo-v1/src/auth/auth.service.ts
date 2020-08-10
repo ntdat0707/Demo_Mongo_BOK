@@ -4,6 +4,7 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { AuthDTO } from './middleware/auth-dto';
 import { JwtPayload } from './middleware/jwt-payload.interface';
+import { User } from './user.entity';
 
 @Injectable()
 export class AuthService {
@@ -30,5 +31,9 @@ export class AuthService {
       `Generated JWT Token with payload ${JSON.stringify(payload)}`,
     );
     return { accessToken };
+  }
+
+  async getUser(auth:AuthDTO):Promise<User>{
+    return this.userRepository.getUser(auth);
   }
 }

@@ -30,8 +30,9 @@ export class CustomerService {
 
   async connectChatbot() {}
 
-  async getUserLoggedInfo(user: User):Promise<Customer> { 
-    const customer = await this.getUser(Number(user.id));
+  async getUserLoggedInfo(user: User):Promise<Customer> {
+     
+    const customer = await this.getUser(user.id);
     return customer;
   }
 }

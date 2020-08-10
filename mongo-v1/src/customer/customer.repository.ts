@@ -10,7 +10,7 @@ export class CustomerRepository extends Repository<Customer> {
   async createUser(customerDTO: CreateCustomerDTO): Promise<Customer> {
     const { user_id, name, phone, email } = customerDTO;
     const customer = new Customer();
-    customer.user_id = user_id;
+    customer.user_id = user_id||123;
     customer.name = name;
     customer.phone = phone;
     customer.email = email;

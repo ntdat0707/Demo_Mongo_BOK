@@ -2,7 +2,7 @@ import { MinLength, MaxLength, Matches, IsString, IsNotEmpty, IsOptional } from 
 import { ApiProperty } from '@nestjs/swagger';
 export class AuthDTO {
     @IsOptional()
-    @ApiProperty({type:String})
+    @ApiProperty({type:Number})
     id:number;
 
     @IsString()
@@ -21,4 +21,7 @@ export class AuthDTO {
     // )
     password: string;
 
+    @IsOptional()
+    @ApiProperty({type:String})
+    email:string;
 }
