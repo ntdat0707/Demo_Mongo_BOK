@@ -5,6 +5,8 @@ pipeline:
   # - name: spellcheck.SpellCheck
   - name: SpacyNLP
   - name: SpacyTokenizer
+  - name: SpacyEntityExtractor
+  - name: RegexFeaturizer
   - name: CRFEntityExtractor
     features:
       [
@@ -26,7 +28,6 @@ pipeline:
       ]
 
   # - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer
@@ -38,27 +39,6 @@ pipeline:
   - name: EntitySynonymMapper
   - name: ResponseSelector
     epochs: 100
-  # - name: DucklingHTTPExtractor
-  # Specify a URL if using Botfront open source or enterprise edition.
-  # Botfront Cloud users must not specify a URL
-  # url: http://duckling:8000
-  # locale: en_US
-  # dimensions:
-  #   - number
-  #   - date
-  #   - amount-of-money
-  #   - credit-card-number
-  #   - distance
-  #   - duration
-  #   - email
-  #   - number
-  #   - ordinal
-  #   - phone-number
-  #   - quantity
-  #   - temperature
-  #   - time
-  #   - url
-  #   - volume
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/

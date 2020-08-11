@@ -1,18 +1,16 @@
---- 
-
 actions: 
   - action_get_name
   - action_check_email
   - action_check_phone
 
-slots: 
-  email: 
-    type: text
-  name: 
-    auto_fill: false
+slots:
+  name:
     type: unfeaturized
-  phone: 
-    type: text
+    auto_fill: false
+  email:
+    type: unfeaturized
+  phone:
+    type: unfeaturized
 
 entities: 
   - name
@@ -40,18 +38,17 @@ intents:
   - HM_select_nearest_branch
   - HM_select_service_specific
 
-responses: 
+responses:
+  utter_data_name:
+    - text: "(
+        \"data\": (
+          \"name\": \"{name}\"
+        )
+      )"
   utter_data_email: 
     - text: "(
         \"data\": (
           \"email\": \"{email}\"
-        )
-      )"
-
-  utter_data_name: 
-    - text: "(
-        \"data\": (
-          \"name\": \"{name}\"
         )
       )"
 

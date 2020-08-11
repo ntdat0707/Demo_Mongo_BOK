@@ -36,7 +36,7 @@
   - name_form
   - form{"name": "name_form"}
   - form{"name": null} 
-  - utter_data_name
+
 > check_new_booking_info
 
 ## ask_name
