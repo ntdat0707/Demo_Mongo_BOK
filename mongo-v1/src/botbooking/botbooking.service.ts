@@ -282,8 +282,8 @@ export class BotBookingService {
     const mailgun = require('nodemailer-mailgun-transport');
     const auth = {
       auth: {
-        api_key: 'd8b96d145f3c1123b7a0f2a68f435cb3-913a5827-e3faf87c',
-        domain: 'm.wisere.com',
+        api_key: process.env.MAIL_GUN_API_KEY,
+        domain: process.env.MAIL_GUN_DOMAIN,
       },
       // proxy: 'http://user:pass@localhost:8080' // optional proxy, default is false
     };
@@ -308,7 +308,7 @@ export class BotBookingService {
       } else {
         try {
           let infor = await nodemailerMailgun.sendMail({
-            from: 'Wisere support <support@m.wisere.com>', // sender address
+            from: `${process.env.MAILGUN_SENDER_NAME} <${process.env.mail_gun_sending_email}>`, // sender address
             to: dataInput.user['email'], // list of receivers
             subject: 'This is your appointment ✔', // Subject line
             html: data,

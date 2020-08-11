@@ -83,7 +83,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
     });
     return await axios
       .post('webhooks/restnew/webhook', {
-        sender: requestFE.sender || '123',
+        sender: requestFE.sender,
         message: mess,
       })
       .then(response => {
