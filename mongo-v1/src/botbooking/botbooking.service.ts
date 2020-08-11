@@ -17,8 +17,8 @@ export class BotBookingService {
     private globalcityService: GlobalCityService,
     private serviceproviderService: ServiceproviderService,
     private bookingService: BookingService,
-    private customerService: CustomerService
-  ) { }
+    private customerService: CustomerService,
+  ) {}
 
   async sendReplyToFE(requestFE: MessageFEDTO): Promise<BotBooking> {
     const mess = await this.botRepository.setStateToFE(requestFE);
@@ -117,7 +117,7 @@ export class BotBookingService {
         dataRes['type'] = 'send_email';
         dataRes['data'] = data;
         // await this.generateBooking(requestFE['data']);
-         this.sendEmailNotification(requestFE['data']);
+        this.sendEmailNotification(requestFE['data']);
         return dataRes;
 
       case 'thankyou_confirm':
@@ -203,7 +203,6 @@ export class BotBookingService {
   }
 
   async signIn(requestFE: any): Promise<any> {
-
     const axios = require('axios').create({
       baseURL: 'http://localhost:3000',
     });
@@ -268,16 +267,29 @@ export class BotBookingService {
       },
     });
 
-    const services = this.setServices(dataInput.products['product_price_quote']);
+    const services = this.setServices(
+      dataInput.products['product_price_quote'],
+    );
     console.log('Services', services);
     const ejs = require('ejs');
     let dataEJS = {
-      name:dataInput.user['name'],
-      provider:dataInput['provider_name'],
-      dentist_name:dataInput['dentist_name'],
-      cus_booking_time:dataInput['cus_booking_time'],
-    }
-    ejs.renderFile(__dirname + "../../bookingconfirm.ejs",dataEJS, async function (err, data) {
+      name: dataInput.user['name'],
+      provider: dataInput['provider_name'],
+      dentist_name: dataInput['dentist_name'],
+      cus_booking_time: dataInput['cus_booking_time'],
+    };
+
+    let pathFile = __dirname + '/../../src/botbooking/emailTemplate/bookingconfirm.ejs';
+
+    console.log('DIRNAME:',__dirname+"/../..");
+    const fs = require('fs');
+    fs.readFile(pathFile, function (err, data) {
+      if (err) throw err;
+      console.log('IT CAN BE READDDDD');
+    });
+
+
+    ejs.renderFile(pathFile, dataEJS, async function(err, data) {
       if (err) {
         console.log(err);
       } else {
@@ -286,19 +298,25 @@ export class BotBookingService {
             from: 'nguyentandat.email07@gmail.com', // sender address
             to: dataInput.user['email'], // list of receivers
             subject: 'This is your appointment ✔', // Subject line
-            text: 'Hi,Mr/Ms'+dataInput.user['name']+'This is your appointment information. Please check it again:'+dataInput['provider_name']+dataInput['dentist_name']+dataInput['cus_booking_time'], // plain text body
-            html:data
-              // '<p>Hi,Mr/Ms:&nbsp;<strong>' +
-              // dataInput.user['name'] +
-              // '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
-              // dataInput['provider_name'] +
-              // '</td><td>' +
-              // dataInput['dentist_name'] +
-              // '</td><td>' +
-              // services +
-              // '</td><td>' +
-              // dataInput['cus_booking_time'] +
-              // '</td></tr></tbody></table>',
+            text:
+              'Hi,Mr/Ms' +
+              dataInput.user['name'] +
+              'This is your appointment information. Please check it again:' +
+              dataInput['provider_name'] +
+              dataInput['dentist_name'] +
+              dataInput['cus_booking_time'], // plain text body
+            html: data,
+            // '<p>Hi,Mr/Ms:&nbsp;<strong>' +
+            // dataInput.user['name'] +
+            // '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
+            // dataInput['provider_name'] +
+            // '</td><td>' +
+            // dataInput['dentist_name'] +
+            // '</td><td>' +
+            // services +
+            // '</td><td>' +
+            // dataInput['cus_booking_time'] +
+            // '</td></tr></tbody></table>',
           });
         } catch (err) {
           console.log('Err mail', err);
