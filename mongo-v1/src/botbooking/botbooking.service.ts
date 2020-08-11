@@ -9,6 +9,7 @@ import { BookingService } from '../booking/booking.service';
 import { Booking } from '../booking/booking.entity';
 import { CustomerService } from 'src/customer/customer.service';
 import { Customer } from 'src/customer/customer.entity';
+import { text } from 'express';
 require('dotenv').config();
 @Injectable()
 export class BotBookingService {
@@ -267,27 +268,17 @@ export class BotBookingService {
       },
     });
 
-    const services = this.setServices(
-      dataInput.products['product_price_quote'],
-    );
-    console.log('Services', services);
     const ejs = require('ejs');
     let dataEJS = {
       name: dataInput.user['name'],
-      provider: dataInput['provider_name'],
+      address: dataInput['address'],
+      provider_name: dataInput['provider_name'],
       dentist_name: dataInput['dentist_name'],
+      services:this.setServices(dataInput['products']['product_price_quote']),
       cus_booking_time: dataInput['cus_booking_time'],
     };
 
     let pathFile = __dirname + '/../../src/botbooking/emailTemplate/bookingconfirm.ejs';
-
-    console.log('DIRNAME:',__dirname+"/../..");
-    const fs = require('fs');
-    fs.readFile(pathFile, function (err, data) {
-      if (err) throw err;
-      console.log('IT CAN BE READDDDD');
-    });
-
 
     ejs.renderFile(pathFile, dataEJS, async function(err, data) {
       if (err) {
@@ -298,25 +289,7 @@ export class BotBookingService {
             from: 'nguyentandat.email07@gmail.com', // sender address
             to: dataInput.user['email'], // list of receivers
             subject: 'This is your appointment ✔', // Subject line
-            text:
-              'Hi,Mr/Ms' +
-              dataInput.user['name'] +
-              'This is your appointment information. Please check it again:' +
-              dataInput['provider_name'] +
-              dataInput['dentist_name'] +
-              dataInput['cus_booking_time'], // plain text body
             html: data,
-            // '<p>Hi,Mr/Ms:&nbsp;<strong>' +
-            // dataInput.user['name'] +
-            // '</strong></p><p>This is your appointment information. Please check it again:</p><table style="width: 80%;" border="5" cellpadding="5"><tbody><tr><td>Service Provider</td><td>Doctor</td><td>Service</td><td>Time</td></tr><tr><td>' +
-            // dataInput['provider_name'] +
-            // '</td><td>' +
-            // dataInput['dentist_name'] +
-            // '</td><td>' +
-            // services +
-            // '</td><td>' +
-            // dataInput['cus_booking_time'] +
-            // '</td></tr></tbody></table>',
           });
         } catch (err) {
           console.log('Err mail', err);
@@ -325,11 +298,10 @@ export class BotBookingService {
     });
   }
 
-  setServices(products: Array<Object>): string {
-    let services = '';
+  setServices(products: Array<Object>): any {
+    let services = [];
     for (const product of products) {
-      services =
-        services == '' ? product['name'] : services + ' & ' + product['name'];
+      services.push(product);
     }
     return services;
   }

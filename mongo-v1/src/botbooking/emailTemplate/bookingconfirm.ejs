@@ -17,7 +17,7 @@
         min-width: 600px;
         max-width: 700px;
         margin: auto;
-        font-family: "Be VietNam", sans-serif;
+        font-family: 'Be VietNam', sans-serif;
         font-size: 14px;
         padding: 40px;
         background-color: #f0f3f8;
@@ -31,7 +31,7 @@
         text-decoration: none;
         color: #6658f3;
         font-weight: 700;
-        font-family: "Roboto", sans-serif;
+        font-family: 'Roboto', sans-serif;
       }
       main {
         margin-top: 40px;
@@ -120,13 +120,20 @@
     <div id="appointment">
       <div class="appointment">
         <header>
-          <img src="https://raw.githubusercontent.com/ntdat0707/Demo_Mongo_BOK/Validation-Database/mongo-v1/src/botbooking/emailTemplate/logo_wisere.svg?token=AQBCC4YI2A3OICSLYUIOILS7GICFC" alt="logo" />
+          <img
+            src="https://raw.githubusercontent.com/ntdat0707/Demo_Mongo_BOK/Validation-Database/mongo-v1/src/botbooking/emailTemplate/logo_wisere.png"
+            alt="logo"
+          />
           <a href="https://beta.wisere.com" target="blank">
             > Visit website
           </a>
         </header>
         <main>
-          <img class="banner" src="https://raw.githubusercontent.com/ntdat0707/Demo_Mongo_BOK/Validation-Database/mongo-v1/src/botbooking/emailTemplate/banner.png?token=AQBCC4YI2A3OICSLYUIOILS7GICFC" alt="banner" />
+          <img
+            class="banner"
+            src="https://raw.githubusercontent.com/ntdat0707/Demo_Mongo_BOK/Validation-Database/mongo-v1/src/botbooking/emailTemplate/banner.png?token=AQBCC4YI2A3OICSLYUIOILS7GICFC"
+            alt="banner"
+          />
           <div class="info">
             <h1>
               Appointment Booking Detail
@@ -136,13 +143,14 @@
                 Hi <%=name%>.
               </p>
               <p>
-                This is your appointment booking at <%=provider%>. Please help to check and do not hesitate to contact
-                us if you get any problems. Thank you!
+                This is your appointment booking at <%=provider_name%>. Please
+                help to check and do not hesitate to contact us if you get any
+                problems. Thank you!
               </p>
             </div>
             <div class="info__place">
               <h2>
-                <%=dentist_name%>
+                <%=provider_name%>
               </h2>
               <table>
                 <tr>
@@ -150,7 +158,7 @@
                     Branch:
                   </td>
                   <td>
-                    371 Truong Chinh, ward 14, Tan Binh dist, HCM
+                    <%=address%>
                   </td>
                 </tr>
                 <tr>
@@ -158,7 +166,7 @@
                     Dentist:
                   </td>
                   <td>
-                    Dr. Ngoc Mai
+                    <%=dentist_name%>
                   </td>
                 </tr>
                 <tr>
@@ -166,7 +174,13 @@
                     Service:
                   </td>
                   <td>
-                    Check-up (500.000vnd)
+                    <ul style="padding:0">
+                      <% services.forEach(function(service){%>
+                      <li>
+                        <%=service.name%> (<%=service.price%> VND)
+                      </li>
+                      <%});%>
+                    </ul>
                   </td>
                 </tr>
                 <tr>
@@ -192,10 +206,12 @@
             Sent from Wisere Marketplace
           </p>
           <p>
-            Wisere, 268 Tran Hung Dao Street, Ward 11 , District 5, HCMC
+            Wisere, <%=address%>
           </p>
           <div>
-            <a href="https://beta.wisere.com" target="blank">Wisere for Business</a>
+            <a href="https://beta.wisere.com" target="blank"
+              >Wisere for Business</a
+            >
             <a href="https://beta.wisere.com" target="blank">View in browser</a>
             <a href="https://beta.wisere.com" target="blank">Unsubscribe</a>
           </div>
