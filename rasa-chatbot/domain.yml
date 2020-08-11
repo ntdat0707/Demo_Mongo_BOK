@@ -1,4 +1,28 @@
-intents:
+--- 
+
+actions: 
+  - action_get_name
+  - action_check_email
+  - action_check_phone
+
+slots: 
+  email: 
+    type: text
+  name: 
+    auto_fill: false
+    type: unfeaturized
+  phone: 
+    type: text
+
+entities: 
+  - name
+  - email
+  - phone
+
+forms: 
+  - name_form
+
+intents: 
   - MES_greet
   - MES_goodbye
   - ASK_name
@@ -15,254 +39,281 @@ intents:
   - HM_select_date_booking
   - HM_select_nearest_branch
   - HM_select_service_specific
-forms:
-  - name_form
 
-entities:
-  - name
-  - email
-  - phone
+responses: 
+  utter_data_email: 
+    - text: "(
+        \"data\": (
+          \"email\": \"{email}\"
+        )
+      )"
 
-slots:
-  name:
-    type: unfeaturized
-    auto_fill: false
-  email:
-    type: text
-  phone:
-    type: text
+  utter_data_name: 
+    - text: "(
+        \"data\": (
+          \"name\": \"{name}\"
+        )
+      )"
 
-actions:
-  - action_get_name
-  - action_check_email
-  - action_check_phone
+  utter_data_phone: 
+    - text: "(
+        \"data\": (
+          \"phone\": \"{phone}\"
+        )
+      )"
 
-responses:
-  utter_data_name:
-    - text: '(
-      "data": ("name": "{name}")
-    )'
+  utter_input_email_again: 
+    - text: "(
+        \"message\": \"please enter your email address in a valid format!\"
+      )"
 
-  utter_data_phone:
-    - text: '(
-      "data": ("phone": "{phone}")
-    )'
+  utter_input_phone_number_again: 
+    - text: "(
+        \"message\": \"please enter your phone in a valid format\"
+      )"
 
-  utter_data_email:
-    - text: '(
-        "data": ("email": "{email}")
-      )'
+  utter_question_date_booking: 
+    - text: "(
+        \"message\": [
+          \"No problem!!!\",
+          \"When you would like to visit our dentist?\",
+          \"Please select date & time\"
+        ]
+      )"
 
-  utter_question_name:
+  utter_question_email: 
+    - text: "(
+        \"message\": [
+          \"Where can can we send the appointment confirmation?\\n
+            Your email address please?\"
+          ]
+      )"
+    - text: "(
+        \"message\": \"Finally, please share your email so that we can send you the appointment confirmation.\"
+      )"
+
+  utter_question_follow_information: 
+    - text: "(
+        \"message\": \"do you want to use the following information to make an appointment?\"
+      )"
+
+  utter_question_name: 
     - text: "(
         \"message\": \"How may i call you?\"
       )"
-
-  utter_state_question_name:
-    - text: '(
-        "state": "question_name"
-      )'
-
-  utter_question_email:
     - text: "(
-        \"message\": \"Where can can we send the appointment confirmation? Your email address please?\"
+        \"message\": \"So, could I know your name please?\"
       )"
 
-  utter_state_question_email:
-    - text: '(
-        "state": "question_email"
-      )'
-
-  utter_question_phone_number:
-    - text: "(
-        \"message\": \"Great {name} ! And your phone number?\"
-      )"
-  
-  utter_state_question_phone_number:
-    - text: '(
-        "state": "question_phone_number"
-      )'
-
-  utter_input_email_again:
-    - text: '(
-        "message": "please enter your email address in a valid format!"
-      )'
-
-  utter_state_question_email_again:
-    - text: '(
-        "state": "question_email_again"
-      )'
-
-  utter_input_phone_number_again:
-    - text: '(
-        "message": "please enter your phone in a valid format"
-      )'
-  
-  utter_state_question_phone_number_again:
-    - text: '(
-        "state": "question_phone_number_again" 
-      )'
-
-  utter_response_welcome:
-    - text: '(
-        "message": [
-          "Wellcome to Elite Dental",
-          "We provide diagnostics, dental care, general, and specialized treatment..."
-        ]
-      )'
-
-  utter_state_chatbot_welcome: 
-    - text: '(
-        "state": "chatbot_welcome"
-      )'
-  
-  utter_question_follow_information:
-    - text: '(
-        "message": "do you want to use the following information to make an appointment?"
-      )' 
-
-  utter_state_follow_information:
-    - text: '(
-        "state": "follow_information"
-      )'
-
-  utter_question_select_location:
-    - text: '(
-        "message": "Select your location"
-      )'
-
-  utter_state_select_location:
-    - text: '(
-        "state": "select_location"
-      )'
-
-  utter_response_hi_human:
-    - text: '(
-        "message": "hello {name}",
-        "data": ("name": "{name}")
-      )'
-
-  utter_state_hello_human:
-    - text: '(
-          "state": "hello_human"
-      )'        
-
-  utter_response_bye_human:
-    - text: '(
-        "message": "bye {name}"
-      )'
-
-  utter_state_bye_human:
-    - text: '(
-        "state": "bye human"
-      )'
-
-  utter_response_submit:
-    - text: '(
-        "message": "All done! \n
-            email: {email} \n
-            phone: {phone}"
-      )'
-
-  utter_question_nearest_branch:
-    - text: '(
-        "message": "Those are the nearest branches that we found for you."
-      )'
-  utter_state_nearest_branch:
-    - text: '(
-        "state": "nearest_branch"
-      )'
-
-  utter_question_select_service:
-    - text: '(
-        "message": "Thanks you! What kind of service are you looking for... ?",
-        "state": "select_service"
-      )'
-
-  utter_state_select_service:
-    - text: '(
-        "state": "select_service"
-      )'
-
-  utter_question_select_specific_services:
-    - text: '(
-        "message": "Which kind of <service> in specific?"
-      )'
-  
-  utter_state_select_specific_service:
-    - text: '(
-        "state": "select_specific_service"
-      )'
-  
-  utter_question_select_doctor:
-    - text: '(
-        "message": [
-          "Which doctor do you want?",
-          "Choose no refernce to get the maxium availiability"
-        ]
-      )'
-  utter_state_select_doctor:
-    - text: '(
-        "state": "select_doctor"
-      )'
-
-  utter_response_great:
-    - text: '(
-        "message": "Perfect"
-      )'
-    - text: '(
-        "message": "Great"
-      )'
-  
-  utter_question_date_booking:
-    - text: '(
-        "message": "Which date would you like to book?"
-      )'
-  
-  utter_state_date_booking:
-    - text: '(
-        "state": "date_booking"
-      )'
-  
-  utter_response_thankyou_booking:
+  utter_question_nearest_branch: 
     - text: "(
         \"message\": [
-          \"Thank you. Please carefully check your booking information.\",
-          \"Don't worry, you can edit the booking info later on \\\"My appointment\\\" section.\"  
+          \"Got it!\",
+          \"Currently, we are operation in <number_location> locations\",
+          \"Which one you would like to visit?\"
         ]
       )"
 
-  utter_state_thankyou_booking:
-    - text: '(
-        "state": "thankyou_booking"
-      )'    
-
-  utter_response_thankyou_confirm:
-    - text: '(
-        "message": [
-          "Thank you for your time {name}",
-          "Hope you have a nice and pleasant treatment at our place."
+  utter_question_phone_number: 
+    - text: "(
+        \"message\": \"And your phone number?\"
+      )"
+    - text: "(
+        \"message\": [
+          \"And your phone number please?\",
+          \"We don't call unnecessarily.\\n
+            We'll use this to coordinate you for your activity with us.\\n
+            So don't worry!!!\"
         ]
-      )'
+      )"
 
-  utter_state_thankyou_confirm:
-    - text: '(
-        "state": "thankyou_confirm"
-      )'
+  utter_question_select_doctor: 
+    - text: "(
+        \"message\": [
+          \"Which dentist would you like to schedule the appointment with?\"
+        ]
+      )"
 
-  utter_response_my_appointment:
-    - text: '(
-        "message": "Please check your email for the booking details." 
-      )'
+  utter_question_select_location: 
+    - text: "(
+        \"message\": \"Select your location\"
+      )"
 
-  utter_state_my_appointment:
-    - text: '(
-        "state": "my_appointment"
-      )'
- 
-session_config:
-  session_expiration_time: 60
+  utter_question_select_service: 
+    - text: "(
+        \"message\": [
+          \"great!!!\",
+          \"What is the exact service are you looking for?\"
+        ]
+      )"
+
+  utter_question_select_specific_services: 
+    - text: "(
+        \"message\": \"Which kind of <service> in specific?\"
+      )"
+
+  utter_response_bye_human: 
+    - text: "(
+        \"message\": \"bye {name}\"
+      )"
+
+  utter_response_great: 
+    - text: "(
+        \"message\": \"Perfect\"
+      )"
+    - text: "(
+        \"message\": \"Great\"
+      )"
+
+  utter_response_hi_human: 
+    - text: "(
+        \"message\": \"hello {name}\"
+      )"
+
+  utter_response_my_appointment: 
+    - text: "(
+        \"message\": [
+          \"Great! Your appointment infomation is on the way to your mailbox.\\n
+            Please help to check!\\n
+            And this is your appointment information, please check carefully.\"
+        ]
+      )"
+
+  utter_response_select_language: 
+    - text: "(
+        \"message\": [
+          \"Thank you for trusting Lotus Dentist for all your needs\",
+          \"To begin with, please select ayour prefered language.\"
+        ]
+      )"
+
+  utter_response_select_location: 
+    - text: "(
+        \"message\": [
+          \"sure\",
+          \"Great to have you with us today!\",
+          \"Now, I would need your details to booking your appointment.\",
+          \"First, please provide your location.\"
+        ]
+      )"
+
+  utter_response_thankyou_booking: 
+    - text: "(
+        \"message\": [
+          \"Thanks for sharing.\"
+        ]
+      )"
+
+  utter_response_thankyou_confirm: 
+    - text: "(
+        \"message\": [
+          \"Do you want to use this login infomation for booking confirmation\"
+        ]
+      )"
+
+  utter_response_welcome: 
+    - text: "(
+        \"message\": [
+          \"Hello my dear, welcome to Lotus Dentist\",
+          \"My name is Wisere and I'm here to help you\",
+          \"Are you visiting for the first time, or is it follow-up visit?\"
+        ]
+      )"
+  
+  utter_state_bye_human: 
+    - text: "(
+        \"state\": \"bye_human\"
+      )"
+
+  utter_state_chatbot_welcome: 
+    - text: "(
+        \"state\": \"chatbot_welcome\"
+      )"
+
+  utter_state_date_booking: 
+    - text: "(
+        \"state\": \"date_booking\"
+      )"
+
+  utter_state_follow_information: 
+    - text: "(
+        \"state\": \"follow_information\"
+      )"
+
+  utter_state_hello_human: 
+    - text: "(
+        \"state\": \"hello_human\"
+      )"
+
+  utter_state_my_appointment: 
+    - text: "(
+        \"state\": \"my_appointment\"
+      )"
+
+  utter_state_nearest_branch: 
+    - text: "(
+        \"state\": \"nearest_branch\"
+      )"
+
+  utter_state_question_email: 
+    - text: "(
+        \"state\": \"question_email\"
+      )"
+
+  utter_state_question_email_again: 
+    - text: "(
+        \"state\": \"question_email_again\"
+      )"
+  utter_state_question_name: 
+    - text: "(
+        \"state\": \"question_name\"
+      )"
+
+  utter_state_question_phone_number: 
+    - text: "(
+        \"state\": \"question_phone_number\"
+      )"
+
+  utter_state_question_phone_number_again: 
+    - text: "(
+        \"state\": \"question_phone_number_again\"
+      )"
+
+  utter_state_select_doctor: 
+    - text: "(
+        \"state\": \"select_doctor\"
+      )"
+
+  utter_state_select_language: 
+    - text: "(
+        \"state\": \"select_language\"
+      )"
+
+  utter_state_select_location: 
+    - text: "(
+        \"state\": \"select_location\"
+      )"
+
+  utter_state_select_service: 
+    - text: "(
+        \"state\": \"select_service\"
+      )"
+
+  utter_state_select_specific_service: 
+    - text: "(
+        \"state\": \"select_specific_service\"
+      )"
+
+  utter_state_thankyou_booking: 
+    - text: "(
+        \"state\": \"thankyou_booking\"
+      )"
+
+  utter_state_thankyou_confirm: 
+    - text: "(
+        \"state\": \"thankyou_confirm\"
+      )"
+
+session_config: 
   carry_over_slots_to_new_session: true
-
-
-
+  session_expiration_time: 60
