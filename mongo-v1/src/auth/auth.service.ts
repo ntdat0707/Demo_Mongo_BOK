@@ -20,20 +20,23 @@ export class AuthService {
   }
 
   async signIn(authDTO: AuthDTO): Promise<{ accessToken: string }> {
-    const username = await this.userRepository.validatePassword(authDTO);
-    if (!username) {
+    const user = await this.userRepository.validatePassword(authDTO);
+    if (!user) {
       throw new UnauthorizedException('Invalid Credentials');
     }
 
-    const payload: JwtPayload = { username };
+    const payload: JwtPayload = { user };
     const accessToken = await this.jwtService.sign(payload);
     this.logger.debug(
       `Generated JWT Token with payload ${JSON.stringify(payload)}`,
     );
+  
     return { accessToken };
   }
 
-  async getUser(auth:AuthDTO):Promise<User>{
+  async getUser(auth: AuthDTO): Promise<User> {
     return this.userRepository.getUser(auth);
   }
+
+
 }

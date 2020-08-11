@@ -20,7 +20,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
         break;
 
       case 'nearest_branch':
-        message_Rasa = 'selected_nearest_branches';
+        message_Rasa = 'nearest_branch';
         break;
 
       case 'select_service':
@@ -39,7 +39,15 @@ export class BotBookingRepository extends Repository<BotBooking> {
         message_Rasa = requestFE.message;
         break;
 
+      case 'question_phone_number_again':
+        message_Rasa = requestFE.message;
+        break;
+
       case 'question_email':
+        message_Rasa = requestFE.message;
+        break;
+
+      case 'question_email_again':
         message_Rasa = requestFE.message;
         break;
 
@@ -79,7 +87,7 @@ export class BotBookingRepository extends Repository<BotBooking> {
         message: mess,
       })
       .then(response => {
-        console.log('Response',response);
+        console.log('Response', response);
         return response.data;
       })
       .catch(error => {

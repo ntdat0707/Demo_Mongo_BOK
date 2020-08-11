@@ -33,4 +33,5 @@ export class AuthController {
   ): Promise<{ accessToken: string }> {
     return this.authService.signIn(authDTO);
   }
+
 }

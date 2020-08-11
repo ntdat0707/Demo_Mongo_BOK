@@ -19,6 +19,7 @@ export class CustomerService {
   async getUsers(): Promise<Customer[]> {
     return this.customerRepository.find();
   }
+
   async getUser(userID: number): Promise<Customer> {
     const user = await this.customerRepository.findOne({ user_id: userID });
     if (!user) {
@@ -28,11 +29,20 @@ export class CustomerService {
     }
   }
 
-  async connectChatbot() {}
+async getUserByEmail(userEmail: string): Promise<Customer> {
+    const user = await this.customerRepository.findOne({ email: userEmail });
+    if (!user) {
+      throw new NotFoundException(`Not found this User id: ${userEmail}`);
+    } else {
+      return user;
+    }
+  }
 
   async getUserLoggedInfo(user: User):Promise<Customer> {
-     console.log("User",user);
-    const customer = await this.getUser(user.id);
+    console.log('User Logged update',user);
+    const customer = await this.getUserByEmail(user.email);
     return customer;
   }
+
+
 }

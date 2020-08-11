@@ -55,4 +55,5 @@ export class CustomerController {
   async getUserLoggedInfo(@GetUser() user: User):Promise<Customer> {
    return this.customerService.getUserLoggedInfo(user);
   }
+
 }

@@ -9,7 +9,7 @@ export class UserRepository extends Repository<User> {
     async signUp(authDTO: AuthDTO): Promise<string> {
         const { id,username, password,email } = authDTO;
         const user = new User();
-        user.id = id||123;
+        user.id = id||this.getRandomInt(9999);
         user.username = username;
         user.salt = await bcrypt.genSalt();
         user.password = await this.hashPassword(password, user.salt);
@@ -29,16 +29,20 @@ export class UserRepository extends Repository<User> {
         }
     }
 
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
     private async hashPassword(password: string, salt: string): Promise<string> {
         return await bcrypt.hash(password, salt);
     }
 
-    async validatePassword(authDTO: AuthDTO): Promise<string> {
-        const { username, password } = authDTO;
-        const user = await this.findOne({ username });
+    async validatePassword(authDTO: AuthDTO): Promise<User> {
+        const { username, password,email } = authDTO;
+        const user = await this.findOne({ email });
 
         if(user && await user.validatePassword(password)){
-            return user.username;
+            return user;
         }
         else{
             return null;

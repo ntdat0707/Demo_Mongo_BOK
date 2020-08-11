@@ -10,6 +10,7 @@ import { Booking } from '../booking/booking.entity';
 import { CustomerService } from 'src/customer/customer.service';
 import { Customer } from 'src/customer/customer.entity';
 import { text } from 'express';
+
 require('dotenv').config();
 @Injectable()
 export class BotBookingService {
@@ -27,9 +28,9 @@ export class BotBookingService {
     botbooking = await this.botRepository.sendReplyToRasa(requestFE, mess);
 
     console.log('Bot-Booking', botbooking);
-    if (botbooking.state == 'select_specific_service') {
-      botbooking.message = [`Which kind of ${requestFE.message} in specific?`];
-    }
+    // if (botbooking.state == 'select_specific_service') {
+    //   botbooking.message = [`Which kind of ${requestFE.message} in specific?`];
+    // }
 
     let dataRes = await this.setDataToFE(requestFE);
 
@@ -71,7 +72,6 @@ export class BotBookingService {
 
       case 'nearest_branch':
         data = ['Whitening', 'Checks-up', 'Braces', 'Implant', 'Fillings'];
-
         dataRes['type'] = 'tags_service';
         dataRes['data'] = data;
         return dataRes;
@@ -92,8 +92,32 @@ export class BotBookingService {
         dataRes['data'] = data;
         return dataRes;
 
+      case 'question_phone_number_again':
+        dataRes['type'] = 'text';
+        dataRes['data'] = data;
+        return dataRes;
+
+      case 'question_email':
+        console.log("REQ_FE state",requestFE.state);
+        if (requestFE.state != null) {
+          data = await this.afterRegisEmail(requestFE);
+          dataRes['type'] = 'select_locations';
+          dataRes['data'] = data;
+        } else {
+          dataRes['type'] = 'text';
+          dataRes['data'] = data;
+        }
+        dataRes['data'] = data;
+
+        return dataRes;
+
       case 'question_email':
         data = await this.afterRegisEmail(requestFE);
+        dataRes['type'] = 'select_locations';
+        dataRes['data'] = data;
+        return dataRes;
+
+      case 'question_email_again':
         dataRes['type'] = 'select_locations';
         dataRes['data'] = data;
         return dataRes;
@@ -124,7 +148,6 @@ export class BotBookingService {
       case 'thankyou_confirm':
         data = await this.stateWelcome(requestFE.message);
         if (requestFE.message.toUpperCase() != 'ADD MORE BOOKING') {
-          // await this.afterRegisEmail(requestFE);
           dataRes['type'] = 'text';
         } else {
           dataRes['type'] = 'select_locations';
@@ -211,6 +234,7 @@ export class BotBookingService {
       .post('auth/signin', {
         username: requestFE.data.name,
         password: 'abc@123',
+        email:requestFE.message,
       })
       .then(response => {
         console.log('Response SignInAfter', response.status);
@@ -255,18 +279,15 @@ export class BotBookingService {
   //use nodemailer for send email notifications with parameters Data
   async sendEmailNotification(dataInput: CreateBookingDTO): Promise<any> {
     const nodemailer = require('nodemailer');
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // true for 465, false for other ports
+    const mailgun = require('nodemailer-mailgun-transport');
+    const auth = {
       auth: {
-        user: 'nguyentandat.email07@gmail.com', // generated ethereal user
-        pass: '091392134112', // generated ethereal password
+        api_key: 'd8b96d145f3c1123b7a0f2a68f435cb3-913a5827-e3faf87c',
+        domain: 'm.wisere.com',
       },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+      // proxy: 'http://user:pass@localhost:8080' // optional proxy, default is false
+    };
+    const nodemailerMailgun = nodemailer.createTransport(mailgun(auth));
 
     const ejs = require('ejs');
     let dataEJS = {
@@ -274,23 +295,25 @@ export class BotBookingService {
       address: dataInput['address'],
       provider_name: dataInput['provider_name'],
       dentist_name: dataInput['dentist_name'],
-      services:this.setServices(dataInput['products']['product_price_quote']),
+      services: this.setServices(dataInput['products']['product_price_quote']),
       cus_booking_time: dataInput['cus_booking_time'],
     };
 
-    let pathFile = __dirname + '/../../src/botbooking/emailTemplate/bookingconfirm.ejs';
+    let pathFile =
+      __dirname + '/../../src/botbooking/emailTemplate/bookingconfirm.ejs';
 
     ejs.renderFile(pathFile, dataEJS, async function(err, data) {
       if (err) {
         console.log(err);
       } else {
         try {
-          await transporter.sendMail({
-            from: 'nguyentandat.email07@gmail.com', // sender address
+          let infor = await nodemailerMailgun.sendMail({
+            from: 'Wisere support <support@m.wisere.com>', // sender address
             to: dataInput.user['email'], // list of receivers
             subject: 'This is your appointment ✔', // Subject line
             html: data,
           });
+          console.log('INFOR:', infor);
         } catch (err) {
           console.log('Err mail', err);
         }

@@ -12,12 +12,12 @@
       rel="stylesheet"
     />
     <style>
-      #appointment {
+        #appointment {
         width: 40%;
         min-width: 600px;
         max-width: 700px;
         margin: auto;
-        font-family: 'Be VietNam', sans-serif;
+        font-family: "Be VietNam", sans-serif;
         font-size: 14px;
         padding: 40px;
         background-color: #f0f3f8;
@@ -31,39 +31,39 @@
         text-decoration: none;
         color: #6658f3;
         font-weight: 700;
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
       }
-      main {
+      .main {
         margin-top: 40px;
         background-color: #ffffff;
         border-radius: 14px 14px 40px 14px;
       }
-      main img {
+      .main img {
         width: 100%;
       }
-      main p {
+      .main p {
         margin: 5px 0;
       }
-      main .info {
+      .main .info {
         padding: 40px;
       }
-      main .info__wellcome {
+      .main .info__wellcome {
         color: #3c3b3b;
         font-weight: 500;
       }
-      main .info h1 {
+      .main .info h1 {
         color: #070d14;
         font-size: 32px;
         margin-bottom: 25px;
       }
-      main .info__place h2 {
+      .main .info__place h2 {
         font-size: 14px;
         margin-bottom: 0;
       }
-      main .info__place {
+      .main .info__place {
         font-weight: bold;
       }
-      main .info__thanks {
+      .main .info__thanks {
         color: #3c3b3b;
         margin-top: 20px;
       }
@@ -87,11 +87,12 @@
       }
       footer div {
         display: flex;
-        justify-content: center;
+        width : fit-content;
+        margin: auto;
       }
       footer div a {
         margin: 5px;
-        color: #727070;
+        color: #727070 !important;
         font-size: 12px;
         cursor: pointer;
       }
@@ -115,6 +116,7 @@
         }
       }
     </style>
+    </style>
   </head>
   <body>
     <div id="appointment">
@@ -128,7 +130,7 @@
             > Visit website
           </a>
         </header>
-        <main>
+        <div class="main">
           <img
             class="banner"
             src="https://raw.githubusercontent.com/ntdat0707/Demo_Mongo_BOK/Validation-Database/mongo-v1/src/botbooking/emailTemplate/banner.png?token=AQBCC4YI2A3OICSLYUIOILS7GICFC"
@@ -143,7 +145,7 @@
                 Hi <%=name%>.
               </p>
               <p>
-                This is your appointment booking at <%=provider_name%>. Please
+                Appointment booking detail at <%=provider_name%>. Please
                 help to check and do not hesitate to contact us if you get any
                 problems. Thank you!
               </p>
@@ -188,7 +190,7 @@
                     Date & Time:
                   </td>
                   <td>
-                    04-Aug-2020 17:00 PM
+                    <%=cus_booking_time%>
                   </td>
                 </tr>
               </table>
@@ -200,7 +202,7 @@
               </p>
             </div>
           </div>
-        </main>
+        </div>
         <footer>
           <p>
             Sent from Wisere Marketplace

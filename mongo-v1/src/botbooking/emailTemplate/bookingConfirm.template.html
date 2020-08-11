@@ -33,37 +33,37 @@
         font-weight: 700;
         font-family: "Roboto", sans-serif;
       }
-      main {
+      .main {
         margin-top: 40px;
         background-color: #ffffff;
         border-radius: 14px 14px 40px 14px;
       }
-      main img {
+      .main img {
         width: 100%;
       }
-      main p {
+      .main p {
         margin: 5px 0;
       }
-      main .info {
+      .main .info {
         padding: 40px;
       }
-      main .info__wellcome {
+      .main .info__wellcome {
         color: #3c3b3b;
         font-weight: 500;
       }
-      main .info h1 {
+      .main .info h1 {
         color: #070d14;
         font-size: 32px;
         margin-bottom: 25px;
       }
-      main .info__place h2 {
+      .main .info__place h2 {
         font-size: 14px;
         margin-bottom: 0;
       }
-      main .info__place {
+      .main .info__place {
         font-weight: bold;
       }
-      main .info__thanks {
+      .main .info__thanks {
         color: #3c3b3b;
         margin-top: 20px;
       }
@@ -87,11 +87,11 @@
       }
       footer div {
         display: flex;
-        justify-content: center;
+        justify-content: center !important;
       }
       footer div a {
         margin: 5px;
-        color: #727070;
+        color: #727070 !important;
         font-size: 12px;
         cursor: pointer;
       }
@@ -125,7 +125,7 @@
             > Visit website
           </a>
         </header>
-        <main>
+        <div class="main">
           <img class="banner" src="./banner.png" alt="banner" />
           <div class="info">
             <h1>
@@ -186,7 +186,7 @@
               </p>
             </div>
           </div>
-        </main>
+        </div>
         <footer>
           <p>
             Sent from Wisere Marketplace
