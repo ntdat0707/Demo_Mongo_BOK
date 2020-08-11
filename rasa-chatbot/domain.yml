@@ -15,8 +15,11 @@ intents:
   - HM_select_date_booking
   - HM_select_nearest_branch
   - HM_select_service_specific
+
 forms:
   - name_form
+  - mail_form
+  - phone_form
 
 entities:
   - name
@@ -28,9 +31,9 @@ slots:
     type: unfeaturized
     auto_fill: false
   email:
-    type: text
+    type: unfeaturized
   phone:
-    type: text
+    type: unfeaturized
 
 actions:
   - action_get_name

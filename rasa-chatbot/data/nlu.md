@@ -30,7 +30,12 @@
 - [human@gmail](email)
 - [human@live](email)
 - [example@example](email) 
-
+- [example@unibiz](email)
+- [example@cinnolab](email)
+- [asdasd@ahbcvsdr.234dsfd](email)
+- [osdfusd788@hjsfdfuo.dusifo](email)
+- [cvbbnm123vcuyi@dshff.aisdo](email)
+    
 ## intent:ASK_phone_number
 - [0349305375](phone)
 - [0987654311](phone)
@@ -94,7 +99,7 @@
 - ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
 
 ## regex:email
-- [a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$
+- [a-zA-Z0-9-.@]+$
 
 ## lookup:name
 data/_lookup/name.txt

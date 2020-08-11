@@ -5,6 +5,8 @@ pipeline:
   # - name: spellcheck.SpellCheck
   - name: SpacyNLP
   - name: SpacyTokenizer
+  - name: SpacyEntityExtractor
+  - name: RegexFeaturizer
   - name: CRFEntityExtractor
     features:
       [
@@ -26,7 +28,6 @@ pipeline:
       ]
 
   # - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer

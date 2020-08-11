@@ -36,7 +36,7 @@
   - name_form
   - form{"name": "name_form"}
   - form{"name": null} 
-  - utter_data_name
+
 > check_new_booking_info
 
 ## ask_name
@@ -48,7 +48,6 @@
 > check_ask_name
 
 ## ask_phone
-> check_new_booking_info
 > check_ask_name
 * ASK_phone_number
   - action_check_phone
@@ -61,6 +60,7 @@
 > check_ask_email      
 
 ## selected_service
+> check_new_booking_info
 > check_selected_near_location
 * HM_select_service 
   - utter_question_select_specific_services
