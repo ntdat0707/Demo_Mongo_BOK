@@ -78,10 +78,12 @@
 ## intent:HM_select_location
 - selected location
 - select city
-
+- select_location
+ 
 ## intent:HM_select_nearest_branch
 - selected service near location
 - nearest branch
+- select_nearest_branch
 
 ## intent:HM_select_service
 - Implant
