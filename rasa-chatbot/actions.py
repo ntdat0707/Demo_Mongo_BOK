@@ -33,10 +33,9 @@ class action_check_email(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         if self.valid_email(tracker.slots['email']):
-            dispatcher.utter_template('utter_question_select_location',
-                                      tracker)
+            dispatcher.utter_template('utter_response_my_appointment', tracker)
             dispatcher.utter_template('utter_data_email', tracker)
-            dispatcher.utter_template('utter_state_select_location', tracker)
+            dispatcher.utter_template('utter_state_my_appointment', tracker)
         else:
             dispatcher.utter_template('utter_input_email_again', tracker)
             dispatcher.utter_template('utter_state_question_email_again',
@@ -108,7 +107,7 @@ class NameForm(FormAction):
         # dispatcher.utter_template("utter_urlAvailable", tracker)
         print(tracker.slots)
         dispatcher.utter_message('''(
-            data": ("name": "{name}")
+            "data": ("name": "{name}")
         )'''.format(name=tracker.slots['name']))
 
         dispatcher.utter_message('''(

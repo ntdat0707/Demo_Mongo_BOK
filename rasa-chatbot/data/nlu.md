@@ -75,6 +75,41 @@
 - confirmed 
 - submited
 
+## intent:HM_message_first_visit
+- first visit
+- first_visit
+- firstvisit
+
+## intent:HM_message_follow_up_visit
+- follow_up_visit
+- followupvisit
+- follow-up-visit
+
+## intent:HM_message_still_use_english
+- still_use_english
+- use english
+- choice english
+- select english
+
+## intent:HM_message_no_use_login_information
+- no_use_login_information
+- no_use_info_login
+- no use login information
+
+## intent:HM_message_continue_use_login_information
+- continue_use_login_information
+- continue use information
+- continueuseinformation
+
+## intent:HM_message_book_another_appointment
+- yes book another appointment
+- continue book another appointment
+- book_another_appointment
+
+## intent:HM_message_no_book_another_appointment
+- no book another appointment
+- no_booking_another_appointment
+
 ## intent:HM_select_location
 - selected location
 - select city

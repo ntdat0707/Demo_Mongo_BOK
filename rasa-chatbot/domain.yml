@@ -8,9 +8,9 @@ slots:
     type: unfeaturized
     auto_fill: false
   email:
-    type: unfeaturized
+    type: text
   phone:
-    type: unfeaturized
+    type: text
 
 entities: 
   - name
@@ -29,15 +29,21 @@ intents:
   - HM_message_confirmed
   - HM_message_hello_rasa
   - HM_message_new_booking
+  - HM_message_first_visit
   - HM_message_my_appointment
+  - HM_message_follow_up_visit
   - HM_message_new_more_booking
+  - HM_message_still_use_english
+  - HM_message_no_use_login_information
+  - HM_message_book_another_appointment
+  - HM_message_no_book_another_appointment
+  - HM_message_continue_use_login_information
   - HM_select_doctor
   - HM_select_service
   - HM_select_location
   - HM_select_date_booking
   - HM_select_nearest_branch
   - HM_select_service_specific
-
 responses:
   utter_data_name:
     - text: "(
@@ -45,6 +51,7 @@ responses:
           \"name\": \"{name}\"
         )
       )"
+
   utter_data_email: 
     - text: "(
         \"data\": (
@@ -112,9 +119,6 @@ responses:
       )"
 
   utter_question_phone_number: 
-    - text: "(
-        \"message\": \"And your phone number?\"
-      )"
     - text: "(
         \"message\": [
           \"And your phone number please?\",
@@ -187,7 +191,7 @@ responses:
   utter_response_select_location: 
     - text: "(
         \"message\": [
-          \"sure\",
+          \"Sure\",
           \"Great to have you with us today!\",
           \"Now, I would need your details to booking your appointment.\",
           \"First, please provide your location.\"
@@ -204,8 +208,20 @@ responses:
   utter_response_thankyou_confirm: 
     - text: "(
         \"message\": [
-          \"Thank for spending your time with us.\",
+          \"Thank for spending your time with us.\"
+        ]
+      )"
+
+  utter_question_book_another_appointment:
+    - text: "(
+        \"message\": [
           \"Do you want to book another appointment?\"
+        ]
+      )"
+  utter_response_login_information:
+    - text: "(
+        \"message\": [
+          \"Do you want to use this login information for booking  confirmation?\"
         ]
       )"
 
@@ -323,7 +339,17 @@ responses:
   utter_state_bot_bye:
     - text: "(
         \"state\": \"bot_bye\"
-      )"        
+      )"
+
+  utter_state_login_information:
+    - text: "(
+        \"state\": \"login_infomation\"
+      )"
+
+  utter_state_book_another_appointment:
+    - text: "(
+        \"state\": \"book_another_appointment\"
+      )"
 
 session_config: 
   carry_over_slots_to_new_session: true
