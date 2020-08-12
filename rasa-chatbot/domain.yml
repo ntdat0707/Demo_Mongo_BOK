@@ -204,7 +204,16 @@ responses:
   utter_response_thankyou_confirm: 
     - text: "(
         \"message\": [
-          \"Do you want to use this login infomation for booking confirmation\"
+          \"Thank for spending your time with us.\",
+          \"Do you want to book another appointment?\"
+        ]
+      )"
+
+  utter_response_bot_bye:
+    - text: "(
+        \"message\": [
+          \"I got that\",
+          \"We look forward see you soon at Lotus Dentist\"
         ]
       )"
 
@@ -310,6 +319,11 @@ responses:
     - text: "(
         \"state\": \"thankyou_confirm\"
       )"
+
+  utter_state_bot_bye:
+    - text: "(
+        \"state\": \"bot_bye\"
+      )"        
 
 session_config: 
   carry_over_slots_to_new_session: true

@@ -54,18 +54,22 @@
 - hi rasa
 - hey rasa
 - chatbot wellcome
+- hello_rasa
 
 ## intent:HM_message_new_booking
 - new booking info
 - new info
+- new_booking
 
 ## intent:HM_message_new_more_booking
 - add more booking
 - add more info
-
+- new_more_booking
+- 
 ## intent:HM_message_my_appointment
 - my appointment
 - appointment
+- my_appointment
 
 ## intent:HM_message_confirmed
 - confirmed 
@@ -90,10 +94,12 @@
 ## intent:HM_select_doctor
 - select doctor
 - choice doctor
+- select_doctor
 
 ## intent:HM_select_date_booking
 - select date booking
 - choice date booking
+- select_date_booking
 
 ## regex:phone
 - ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
