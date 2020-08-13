@@ -174,7 +174,7 @@ responses:
   utter_response_my_appointment: 
     - text: "(
         \"message\": [
-          \"Great! Your appointment infomation is on the way to your mailbox.\\n
+          \"Great! Your appointment information is on the way to your mailbox.\\n
             Please help to check!\\n
             And this is your appointment information, please check carefully.\"
         ]
@@ -343,7 +343,7 @@ responses:
 
   utter_state_login_information:
     - text: "(
-        \"state\": \"login_infomation\"
+        \"state\": \"login_information\"
       )"
 
   utter_state_book_another_appointment:
