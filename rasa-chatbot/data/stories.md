@@ -30,13 +30,20 @@
 ## selected_near_location
 > check_selected_location
 * HM_select_nearest_branch
-  - utter_question_select_service
-  - utter_state_select_service
+  - utter_question_select_cateservice
+  - utter_state_select_cateservice
 > check_selected_near_location
 
-## select service
+## selected_service
 > check_selected_near_location
 * HM_select_service 
+  - utter_question_select_specific_services
+  - utter_state_select_specific_service
+> check_selected_service
+
+## select specific
+> check_selected_service
+* HM_select_service_specific
   - utter_question_select_doctor
   - utter_state_select_doctor
 > check_selected_service_specific
@@ -80,7 +87,7 @@
 > check_ask_email
 
 ## book another appointment
-> check_continue_user_login_information
+> checkout_continue_user_login_information
 > check_ask_email
 * HM_message_confirmed
   - utter_response_thankyou_confirm
@@ -107,4 +114,4 @@
 * HM_message_continue_use_login_information
   - utter_response_my_appointment
   - utter_state_my_appointment
-> check_continue_user_login_information
+> checkout_continue_user_login_information

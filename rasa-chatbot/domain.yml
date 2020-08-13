@@ -140,7 +140,7 @@ responses:
         \"message\": \"Select your location\"
       )"
 
-  utter_question_select_service: 
+  utter_question_select_cateservice: 
     - text: "(
         \"message\": [
           \"great!!!\",
@@ -316,9 +316,9 @@ responses:
         \"state\": \"select_location\"
       )"
 
-  utter_state_select_service: 
+  utter_state_select_cateservice: 
     - text: "(
-        \"state\": \"select_service\"
+        \"state\": \"select_cateservice\"
       )"
 
   utter_state_select_specific_service: 
