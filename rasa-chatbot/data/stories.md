@@ -80,7 +80,7 @@
 > check_ask_email
 
 ## book another appointment
-> checkout_continue_user_login_information
+> check_continue_user_login_information
 > check_ask_email
 * HM_message_confirmed
   - utter_response_thankyou_confirm
@@ -107,4 +107,4 @@
 * HM_message_continue_use_login_information
   - utter_response_my_appointment
   - utter_state_my_appointment
-> checkout_continue_user_login_information
+> check_continue_user_login_information
