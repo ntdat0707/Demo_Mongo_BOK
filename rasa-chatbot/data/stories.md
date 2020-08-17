@@ -1,7 +1,6 @@
 ## hello rasa
 * HM_message_hello_rasa
   - utter_response_welcome
-  - utter_question_follow_information
   - utter_state_follow_information
 > check_hello_rasa
 

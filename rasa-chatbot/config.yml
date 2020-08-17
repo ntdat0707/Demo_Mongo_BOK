@@ -28,6 +28,10 @@ pipeline:
       ]
 
   # - name: WhitespaceTokenizer
+  - name: "DucklingHTTPExtractor"
+    url: "http://localhost:8000"
+    dimensions: ["email"]
+    timeout: 3
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer

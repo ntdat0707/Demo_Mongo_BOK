@@ -52,7 +52,7 @@ class acction_check_phone(Action):
     def valid_phone(phone):
         return bool(
             re.search(
-                r"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
+                r"([+]*)[-()\s\._/0-9]*$",
                 phone))
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
@@ -65,8 +65,8 @@ class acction_check_phone(Action):
         else:
             dispatcher.utter_template('utter_input_phone_number_again',
                                       tracker)
-            dispatcher.utter_template('utter_state_phone_number_again',
-                                      tracker)
+            dispatcher.utter_template(
+                'utter_state_question_phone_number_again', tracker)
         return None
 
 
@@ -119,122 +119,3 @@ class NameForm(FormAction):
         )''')
 
         return []
-
-
-# class MailForm(FormAction):
-#     """Example of a custom form action"""
-#     def name(self) -> Text:
-#         """Unique identifier of the form"""
-
-#         return "mail_form"
-
-#     @staticmethod
-#     def required_slots(tracker: Tracker) -> List[Text]:
-#         """A list of required slots that the form has to fill"""
-#         return ["email"]
-
-#     @staticmethod
-#     def valid_email(email):
-#         return bool(
-#             re.search(r"[a-zA-Z0-9_.+]+@[a-zA-Z]+[.][a-zA-Z0-9-.]+$", email))
-
-#     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-#         """A dictionary to map required slots to
-#             - an extracted entity
-#             - intent: value pairs
-#             - a whole message
-#             or a list of them, where a first match will be picked"""
-#         return {
-#             "email": [
-#                 self.from_entity(entity='email', intent=["ASK_mail"]),
-#                 self.from_text()
-#             ],
-#         }
-
-#     def validate_mail(
-#         self,
-#         value: Text,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> Dict[Text, Any]:
-#         if self.valid_email(value):
-#             dispatcher.utter_template('utter_input_email_again', **tracker)
-#             dispatcher.utter_template('utter_state_email_again', **tracker)
-
-#             return {"email": None}
-#         return {"email": value}
-
-#     def submit(
-#         self,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> List[Dict]:
-#         """Define what the form has to do
-#             after all required slots are filled"""
-#         dispatcher.utter_template('utter_question_email', **tracker)
-#         dispatcher.utter_template('utter_data_phone', **tracker)
-#         dispatcher.utter_template('utter_state_question_email', **tracker)
-#         return []
-
-# class PhoneForm(FormAction):
-#     """Example of a custom form action"""
-#     def name(self) -> Text:
-#         """Unique identifier of the form"""
-
-#         return "phone_form"
-
-#     @staticmethod
-#     def required_slots(tracker: Tracker) -> List[Text]:
-#         """A list of required slots that the form has to fill"""
-#         return ["phone"]
-
-#     @staticmethod
-#     def valid_phone(phone):
-#         return bool(
-#             re.search(
-#                 r"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$",
-#                 phone))
-
-#     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-#         """A dictionary to map required slots to
-#             - an extracted entity
-#             - intent: value pairs
-#             - a whole message
-#             or a list of them, where a first match will be picked"""
-#         return {
-#             "phone": [
-#                 self.from_entity(entity='phone', intent=["ASK_phone"]),
-#                 self.from_text()
-#             ],
-#         }
-
-#     def validate_phone(
-#         self,
-#         value: Text,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> Dict[Text, Any]:
-#         if self.valid_phone(value):
-#             dispatcher.utter_template('utter_input_phone_number_again',
-#                                       **tracker)
-#             dispatcher.utter_template('utter_state_phone_number_again',
-#                                       **tracker)
-#             return {"phone": None}
-#         return {"phone": value}
-
-#     def submit(
-#         self,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> List[Dict]:
-#         """Define what the form has to do
-#             after all required slots are filled"""
-#         dispatcher.utter_template('utter_question_email', tracker)
-#         dispatcher.utter_template('utter_data_phone', tracker)
-#         dispatcher.utter_template('utter_state_question_email', tracker)
-
-#         return []

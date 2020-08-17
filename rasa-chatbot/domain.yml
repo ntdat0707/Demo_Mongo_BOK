@@ -68,12 +68,12 @@ responses:
 
   utter_input_email_again: 
     - text: "(
-        \"message\": \"please enter your email address in a valid format!\"
+        \"message\": \"Please enter your email address in a valid format!\"
       )"
 
   utter_input_phone_number_again: 
     - text: "(
-        \"message\": \"please enter your phone in a valid format\"
+        \"message\": \"{lease enter your phone in a valid format\"
       )"
 
   utter_question_date_booking: 
@@ -88,7 +88,7 @@ responses:
   utter_question_email: 
     - text: "(
         \"message\": [
-          \"Where can can we send the appointment confirmation?\\n
+          \"Where can can we send the appointment confirmation?<br>
             Your email address please?\"
           ]
       )"
@@ -98,7 +98,7 @@ responses:
 
   utter_question_follow_information: 
     - text: "(
-        \"message\": \"do you want to use the following information to make an appointment?\"
+        \"message\": \"Do you want to use the following information to make an appointment?\"
       )"
 
   utter_question_name: 
@@ -113,7 +113,7 @@ responses:
     - text: "(
         \"message\": [
           \"Got it!\",
-          \"Currently, we are operation in <number_location> locations\",
+          \"Currently, we are operating in <number_location> locations\",
           \"Which one you would like to visit?\"
         ]
       )"
@@ -122,8 +122,8 @@ responses:
     - text: "(
         \"message\": [
           \"And your phone number please?\",
-          \"We don't call unnecessarily.\\n
-            We'll use this to coordinate you for your activity with us.\\n
+          \"We don't call unnecessarily.<br>
+            We'll use this to coordinate you for your activity with us.<br>
             So don't worry!!!\"
         ]
       )"
@@ -155,7 +155,7 @@ responses:
 
   utter_response_bye_human: 
     - text: "(
-        \"message\": \"bye {name}\"
+        \"message\": \"Bye {name}\"
       )"
 
   utter_response_great: 
@@ -168,14 +168,14 @@ responses:
 
   utter_response_hi_human: 
     - text: "(
-        \"message\": \"hello {name}\"
+        \"message\": \"Hello {name}\"
       )"
 
   utter_response_my_appointment: 
     - text: "(
         \"message\": [
-          \"Great! Your appointment information is on the way to your mailbox.\\n
-            Please help to check!\\n
+          \"Great! Your appointment information is on the way to your mailbox.<br>
+            Please help to check!<br>
             And this is your appointment information, please check carefully.\"
         ]
       )"
@@ -184,7 +184,7 @@ responses:
     - text: "(
         \"message\": [
           \"Thank you for trusting Lotus Dentist for all your needs\",
-          \"To begin with, please select ayour prefered language.\"
+          \"To begin with, please select your preferred language.\"
         ]
       )"
 
@@ -229,7 +229,8 @@ responses:
     - text: "(
         \"message\": [
           \"I got that\",
-          \"We look forward see you soon at Lotus Dentist\"
+          \"We look forward see you soon at Lotus Dentist\",
+          \"Have a smile day {name}\"
         ]
       )"
 

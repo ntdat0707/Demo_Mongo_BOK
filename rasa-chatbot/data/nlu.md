@@ -40,6 +40,15 @@
 - [0349305375](phone)
 - [0987654311](phone)
 - [0123456781](phone)
+- [+(123) - 456-78-90](phone)
+- [754-3010](phone)
+- [(541) 754-3010](phone)
+- [+1-541-754-3010](phone)
+- [1-541-754-3010](phone)
+- [001-541-754-3010](phone)
+- [1-541-754-3010](phone)
+- [636-48018](phone)
+- [(089) / 636-48018](phone)
 
 ## intent:HM_select_service_specific
 - Implant korea - Dentium
@@ -139,11 +148,10 @@
 - select_date_booking
 
 ## regex:phone
-- ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
+- ([+]*)[-()\s\._/0-9]*$
 
 ## regex:email
 - [a-zA-Z0-9-.@]+$
 
 ## lookup:name
 data/_lookup/name.txt
-
