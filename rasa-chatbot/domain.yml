@@ -221,7 +221,8 @@ responses:
   utter_response_login_information:
     - text: "(
         \"message\": [
-          \"Do you want to use this login information for booking  confirmation?\"
+          \"Wellcome back to <commany_name>!\",
+          \"Do you wanna use this login information for booking confirmation?\"
         ]
       )"
 
@@ -240,6 +241,13 @@ responses:
           \"Hello my dear, welcome to Lotus Dentist\",
           \"My name is Wisere and I'm here to help you\",
           \"Are you visiting for the first time, or is it follow-up visit?\"
+        ]
+      )"
+
+  utter_quesiton_name_booking:
+    - text: "(
+        \"message\": [
+          \"So, which name you would like to use for booking?\"
         ]
       )"
   

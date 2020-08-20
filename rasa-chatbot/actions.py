@@ -12,15 +12,6 @@ def get_dict_certain_keys(dic, keys):
     return dict(zip(keys, [dic[key] for key in keys]))
 
 
-class action_get_name(Action):
-    def name(self) -> Text:
-        return "action_get_name"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return None
-
-
 class action_check_email(Action):
     def name(self) -> Text:
         return "action_check_email"
@@ -50,10 +41,7 @@ class acction_check_phone(Action):
 
     @staticmethod
     def valid_phone(phone):
-        return bool(
-            re.search(
-                r"([+]*)[-()\s\._/0-9]*$",
-                phone))
+        return bool(re.search(r"([+]*)[-()\s\._/0-9]*$", phone))
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
@@ -88,7 +76,7 @@ class NameForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        return {
+        return 
             "name": [
                 self.from_text(),
             ],
@@ -109,13 +97,50 @@ class NameForm(FormAction):
         dispatcher.utter_message('''(
             "data": ("name": "{name}")
         )'''.format(name=tracker.slots['name']))
-
-        dispatcher.utter_message('''(
-            "message": "Great {name} ! And your phone number?"
-        )'''.format(name=tracker.slots['name']))
-
-        dispatcher.utter_message('''(
-            "state": "question_phone_number"
-        )''')
-
+        dispatcher.utter_template('utter_question_select_location', tracker)
+        dispatcher.utter_template('utter_state_state_location', tracker)
         return []
+
+
+
+class NameBookingForm(FormAction):
+    """Example of a custom form action"""
+    def name(self) -> Text:
+        """Unique identifier of the form"""
+
+        return "name_booking_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+        """A list of required slots that the form has to fill"""
+        return ["name"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        """A dictionary to map required slots to
+            - an extracted entity
+            - intent: value pairs
+            - a whole message
+            or a list of them, where a first match will be picked"""
+        return 
+            "name_booking": [
+                self.from_text(),
+            ],
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        """Define what the form has to do
+            after all required slots are filled"""
+
+        # utter submit template
+        # dispatcher.utter_template("utter_urlAvailable", tracker)
+        print(tracker.slots)
+        dispatcher.utter_template('utter_question_phone_number', tracker)
+        dispatcher.utter_template('utter_state_question_phone_number', tracker)
+        return []
+
+
