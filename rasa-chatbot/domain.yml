@@ -2,9 +2,13 @@ actions:
   - action_get_name
   - action_check_email
   - action_check_phone
+  - action_check_phone_booking
 
 slots:
   name:
+    type: unfeaturized
+    auto_fill: false
+  name_booking:
     type: unfeaturized
     auto_fill: false
   email:
@@ -16,24 +20,33 @@ entities:
   - name
   - email
   - phone
-
+  - name_booking
+  - phone_booking
 forms: 
   - name_form
-
+  - name_booking_form 
 intents: 
   - MES_greet
   - MES_goodbye
   - ASK_name
   - ASK_email
   - ASK_phone_number
+  - ASK_phone_number_booking
+  - HM_message_OTP_true
   - HM_message_confirmed
   - HM_message_hello_rasa
   - HM_message_new_booking
+  - HM_message_email_ready
+  - HM_message_email_exist
   - HM_message_first_visit
+  - HM_message_accept_policy
+  - HM_message_become_member
   - HM_message_my_appointment
   - HM_message_follow_up_visit
+  - HM_message_no_become_member
   - HM_message_new_more_booking
   - HM_message_still_use_english
+  - HM_message_edit_my_appointment
   - HM_message_no_use_login_information
   - HM_message_book_another_appointment
   - HM_message_no_book_another_appointment
@@ -73,7 +86,7 @@ responses:
 
   utter_input_phone_number_again: 
     - text: "(
-        \"message\": \"{lease enter your phone in a valid format\"
+        \"message\": \"Please enter your phone in a valid format\"
       )"
 
   utter_question_date_booking: 
@@ -88,9 +101,9 @@ responses:
   utter_question_email: 
     - text: "(
         \"message\": [
-          \"Where can can we send the appointment confirmation?<br>
-            Your email address please?\"
-          ]
+          \"Where can can we send the appointment confirmation?\",
+          \"Your email address please?\"
+        ]
       )"
     - text: "(
         \"message\": \"Finally, please share your email so that we can send you the appointment confirmation.\"
@@ -109,6 +122,33 @@ responses:
         \"message\": \"So, could I know your name please?\"
       )"
 
+  utter_question_name_booking: 
+    - text: "(
+        \"message\": \"So, which name you would like to use for booking?\"
+      )"
+
+  utter_question_otp:
+    - text: "(
+        \"message\": \"Welcome back to <company_name> {name}\"
+      )"
+  utter_response_become_member:
+    - text: "(
+        \"message\": [
+          \"A small not for you\",
+          \"You only can book appointment susscessfilly when you have an account in our service\",
+          \"Just two clicks and you've become our member\",
+          \"Do you wannan become <company_name> member?\"
+        ]
+      )"
+  
+  utter_response_policy:
+    - text: "(
+        \"message\": [
+          \"This is our term & policy.\",
+          \"Please read & accept for signing up as our member\"
+        ]
+      )"
+      
   utter_question_nearest_branch: 
     - text: "(
         \"message\": [
@@ -121,10 +161,11 @@ responses:
   utter_question_phone_number: 
     - text: "(
         \"message\": [
+          \"I got it\",
           \"And your phone number please?\",
-          \"We don't call unnecessarily.<br>
-            We'll use this to coordinate you for your activity with us.<br>
-            So don't worry!!!\"
+          \"We don't call unnecessarily.\",
+          \"We'll use this to coordinate you for your activity with us.\",
+          \"So don't worry!!!\"
         ]
       )"
 
@@ -137,7 +178,7 @@ responses:
 
   utter_question_select_location: 
     - text: "(
-        \"message\": \"Select your location\"
+        \"message\": \"Please provide your location.\"
       )"
 
   utter_question_select_cateservice: 
@@ -174,9 +215,8 @@ responses:
   utter_response_my_appointment: 
     - text: "(
         \"message\": [
-          \"Great! Your appointment information is on the way to your mailbox.<br>
-            Please help to check!<br>
-            And this is your appointment information, please check carefully.\"
+          \"Great!\",
+          \"This is your appointment information, please check carefully.\"
         ]
       )"
 
@@ -230,6 +270,8 @@ responses:
     - text: "(
         \"message\": [
           \"I got that\",
+          \"Your appointment detail is on the way to your mailbox.\",
+          \"Please help to help check carefully!!!\",
           \"We look forward see you soon at Lotus Dentist\",
           \"Have a smile day {name}\"
         ]
@@ -250,7 +292,14 @@ responses:
           \"So, which name you would like to use for booking?\"
         ]
       )"
-  
+  utter_response_bot_bye_no_booking:
+    - text: "(
+        \"message\": [
+          \"I got that!\",
+          \"Thank you for spending your time with us\",
+          \"Have a smiley day {name}\"
+        ]
+      )"
   utter_state_bye_human: 
     - text: "(
         \"state\": \"bye_human\"
@@ -295,9 +344,16 @@ responses:
     - text: "(
         \"state\": \"question_email_again\"
       )"
+
   utter_state_question_name: 
     - text: "(
         \"state\": \"question_name\"
+      )"
+
+ 
+  utter_state_question_name_booking: 
+    - text: "(
+        \"state\": \"question_name_booking\"
       )"
 
   utter_state_question_phone_number: 
@@ -309,6 +365,17 @@ responses:
     - text: "(
         \"state\": \"question_phone_number_again\"
       )"
+
+  utter_state_question_phone_number_booking: 
+    - text: "(
+        \"state\": \"question_phone_number_booking\"
+      )"
+
+  utter_state_question_phone_number_booking_again: 
+    - text: "(
+        \"state\": \"question_phone_number_booking_again\"
+      )"
+
 
   utter_state_select_doctor: 
     - text: "(
@@ -350,6 +417,11 @@ responses:
         \"state\": \"bot_bye\"
       )"
 
+  utter_state_bot_bye_no_booking:
+    - text: "(
+        \"state\": \"bot_bye_no_booking\"
+      )"
+
   utter_state_login_information:
     - text: "(
         \"state\": \"login_information\"
@@ -360,6 +432,20 @@ responses:
         \"state\": \"book_another_appointment\"
       )"
 
+  utter_state_become_member:
+    - text: "(
+        \"state\": \"become_member\"
+      )"
+
+  utter_state_policy:
+    - text: "(
+        \"state\": \"policy\"
+      )"
+
+  utter_state_question_otp:
+    - text: "
+        \"state\": \"question_otp\"
+      )"
 session_config: 
   carry_over_slots_to_new_session: true
   session_expiration_time: 60

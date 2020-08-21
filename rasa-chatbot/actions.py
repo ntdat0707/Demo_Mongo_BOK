@@ -47,14 +47,36 @@ class acction_check_phone(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         print(tracker.slots['phone'])
         if self.valid_phone(tracker.slots['phone']):
-            dispatcher.utter_template('utter_question_email', tracker)
+            dispatcher.utter_template('utter_response_my_appointment', tracker)
             dispatcher.utter_template('utter_data_phone', tracker)
-            dispatcher.utter_template('utter_state_question_email', tracker)
+            dispatcher.utter_template('utter_state_my_appointment', tracker)
         else:
             dispatcher.utter_template('utter_input_phone_number_again',
                                       tracker)
             dispatcher.utter_template(
                 'utter_state_question_phone_number_again', tracker)
+        return None
+
+
+class acction_check_phone_booking(Action):
+    def name(self) -> Text:
+        return "action_check_phone_booking"
+
+    @staticmethod
+    def valid_phone(phone):
+        return bool(re.search(r"([+]*)[-()\s\._/0-9]*$", phone))
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        if self.valid_phone(tracker.slots['phone_booking']):
+            dispatcher.utter_template('utter_response_my_appointment', tracker)
+            dispatcher.utter_template('utter_data_phone_booking', tracker)
+            dispatcher.utter_template('utter_state_my_appointment', tracker)
+        else:
+            dispatcher.utter_template('utter_input_phone_number_booking_again',
+                                      tracker)
+            dispatcher.utter_template(
+                'utter_state_question_phone_number_booking_again', tracker)
         return None
 
 
@@ -76,7 +98,7 @@ class NameForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        return 
+        return {
             "name": [
                 self.from_text(),
             ],
@@ -95,12 +117,18 @@ class NameForm(FormAction):
         # dispatcher.utter_template("utter_urlAvailable", tracker)
         print(tracker.slots)
         dispatcher.utter_message('''(
+            "message": [
+                "Nice to meet you {name}",
+                "Greate to have you with us today!!!",
+                "Now, I would need your details to book your appointment."
+            ]
+        )'''.format(name=tracker.slots['name']))
+        dispatcher.utter_message('''(
             "data": ("name": "{name}")
         )'''.format(name=tracker.slots['name']))
         dispatcher.utter_template('utter_question_select_location', tracker)
-        dispatcher.utter_template('utter_state_state_location', tracker)
+        dispatcher.utter_template('utter_state_select_location', tracker)
         return []
-
 
 
 class NameBookingForm(FormAction):
@@ -113,7 +141,7 @@ class NameBookingForm(FormAction):
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
         """A list of required slots that the form has to fill"""
-        return ["name"]
+        return ["name_booking"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -121,7 +149,7 @@ class NameBookingForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        return 
+        return {
             "name_booking": [
                 self.from_text(),
             ],
@@ -139,8 +167,8 @@ class NameBookingForm(FormAction):
         # utter submit template
         # dispatcher.utter_template("utter_urlAvailable", tracker)
         print(tracker.slots)
-        dispatcher.utter_template('utter_question_phone_number', tracker)
-        dispatcher.utter_template('utter_state_question_phone_number', tracker)
+        dispatcher.utter_template('utter_question_phone_number_booking',
+                                  tracker)
+        dispatcher.utter_template('utter_state_question_phone_number_booking',
+                                  tracker)
         return []
-
-

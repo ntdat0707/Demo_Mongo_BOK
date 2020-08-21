@@ -50,6 +50,20 @@
 - [636-48018](phone)
 - [(089) / 636-48018](phone)
 
+## intent:ASK_phone_number_booking
+- <booking> [0349305375](phone_booking)
+- <booking> [0987654311](phone_booking)
+- <booking> [0123456781](phone_booking)
+- <booking> [+(123) - 456-78-90](phone_booking)
+- <booking> [754-3010](phone_booking)
+- <booking> [(541) 754-3010](phone_booking)
+- <booking> [+1-541-754-3010](phone_booking)
+- <booking> [1-541-754-3010](phone_booking)
+- <booking> [001-541-754-3010](phone_booking)
+- <booking> [1-541-754-3010](phone_booking)
+- <booking> [636-48018](phone_booking)
+- <booking> [(089) / 636-48018](phone_booking)
+
 ## intent:HM_select_service_specific
 - Implant korea - Dentium
 - Mini implant
@@ -59,6 +73,7 @@
 - select_service_specific
  
 ## intent:HM_message_hello_rasa
+- hi em
 - hello rasa
 - hi rasa
 - hey rasa
@@ -80,6 +95,11 @@
 - appointment
 - my_appointment
 
+## intent:HM_message_edit_my_appointment
+- i need to edit
+- edit_my_appointment
+- edit my appointment
+ 
 ## intent:HM_message_confirmed
 - confirmed 
 - submited
@@ -114,6 +134,31 @@
 - yes book another appointment
 - continue book another appointment
 - book_another_appointment
+
+## intent:HM_message_OTP_true
+- otp true
+- true opt
+- otp_true
+
+## intent:HM_message_email_exist
+- email exist in database
+- email_exist_in_database
+
+## intent:HM_message_email_ready
+- email ready
+- email_ready
+
+## intent:HM_message_no_become_member
+- no become member
+- no_become_member
+
+## intent:HM_message_become_member
+- become_member
+- become member
+
+## intent:HM_message_accept_policy
+- accept policy
+- accept_policy
 
 ## intent:HM_message_no_book_another_appointment
 - no book another appointment
