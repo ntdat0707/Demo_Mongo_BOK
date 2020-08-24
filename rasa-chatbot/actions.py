@@ -82,6 +82,7 @@ class acction_check_phone_booking(Action):
 
 class NameForm(FormAction):
     """Example of a custom form action"""
+
     def name(self) -> Text:
         """Unique identifier of the form"""
 
@@ -103,6 +104,24 @@ class NameForm(FormAction):
                 self.from_text(),
             ],
         }
+
+    # def validate_name(
+    #     self,
+    #     value: Text,
+    #     dispatcher: CollectingDispatcher,
+    #     tracker: Tracker,
+    #     domain: Dict[Text, Any],
+    # ) -> Dict[Text, Any]:
+    #     """Validate cuisine value."""
+
+    #     if value.lower() in self.cuisine_db():
+    #         # validation succeeded, set the value of the "cuisine" slot to value
+    #         return {"cuisine": value}
+    #     else:
+    #         dispatcher.utter_message(template="utter_wrong_cuisine")
+    #         # validation failed, set this slot to None, meaning the
+    #         # user will be asked for the slot again
+    #         return {"cuisine": None}
 
     def submit(
         self,
@@ -133,6 +152,7 @@ class NameForm(FormAction):
 
 class NameBookingForm(FormAction):
     """Example of a custom form action"""
+
     def name(self) -> Text:
         """Unique identifier of the form"""
 

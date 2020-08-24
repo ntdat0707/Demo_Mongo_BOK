@@ -114,10 +114,7 @@ responses:
         \"message\": \"Do you want to use the following information to make an appointment?\"
       )"
 
-  utter_question_name: 
-    - text: "(
-        \"message\": \"How may i call you?\"
-      )"
+  utter_question_name:  
     - text: "(
         \"message\": \"So, could I know your name please?\"
       )"
