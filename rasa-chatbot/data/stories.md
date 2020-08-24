@@ -39,6 +39,10 @@
   - utter_question_otp
   - utter_state_question_otp
 * HM_message_OTP_true
+  - utter_response_login_information
+  - utter_state_login_information
+> check_login_information
+* HM_message_no_use_login_information
   - utter_question_name_booking
   - slot{"name_booking": null}
   - name_booking_form
@@ -47,10 +51,18 @@
 * ASK_phone_number_booking
   - action_check_phone_booking
 > check_my_appointment
+> check_my_appointment_2
 * HM_message_confirmed
   - utter_response_bot_bye
   - utter_state_bot_bye
 > check_book_another_appointment
+
+## check login information
+> check_login_information
+* HM_message_continue_use_login_information
+  - utter_response_my_appointment
+  - utter_state_my_appointment
+> check_my_appointment_2
 
 ## continue book another appointment
 > check_book_another_appointment
@@ -61,6 +73,7 @@
 
 # edit my appointment
 > check_my_appointment
+> check_my_appointment_2
 > check_edit_my_appointment
 * HM_message_edit_my_appointment
   - utter_question_select_location
